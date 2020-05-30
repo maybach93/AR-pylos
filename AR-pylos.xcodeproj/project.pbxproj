@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1905F6F324832AC1003059A7 /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1905F6F224832AC1003059A7 /* GameMap.swift */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
 		196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6422482F8E000BF63D7 /* Experience.rcproject */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1905F6F224832AC1003059A7 /* GameMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AD6402482F8E000BF63D7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1905F6F024832A92003059A7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1905F6F124832A9C003059A7 /* Game */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1905F6F124832A9C003059A7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				1905F6F224832AC1003059A7 /* GameMap.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 		196AD6322482F8E000BF63D7 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +117,7 @@
 		196AD63D2482F8E000BF63D7 /* AR-pylos */ = {
 			isa = PBXGroup;
 			children = (
+				1905F6F024832A92003059A7 /* Core */,
 				196AD63E2482F8E000BF63D7 /* AppDelegate.swift */,
 				196AD6402482F8E000BF63D7 /* ViewController.swift */,
 				196AD6422482F8E000BF63D7 /* Experience.rcproject */,
@@ -259,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
 				196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */,
