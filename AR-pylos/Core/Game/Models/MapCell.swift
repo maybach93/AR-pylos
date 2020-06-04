@@ -17,13 +17,16 @@ protocol MapCellProtocol {
     var childDownLeft: MapCellProtocol? { get set }
     var childDownRight: MapCellProtocol? { get set }
     
-    subscript(z: Int) -> MapCellProtocol? { get }
     var isAvailable: Bool { get }
+    var isFilled: Bool { get }
+    var item: MapItemProtocol? { get set }
+    
+    subscript(z: Int) -> MapCellProtocol? { get }
 }
 
 class RootMapCell: MapCellProtocol {
     
-    var item: Ball?
+    var item: MapItemProtocol?
     
     var childUpLeft: MapCellProtocol?
     var childUpRight: MapCellProtocol?
@@ -37,6 +40,11 @@ class RootMapCell: MapCellProtocol {
     var isAvailable: Bool {
         return item == nil
     }
+    
+    var isFilled: Bool {
+        return item != nil
+    }
+    
     var allParents: [MapCellProtocol] {
         return []
     }
@@ -57,7 +65,7 @@ class RootMapCell: MapCellProtocol {
 }
 
 class MapCell: MapCellProtocol {
-    var item: Ball?
+    var item: MapItemProtocol?
     var childUpLeft: MapCellProtocol?
     var childUpRight: MapCellProtocol?
     var childDownLeft: MapCellProtocol?
@@ -76,8 +84,12 @@ class MapCell: MapCellProtocol {
         return childDownRight
     }
     
+    var isFilled: Bool {
+        return item != nil
+    }
+    
     var isAvailable: Bool {
-        return item == nil && cellParents.count == 4
+        return item == nil && cellParents.filter({ $0.isFilled }).count == 4
     }
     
     var allParents: [MapCellProtocol] {

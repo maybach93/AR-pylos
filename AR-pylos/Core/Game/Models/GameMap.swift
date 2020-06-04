@@ -15,7 +15,11 @@ struct Coordinate {
 
 protocol GameMapProtocol {
     var availablePoints: [Coordinate] { get }
-    var occupiedPoints: [Coordinate] { get }
+    var filledPoints: [Coordinate] { get }
+    subscript(coordinate: Coordinate) -> MapCellProtocol? { get }
+    
+    func fill(coordinate: Coordinate) -> Bool
+    func fill(coordinate: Coordinate, item: MapItemProtocol?) -> Bool
 }
 
 struct GameMap: GameMapProtocol {
@@ -25,10 +29,10 @@ struct GameMap: GameMapProtocol {
     var availablePoints: [Coordinate] {
         var availablePoints: [Coordinate] = []
         
-        for x in 0...(self.map.count - 1) {
-            for y in 0...(self.map.count - 1) {
-                for z in 0...(self.map.count - 2) {
-                    if self.map[x][y][z]?.isAvailable == true {
+        for z in 0...(self.map.count - 1) {
+            for x in 0...(self.map.count - 1) {
+                for y in 0...(self.map.count - 1) {
+                    if self[Coordinate(x: x, y: y, z: z)]?.isAvailable == true {
                         availablePoints.append(Coordinate(x: x, y: y, z: z))
                     }
                 }
@@ -37,19 +41,20 @@ struct GameMap: GameMapProtocol {
         return availablePoints
     }
     
-    var occupiedPoints: [Coordinate] {
-        var occupiedPoints: [Coordinate] = []
+    var filledPoints: [Coordinate] {
+        var filledPoints: [Coordinate] = []
         
-        for x in 0...(self.map.count - 1) {
-            for y in 0...(self.map.count - 1) {
-                for z in 0...(self.map.count - 2) {
-                    if self.map[x][y][z]?.isAvailable == false {
-                        occupiedPoints.append(Coordinate(x: x, y: y, z: z))
+        for z in 0...(self.map.count - 1) {
+            for x in 0...(self.map.count - 1) {
+                for y in 0...(self.map.count - 1) {
+                    
+                    if self[Coordinate(x: x, y: y, z: z)]?.isFilled == true {
+                        filledPoints.append(Coordinate(x: x, y: y, z: z))
                     }
                 }
             }
         }
-        return occupiedPoints
+        return filledPoints
     }
     
     init(width: Int) {
@@ -79,5 +84,17 @@ struct GameMap: GameMapProtocol {
             }
         }
         self.map = map
+    }
+    
+    subscript(coordinate: Coordinate) -> MapCellProtocol? {
+        return self.map[coordinate.x][coordinate.y][coordinate.z]
+    }
+    
+    @discardableResult
+    func fill(coordinate: Coordinate, item: MapItemProtocol? = nil) -> Bool {
+        guard var cell = self[coordinate] else { return false }
+        let temp = cell.item
+        cell.item = item
+        return (temp == nil) != (item == nil)
     }
 }
