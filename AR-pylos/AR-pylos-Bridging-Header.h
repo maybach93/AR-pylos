@@ -6,8 +6,7 @@
 //  Copyright © 2020 Vitalii Poponov. All rights reserved.
 //
 
-#ifndef AR_pylos_Bridging_Header_h
-#define AR_pylos_Bridging_Header_h
-
-
-#endif /* AR_pylos_Bridging_Header_h */
+#import <UIKit/UIKit.h>
+#import <RxSwift/RxSwift-Swift.h>
+#import <RxRelay/RxRelay-Swift.h>
+#import <RxCocoa/RxCocoa-Swift.h>
