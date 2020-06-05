@@ -8,10 +8,18 @@
 
 import Foundation
 
-protocol MapItemProtocol {
-    
+protocol MapItemProtocol: class {
+    var owner: Player { get }
 }
+
 class Ball: MapItemProtocol {
-    init() {
+    unowned let owner: Player
+    
+    init(owner: Player) {
+        self.owner = owner
+    }
+    
+    static func == (lhs: Ball, rhs: Ball) -> Bool {
+        return lhs === rhs
     }
 }

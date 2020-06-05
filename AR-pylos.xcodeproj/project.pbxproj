@@ -12,6 +12,8 @@
 		19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F7624885D1900E3EBF8 /* RxCocoa.framework */; };
 		19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7A24886B6300E3EBF8 /* MapItem.swift */; };
 		19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7C24886B7700E3EBF8 /* MapCell.swift */; };
+		19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7E248AC2C900E3EBF8 /* Game.swift */; };
+		19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F80248ADB5E00E3EBF8 /* Player.swift */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
@@ -47,6 +49,8 @@
 		19378F7624885D1900E3EBF8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		19378F7A24886B6300E3EBF8 /* MapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItem.swift; sourceTree = "<group>"; };
 		19378F7C24886B7700E3EBF8 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
+		19378F7E248AC2C900E3EBF8 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		19378F80248ADB5E00E3EBF8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 				19378F7A24886B6300E3EBF8 /* MapItem.swift */,
 				19378F7C24886B7700E3EBF8 /* MapCell.swift */,
 				1905F6F224832AC1003059A7 /* GameMap.swift */,
+				19378F7E248AC2C900E3EBF8 /* Game.swift */,
+				19378F80248ADB5E00E3EBF8 /* Player.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -344,7 +350,9 @@
 			files = (
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
+				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
+				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
 				196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */,

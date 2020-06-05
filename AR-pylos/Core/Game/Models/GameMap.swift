@@ -16,9 +16,10 @@ struct Coordinate {
 protocol GameMapProtocol {
     var availablePoints: [Coordinate] { get }
     var filledPoints: [Coordinate] { get }
+    var allPoints: [Coordinate] { get }
+    var availableToMovePoints: [Coordinate] { get }
     subscript(coordinate: Coordinate) -> MapCellProtocol? { get }
     
-    func fill(coordinate: Coordinate) -> Bool
     func fill(coordinate: Coordinate, item: MapItemProtocol?) -> Bool
 }
 
@@ -27,34 +28,31 @@ struct GameMap: GameMapProtocol {
     private var map: [[MapCellProtocol]]
     
     var availablePoints: [Coordinate] {
-        var availablePoints: [Coordinate] = []
+        return allPoints.filter({ self[$0]?.isAvailable == true  })
+    }
+    
+    var availableToMovePoints: [Coordinate] {
+        let movablePoints = allPoints.filter({ self[$0]?.isMovable == true })
+        let highestAvailableToMoveZ = movablePoints.max(by: { $0.z > $1.z })?.z ?? 0 - 1
+        return movablePoints.filter({ $0.z <= highestAvailableToMoveZ })
+    }
+    
+    var allPoints: [Coordinate] {
+        var allPoints: [Coordinate] = []
+        let width = self.map.count
         
-        for z in 0...(self.map.count - 1) {
-            for x in 0...(self.map.count - 1) {
-                for y in 0...(self.map.count - 1) {
-                    if self[Coordinate(x: x, y: y, z: z)]?.isAvailable == true {
-                        availablePoints.append(Coordinate(x: x, y: y, z: z))
-                    }
+        for z in 0...(width - 1) {
+            for x in 0...(width - 1 - z) {
+                for y in 0...(width - 1 - z) {
+                    allPoints.append(Coordinate(x: x, y: y, z: z))
                 }
             }
         }
-        return availablePoints
+        return allPoints
     }
     
     var filledPoints: [Coordinate] {
-        var filledPoints: [Coordinate] = []
-        
-        for z in 0...(self.map.count - 1) {
-            for x in 0...(self.map.count - 1) {
-                for y in 0...(self.map.count - 1) {
-                    
-                    if self[Coordinate(x: x, y: y, z: z)]?.isFilled == true {
-                        filledPoints.append(Coordinate(x: x, y: y, z: z))
-                    }
-                }
-            }
-        }
-        return filledPoints
+        return allPoints.filter({ self[$0]?.isFilled == true })
     }
     
     init(width: Int) {
@@ -91,7 +89,7 @@ struct GameMap: GameMapProtocol {
     }
     
     @discardableResult
-    func fill(coordinate: Coordinate, item: MapItemProtocol? = nil) -> Bool {
+    func fill(coordinate: Coordinate, item: MapItemProtocol?) -> Bool {
         guard var cell = self[coordinate] else { return false }
         let temp = cell.item
         cell.item = item

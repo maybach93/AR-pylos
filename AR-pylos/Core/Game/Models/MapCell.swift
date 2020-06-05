@@ -18,6 +18,7 @@ protocol MapCellProtocol {
     var childDownRight: MapCellProtocol? { get set }
     
     var isAvailable: Bool { get }
+    var isMovable: Bool { get }
     var isFilled: Bool { get }
     var item: MapItemProtocol? { get set }
     
@@ -39,6 +40,10 @@ class RootMapCell: MapCellProtocol {
     
     var isAvailable: Bool {
         return item == nil
+    }
+    
+    var isMovable: Bool {
+        return isFilled && childUpLeft == nil && childUpRight == nil && childDownLeft == nil && childDownRight == nil
     }
     
     var isFilled: Bool {
@@ -86,6 +91,10 @@ class MapCell: MapCellProtocol {
     
     var isFilled: Bool {
         return item != nil
+    }
+    
+    var isMovable: Bool {
+        return isFilled && childUpLeft == nil && childUpRight == nil && childDownLeft == nil && childDownRight == nil
     }
     
     var isAvailable: Bool {
