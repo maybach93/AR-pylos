@@ -17,7 +17,7 @@ protocol MapCellProtocol {
     var childDownLeft: MapCellProtocol? { get set }
     var childDownRight: MapCellProtocol? { get set }
     
-    var isAvailable: Bool { get }
+    var isAvailableToFill: Bool { get }
     var isMovable: Bool { get }
     var isFilled: Bool { get }
     var item: MapItemProtocol? { get set }
@@ -38,7 +38,7 @@ class RootMapCell: MapCellProtocol {
         return childDownRight
     }
     
-    var isAvailable: Bool {
+    var isAvailableToFill: Bool {
         return item == nil
     }
     
@@ -97,7 +97,7 @@ class MapCell: MapCellProtocol {
         return isFilled && childUpLeft == nil && childUpRight == nil && childDownLeft == nil && childDownRight == nil
     }
     
-    var isAvailable: Bool {
+    var isAvailableToFill: Bool {
         return item == nil && cellParents.filter({ $0.isFilled }).count == 4
     }
     

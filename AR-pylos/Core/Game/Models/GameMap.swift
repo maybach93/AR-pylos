@@ -7,7 +7,7 @@
 //
 import Foundation
 
-struct Coordinate {
+struct Coordinate: Equatable {
     var x: Int
     var y: Int
     var z: Int
@@ -28,7 +28,7 @@ struct GameMap: GameMapProtocol {
     private var map: [[MapCellProtocol]]
     
     var availablePoints: [Coordinate] {
-        return allPoints.filter({ self[$0]?.isAvailable == true  })
+        return allPoints.filter({ self[$0]?.isAvailableToFill == true  })
     }
     
     var availableToMovePoints: [Coordinate] {

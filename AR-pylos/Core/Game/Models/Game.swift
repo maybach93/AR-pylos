@@ -7,6 +7,12 @@
 //
 
 import Foundation
+protocol GameProtocol {
+    func moveItem(player: Player, fromCoordinate: Coordinate, toCoordinate: Coordinate) -> Bool
+    func fillItem(player: Player, item: MapItemProtocol, coordinate: Coordinate) -> Bool
+    func stashItem(player: Player, coordinate: Coordinate) -> Bool
+    func availableToMove(to player: Player) -> [Coordinate]
+}
 
 class Game {
     var map: GameMapProtocol
@@ -31,6 +37,13 @@ class Game {
             }
         }
         self.stashedItems = items
+    }
+    
+    func moveItem(player: Player, fromCoordinate: Coordinate, toCoordinate: Coordinate) -> Bool {
+        guard let fromCellItem = self.map[fromCoordinate]?.item, let toCell = self.map[toCoordinate] else { return false }
+        guard self.availableToMove(to: player).contains(where: { $0 == fromCoordinate }), toCell.isAvailableToFill else { return false }
+        
+        return self.map.fill(coordinate: fromCoordinate, item: nil) && self.map.fill(coordinate: toCoordinate, item: fromCellItem)
     }
     
     func fillItem(player: Player, item: MapItemProtocol, coordinate: Coordinate) -> Bool {
