@@ -14,6 +14,13 @@
 		19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7C24886B7700E3EBF8 /* MapCell.swift */; };
 		19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7E248AC2C900E3EBF8 /* Game.swift */; };
 		19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F80248ADB5E00E3EBF8 /* Player.swift */; };
+		19378F83248ADDA100E3EBF8 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F82248ADDA100E3EBF8 /* GameController.swift */; };
+		19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F84248ADF0200E3EBF8 /* GameServer.swift */; };
+		19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F86248AED2600E3EBF8 /* GameCoordinator.swift */; };
+		19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */; };
+		19378F8E248AF18D00E3EBF8 /* LocalGameServerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F8D248AF18D00E3EBF8 /* LocalGameServerBridge.swift */; };
+		19378F90248AF20E00E3EBF8 /* RemoteGameServerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F8F248AF20E00E3EBF8 /* RemoteGameServerBridge.swift */; };
+		19378F93248B354700E3EBF8 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F92248B354700E3EBF8 /* GameKit.framework */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
@@ -51,6 +58,13 @@
 		19378F7C24886B7700E3EBF8 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		19378F7E248AC2C900E3EBF8 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		19378F80248ADB5E00E3EBF8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		19378F82248ADDA100E3EBF8 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		19378F84248ADF0200E3EBF8 /* GameServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameServer.swift; sourceTree = "<group>"; };
+		19378F86248AED2600E3EBF8 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
+		19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMatchingCoordinator.swift; sourceTree = "<group>"; };
+		19378F8D248AF18D00E3EBF8 /* LocalGameServerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalGameServerBridge.swift; sourceTree = "<group>"; };
+		19378F8F248AF20E00E3EBF8 /* RemoteGameServerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGameServerBridge.swift; sourceTree = "<group>"; };
+		19378F92248B354700E3EBF8 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +90,7 @@
 				19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */,
 				19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */,
 				194AD738248430160085C635 /* RxSwift.framework in Frameworks */,
+				19378F93248B354700E3EBF8 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +114,8 @@
 		1905F6F024832A92003059A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				19378F91248B337200E3EBF8 /* Network */,
+				19378F8C248AF15E00E3EBF8 /* Server */,
 				1905F6F124832A9C003059A7 /* Game */,
 			);
 			path = Core;
@@ -108,6 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				19378F7924886B5500E3EBF8 /* Models */,
+				19378F82248ADDA100E3EBF8 /* GameController.swift */,
+				19378F86248AED2600E3EBF8 /* GameCoordinator.swift */,
+				19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -124,9 +144,27 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		19378F8C248AF15E00E3EBF8 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				19378F84248ADF0200E3EBF8 /* GameServer.swift */,
+				19378F8D248AF18D00E3EBF8 /* LocalGameServerBridge.swift */,
+				19378F8F248AF20E00E3EBF8 /* RemoteGameServerBridge.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		19378F91248B337200E3EBF8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		194AD736248430160085C635 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19378F92248B354700E3EBF8 /* GameKit.framework */,
 				19378F7624885D1900E3EBF8 /* RxCocoa.framework */,
 				19378F7524885D1900E3EBF8 /* RxRelay.framework */,
 				194AD737248430160085C635 /* RxSwift.framework */,
@@ -348,13 +386,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19378F8E248AF18D00E3EBF8 /* LocalGameServerBridge.swift in Sources */,
+				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
+				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
+				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
+				19378F83248ADDA100E3EBF8 /* GameController.swift in Sources */,
 				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
+				19378F90248AF20E00E3EBF8 /* RemoteGameServerBridge.swift in Sources */,
 				196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
