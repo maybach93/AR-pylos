@@ -15,12 +15,16 @@ protocol GameCoordinatorBridgeProtocol: GameCoordinatorInputProtocol, GameCoordi
 }
 protocol GameCoordinatorInputProtocol {
     //Interface to receive actions from server
+    var otherPlayersActions: Observable<String> { get }
 }
 protocol GameCoordinatorOutputProtocol {
     //Interface to send actions to server (player actions)
+    var playerAction: PublishSubject<Void> { get }
 }
 
 class GameCoordinator: GameCoordinatorBridgeProtocol {
+    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    var otherPlayersActions: Observable<String> = Observable<String>.just("")
     
     init() {
         

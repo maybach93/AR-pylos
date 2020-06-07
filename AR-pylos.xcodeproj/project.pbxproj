@@ -22,6 +22,9 @@
 		19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */; };
 		19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */; };
 		19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F9C248C4A8100E3EBF8 /* GameProcess.swift */; };
+		19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA3248D3DCB00E3EBF8 /* GameStateMachine.swift */; };
+		19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA6248D488200E3EBF8 /* BaseGameState.swift */; };
+		19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
@@ -66,6 +69,9 @@
 		19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothNetworkAdapter.swift; sourceTree = "<group>"; };
 		19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKitNetworkAdapter.swift; sourceTree = "<group>"; };
 		19378F9C248C4A8100E3EBF8 /* GameProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProcess.swift; sourceTree = "<group>"; };
+		19378FA3248D3DCB00E3EBF8 /* GameStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateMachine.swift; sourceTree = "<group>"; };
+		19378FA6248D488200E3EBF8 /* BaseGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseGameState.swift; sourceTree = "<group>"; };
+		19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedGameState.swift; sourceTree = "<group>"; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,8 +153,10 @@
 		19378F8C248AF15E00E3EBF8 /* Server */ = {
 			isa = PBXGroup;
 			children = (
+				19378FA5248D482F00E3EBF8 /* StateMachine */,
 				19378F9E248C5CA100E3EBF8 /* Bridges */,
 				19378F84248ADF0200E3EBF8 /* GameServer.swift */,
+				19378FA3248D3DCB00E3EBF8 /* GameStateMachine.swift */,
 			);
 			path = Server;
 			sourceTree = "<group>";
@@ -168,6 +176,15 @@
 				19378F8F248AF20E00E3EBF8 /* GameServerBridge.swift */,
 			);
 			path = Bridges;
+			sourceTree = "<group>";
+		};
+		19378FA5248D482F00E3EBF8 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				19378FA6248D488200E3EBF8 /* BaseGameState.swift */,
+				19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */,
+			);
+			path = StateMachine;
 			sourceTree = "<group>";
 		};
 		194AD736248430160085C635 /* Frameworks */ = {
@@ -395,9 +412,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */,
+				19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */,
 				19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
+				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
+				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,

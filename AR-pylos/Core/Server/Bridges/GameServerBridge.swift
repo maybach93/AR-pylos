@@ -11,6 +11,13 @@ import Foundation
 //RemotePlayerServerBridge emits actions for player received from communicator and send
 //to communicator actions from server
 class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
+    
+    //MARK: - Outputs
+    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    
+    //MARK: - Inputs
+    var otherPlayersActions: Observable<String> = Observable<String>.just("")
+    
     init() {
         //With communicator
     }

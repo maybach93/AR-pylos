@@ -16,10 +16,22 @@ protocol GameServerProtocol {
     
 }
 
-class GameServer: GameServerProtocol {
-    private var gameCoordinators: [GameCoordinatorBridgeProtocol]
+protocol GameServerContext: class {
+    var gameCoordinators: [GameCoordinatorBridgeProtocol] { get }
+}
+
+class GameServer: GameServerProtocol, GameServerContext {
+    internal var gameCoordinators: [GameCoordinatorBridgeProtocol]
+    lazy private var gameState: BaseGameState = {
+        return BaseGameState(context: self)
+    }()
     
     init(gameCoordinators: [GameCoordinatorBridgeProtocol]) {
         self.gameCoordinators = gameCoordinators
+        self.executeNextState()
+    }
+    
+    func executeNextState() {
+        self.gameState = self.gameState.nextState()
     }
 }
