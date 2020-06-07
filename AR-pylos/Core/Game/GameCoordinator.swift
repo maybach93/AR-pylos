@@ -14,7 +14,7 @@ protocol GameCoordinatorBridgeProtocol: class, GameCoordinatorInputProtocol, Gam
 }
 protocol GameCoordinatorInputProtocol {
     //Interface to receive actions from server
-    var otherPlayersActions: Observable<String> { get }
+    var serverStateMessages: PublishRelay<ServerMessage> { get }
 }
 protocol GameCoordinatorOutputProtocol {
     //Interface to send actions to server (player actions)
@@ -22,10 +22,29 @@ protocol GameCoordinatorOutputProtocol {
 }
 
 class GameCoordinator: GameCoordinatorBridgeProtocol {
-    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    
+    private let disposeBag = DisposeBag()
+
+    //MARK: - Input
+    var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     var otherPlayersActions: Observable<String> = Observable<String>.just("")
     
+    //MARK: - Output
+    
+    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    
     init() {
-        
+        serverStateMessages.subscribe { (event) in
+            switch event {
+                
+            case .next(let message):
+                print("")
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
     }
+    
 }

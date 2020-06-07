@@ -16,7 +16,7 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     var playerAction: PublishSubject<Void> = PublishSubject<Void>()
     
     //MARK: - Inputs
-    var otherPlayersActions: Observable<String> = Observable<String>.just("")
+    var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
     init() {
         //With communicator

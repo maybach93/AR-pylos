@@ -17,20 +17,29 @@ protocol GameServerProtocol {
 }
 
 protocol GameServerContext: class {
-    var gameCoordinators: [GameCoordinatorBridgeProtocol] { get }
-    var currentPlayer: GameCoordinatorBridgeProtocol? { get }
+    var gameCoordinators: [Player: GameCoordinatorBridgeProtocol] { get }
+    var currentPlayer: Player? { get }
+    var game: Game { get }
 }
 
 class GameServer: GameServerProtocol, GameServerContext {
-    internal var gameCoordinators: [GameCoordinatorBridgeProtocol]
-    internal weak var currentPlayer: GameCoordinatorBridgeProtocol?
+    internal var game: Game
+    internal var gameCoordinators: [Player: GameCoordinatorBridgeProtocol]
+    internal weak var currentPlayer: Player?
     
     lazy private var gameState: BaseGameState = {
         return BaseGameState(context: self)
     }()
     
     init(gameCoordinators: [GameCoordinatorBridgeProtocol]) {
-        self.gameCoordinators = gameCoordinators
+        let game = Game()
+        var gameCoordinatorsDict: [Player: GameCoordinatorBridgeProtocol] = [:]
+        for (index, gameCoordinator) in gameCoordinators.enumerated() {
+            let player = game.players[index]
+            gameCoordinatorsDict[player] = gameCoordinator
+        }
+        self.gameCoordinators = gameCoordinatorsDict
+        self.game = game
         self.executeNextState()
     }
     

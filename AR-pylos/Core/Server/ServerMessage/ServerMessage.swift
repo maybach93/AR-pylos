@@ -25,6 +25,11 @@ struct ServerMessage: Codable {
     var type: ServerMessageType
     var payload: ServerMessagePayloadProtocol
     
+    init(type: ServerMessageType, payload: ServerMessagePayloadProtocol) {
+        self.type = type
+        self.payload = payload
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decode(ServerMessageType.self, forKey: .type)
