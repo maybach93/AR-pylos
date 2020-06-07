@@ -12,24 +12,14 @@ import Foundation
 //It receives actions/signals from server to update information or UI
 //It sends user actions to server locally or via Network
 
-protocol GameServerBridgeOutputs {
-    //observable - player actions
-    //left the game
-}
-
-protocol GameServerBridgeInputs {
-    //observable - other players' actions
-    //server update state of game
-}
-
-protocol GameServerBridge {
-    var player: Player { get }
-}
-
-class GameServer {
-    private var gameBridges: [GameServerBridge]
+protocol GameServerProtocol {
     
-    init(gameBridges: [GameServerBridge]) {
-        self.gameBridges = gameBridges
+}
+
+class GameServer: GameServerProtocol {
+    private var gameCoordinators: [GameCoordinatorBridgeProtocol]
+    
+    init(gameCoordinators: [GameCoordinatorBridgeProtocol]) {
+        self.gameCoordinators = gameCoordinators
     }
 }
