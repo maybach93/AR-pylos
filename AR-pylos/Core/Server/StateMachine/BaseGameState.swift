@@ -9,7 +9,7 @@
 import Foundation
 
 class BaseGameState {
-    private unowned var context: GameServerContext
+    unowned var context: GameServerContext
     var state: GameStateMachine {
         return .none
     }
@@ -23,6 +23,8 @@ class BaseGameState {
     //MARK: - Public
     
     func nextState() -> BaseGameState {
-        return InitiatedGameState(context: context)
+        let state = InitiatedGameState(context: context)
+        state.movingFrom(previousState: self)
+        return state
     }
 }

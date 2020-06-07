@@ -10,8 +10,7 @@
 //it subscribes for server acrtion, and emit actions from player to server
 import Foundation
 
-protocol GameCoordinatorBridgeProtocol: GameCoordinatorInputProtocol, GameCoordinatorOutputProtocol {
-    
+protocol GameCoordinatorBridgeProtocol: class, GameCoordinatorInputProtocol, GameCoordinatorOutputProtocol {
 }
 protocol GameCoordinatorInputProtocol {
     //Interface to receive actions from server

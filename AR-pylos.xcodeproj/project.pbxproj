@@ -25,6 +25,8 @@
 		19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA3248D3DCB00E3EBF8 /* GameStateMachine.swift */; };
 		19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA6248D488200E3EBF8 /* BaseGameState.swift */; };
 		19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */; };
+		19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAB248D50F000E3EBF8 /* ServerMessage.swift */; };
+		19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
@@ -72,6 +74,8 @@
 		19378FA3248D3DCB00E3EBF8 /* GameStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateMachine.swift; sourceTree = "<group>"; };
 		19378FA6248D488200E3EBF8 /* BaseGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseGameState.swift; sourceTree = "<group>"; };
 		19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedGameState.swift; sourceTree = "<group>"; };
+		19378FAB248D50F000E3EBF8 /* ServerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerMessage.swift; sourceTree = "<group>"; };
+		19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedServerMessagePayload.swift; sourceTree = "<group>"; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		19378F8C248AF15E00E3EBF8 /* Server */ = {
 			isa = PBXGroup;
 			children = (
+				19378FAA248D50D200E3EBF8 /* ServerMessage */,
 				19378FA5248D482F00E3EBF8 /* StateMachine */,
 				19378F9E248C5CA100E3EBF8 /* Bridges */,
 				19378F84248ADF0200E3EBF8 /* GameServer.swift */,
@@ -185,6 +190,15 @@
 				19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */,
 			);
 			path = StateMachine;
+			sourceTree = "<group>";
+		};
+		19378FAA248D50D200E3EBF8 /* ServerMessage */ = {
+			isa = PBXGroup;
+			children = (
+				19378FAB248D50F000E3EBF8 /* ServerMessage.swift */,
+				19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */,
+			);
+			path = ServerMessage;
 			sourceTree = "<group>";
 		};
 		194AD736248430160085C635 /* Frameworks */ = {
@@ -419,7 +433,9 @@
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
+				19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
+				19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */,
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,

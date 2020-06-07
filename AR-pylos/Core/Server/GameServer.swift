@@ -18,10 +18,13 @@ protocol GameServerProtocol {
 
 protocol GameServerContext: class {
     var gameCoordinators: [GameCoordinatorBridgeProtocol] { get }
+    var currentPlayer: GameCoordinatorBridgeProtocol? { get }
 }
 
 class GameServer: GameServerProtocol, GameServerContext {
     internal var gameCoordinators: [GameCoordinatorBridgeProtocol]
+    internal weak var currentPlayer: GameCoordinatorBridgeProtocol?
+    
     lazy private var gameState: BaseGameState = {
         return BaseGameState(context: self)
     }()

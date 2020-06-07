@@ -13,5 +13,7 @@ class InitiatedGameState: BaseGameState {
         return .initiated
     }
     
-    
+    func movingFrom(previousState: BaseGameState) {
+        self.context.gameCoordinators
+    }
 }
