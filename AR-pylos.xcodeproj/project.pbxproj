@@ -7,9 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1905F6F324832AC1003059A7 /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1905F6F224832AC1003059A7 /* GameMap.swift */; };
+		19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F7524885D1900E3EBF8 /* RxRelay.framework */; };
+		19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F7624885D1900E3EBF8 /* RxCocoa.framework */; };
+		19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7A24886B6300E3EBF8 /* MapItem.swift */; };
+		19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7C24886B7700E3EBF8 /* MapCell.swift */; };
+		19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7E248AC2C900E3EBF8 /* Game.swift */; };
+		19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F80248ADB5E00E3EBF8 /* Player.swift */; };
+		19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F84248ADF0200E3EBF8 /* GameServer.swift */; };
+		19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F86248AED2600E3EBF8 /* GameCoordinator.swift */; };
+		19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */; };
+		19378F90248AF20E00E3EBF8 /* GameServerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F8F248AF20E00E3EBF8 /* GameServerBridge.swift */; };
+		19378F93248B354700E3EBF8 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F92248B354700E3EBF8 /* GameKit.framework */; };
+		19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */; };
+		19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */; };
+		19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F9C248C4A8100E3EBF8 /* GameProcess.swift */; };
+		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
-		196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6422482F8E000BF63D7 /* Experience.rcproject */; };
 		196AD6462482F8E000BF63D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6442482F8E000BF63D7 /* Main.storyboard */; };
 		196AD6482482F8E200BF63D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6472482F8E200BF63D7 /* Assets.xcassets */; };
 		196AD64B2482F8E200BF63D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */; };
@@ -35,10 +50,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1905F6F224832AC1003059A7 /* GameMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
+		19378F7424885CC900E3EBF8 /* AR-pylos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AR-pylos-Bridging-Header.h"; sourceTree = "<group>"; };
+		19378F7524885D1900E3EBF8 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
+		19378F7624885D1900E3EBF8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		19378F7A24886B6300E3EBF8 /* MapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapItem.swift; sourceTree = "<group>"; };
+		19378F7C24886B7700E3EBF8 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
+		19378F7E248AC2C900E3EBF8 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		19378F80248ADB5E00E3EBF8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		19378F84248ADF0200E3EBF8 /* GameServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameServer.swift; sourceTree = "<group>"; };
+		19378F86248AED2600E3EBF8 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
+		19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMatchingCoordinator.swift; sourceTree = "<group>"; };
+		19378F8F248AF20E00E3EBF8 /* GameServerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameServerBridge.swift; sourceTree = "<group>"; };
+		19378F92248B354700E3EBF8 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothNetworkAdapter.swift; sourceTree = "<group>"; };
+		19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKitNetworkAdapter.swift; sourceTree = "<group>"; };
+		19378F9C248C4A8100E3EBF8 /* GameProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProcess.swift; sourceTree = "<group>"; };
+		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AD6402482F8E000BF63D7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		196AD6422482F8E000BF63D7 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		196AD6452482F8E000BF63D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		196AD6472482F8E200BF63D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		196AD64A2482F8E200BF63D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,6 +87,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */,
+				19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */,
+				194AD738248430160085C635 /* RxSwift.framework in Frameworks */,
+				19378F93248B354700E3EBF8 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +111,76 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1905F6F024832A92003059A7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				19378F91248B337200E3EBF8 /* Network */,
+				19378F8C248AF15E00E3EBF8 /* Server */,
+				1905F6F124832A9C003059A7 /* Game */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1905F6F124832A9C003059A7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				19378F7924886B5500E3EBF8 /* Models */,
+				19378F86248AED2600E3EBF8 /* GameCoordinator.swift */,
+				19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */,
+				19378F9C248C4A8100E3EBF8 /* GameProcess.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		19378F7924886B5500E3EBF8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				19378F7A24886B6300E3EBF8 /* MapItem.swift */,
+				19378F7C24886B7700E3EBF8 /* MapCell.swift */,
+				1905F6F224832AC1003059A7 /* GameMap.swift */,
+				19378F7E248AC2C900E3EBF8 /* Game.swift */,
+				19378F80248ADB5E00E3EBF8 /* Player.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		19378F8C248AF15E00E3EBF8 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				19378F9E248C5CA100E3EBF8 /* Bridges */,
+				19378F84248ADF0200E3EBF8 /* GameServer.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		19378F91248B337200E3EBF8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */,
+				19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		19378F9E248C5CA100E3EBF8 /* Bridges */ = {
+			isa = PBXGroup;
+			children = (
+				19378F8F248AF20E00E3EBF8 /* GameServerBridge.swift */,
+			);
+			path = Bridges;
+			sourceTree = "<group>";
+		};
+		194AD736248430160085C635 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				19378F92248B354700E3EBF8 /* GameKit.framework */,
+				19378F7624885D1900E3EBF8 /* RxCocoa.framework */,
+				19378F7524885D1900E3EBF8 /* RxRelay.framework */,
+				194AD737248430160085C635 /* RxSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		196AD6322482F8E000BF63D7 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +188,7 @@
 				196AD6542482F8E200BF63D7 /* AR-pylosTests */,
 				196AD65F2482F8E200BF63D7 /* AR-pylosUITests */,
 				196AD63C2482F8E000BF63D7 /* Products */,
+				194AD736248430160085C635 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,13 +205,14 @@
 		196AD63D2482F8E000BF63D7 /* AR-pylos */ = {
 			isa = PBXGroup;
 			children = (
+				1905F6F024832A92003059A7 /* Core */,
 				196AD63E2482F8E000BF63D7 /* AppDelegate.swift */,
 				196AD6402482F8E000BF63D7 /* ViewController.swift */,
-				196AD6422482F8E000BF63D7 /* Experience.rcproject */,
 				196AD6442482F8E000BF63D7 /* Main.storyboard */,
 				196AD6472482F8E200BF63D7 /* Assets.xcassets */,
 				196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */,
 				196AD64C2482F8E200BF63D7 /* Info.plist */,
+				19378F7424885CC900E3EBF8 /* AR-pylos-Bridging-Header.h */,
 			);
 			path = "AR-pylos";
 			sourceTree = "<group>";
@@ -138,6 +245,7 @@
 				196AD6372482F8E000BF63D7 /* Sources */,
 				196AD6382482F8E000BF63D7 /* Frameworks */,
 				196AD6392482F8E000BF63D7 /* Resources */,
+				194AD73524842FAA0085C635 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -254,14 +362,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		194AD73524842FAA0085C635 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxRelay.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxRelay.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		196AD6372482F8E000BF63D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */,
+				19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */,
+				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
+				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
+				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
+				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
+				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
+				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
+				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
+				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
+				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
-				196AD6432482F8E000BF63D7 /* Experience.rcproject in Sources */,
+				19378F90248AF20E00E3EBF8 /* GameServerBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +582,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PQJ88HC63;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "AR-pylos/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -444,6 +594,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vp.ar-pylos.AR-pylos";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AR-Pylos/AR-pylos-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -455,6 +606,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6PQJ88HC63;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "AR-pylos/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -463,6 +618,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vp.ar-pylos.AR-pylos";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AR-Pylos/AR-pylos-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
