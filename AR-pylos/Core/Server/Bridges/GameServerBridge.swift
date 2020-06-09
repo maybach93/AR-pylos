@@ -18,8 +18,12 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     //MARK: - Inputs
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
-    init() {
-        //With communicator
+    //MARK: - Private
+    
+    private var communicator: CommunicatorAdapter
+    
+    init(communicator: CommunicatorAdapter) {
+        self.communicator = communicator
     }
 }
 

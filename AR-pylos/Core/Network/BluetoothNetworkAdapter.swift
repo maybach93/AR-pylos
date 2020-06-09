@@ -11,11 +11,20 @@
 import Foundation
 
 protocol CommunicatorAdapter {
-    func findMatch(asHost: Bool)
+    var outMessages: PublishRelay<Data> { get } //Messages to send to others
+    var inMessages: PublishSubject<Data> { get } //Messages received from others
+    
+    func findMatch() -> Observable<Bool>
 }
 
 class BluetoothNetworkAdapter: CommunicatorAdapter {
-    func findMatch(asHost: Bool) {
-        
+    
+    private let disposeBag = DisposeBag()
+
+    var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
+    var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
+    
+    func findMatch() -> Observable<Bool> {
+        return Observable.just(true)
     }
 }

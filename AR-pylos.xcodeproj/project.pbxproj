@@ -27,10 +27,12 @@
 		19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */; };
 		19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAB248D50F000E3EBF8 /* ServerMessage.swift */; };
 		19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */; };
+		19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */; };
+		19378FB7248ED1E400E3EBF8 /* MatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB6248ED1E300E3EBF8 /* MatchingView.swift */; };
+		19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB8248ED68900E3EBF8 /* SceneDelegate.swift */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
 		196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6402482F8E000BF63D7 /* ViewController.swift */; };
-		196AD6462482F8E000BF63D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6442482F8E000BF63D7 /* Main.storyboard */; };
 		196AD6482482F8E200BF63D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6472482F8E200BF63D7 /* Assets.xcassets */; };
 		196AD64B2482F8E200BF63D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */; };
 		196AD6562482F8E200BF63D7 /* AR_pylosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6552482F8E200BF63D7 /* AR_pylosTests.swift */; };
@@ -76,11 +78,13 @@
 		19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedGameState.swift; sourceTree = "<group>"; };
 		19378FAB248D50F000E3EBF8 /* ServerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerMessage.swift; sourceTree = "<group>"; };
 		19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedServerMessagePayload.swift; sourceTree = "<group>"; };
+		19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtension.swift; sourceTree = "<group>"; };
+		19378FB6248ED1E300E3EBF8 /* MatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingView.swift; sourceTree = "<group>"; };
+		19378FB8248ED68900E3EBF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD63E2482F8E000BF63D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		196AD6402482F8E000BF63D7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		196AD6452482F8E000BF63D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		196AD6472482F8E200BF63D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		196AD64A2482F8E200BF63D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		196AD64C2482F8E200BF63D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		1905F6F024832A92003059A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				19378FAF248ECB0700E3EBF8 /* Extension */,
 				19378F91248B337200E3EBF8 /* Network */,
 				19378F8C248AF15E00E3EBF8 /* Server */,
 				1905F6F124832A9C003059A7 /* Game */,
@@ -201,6 +206,30 @@
 			path = ServerMessage;
 			sourceTree = "<group>";
 		};
+		19378FAF248ECB0700E3EBF8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		19378FB2248ED04C00E3EBF8 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				19378FB3248ED05200E3EBF8 /* Matching */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		19378FB3248ED05200E3EBF8 /* Matching */ = {
+			isa = PBXGroup;
+			children = (
+				19378FB6248ED1E300E3EBF8 /* MatchingView.swift */,
+			);
+			path = Matching;
+			sourceTree = "<group>";
+		};
 		194AD736248430160085C635 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,10 +265,11 @@
 		196AD63D2482F8E000BF63D7 /* AR-pylos */ = {
 			isa = PBXGroup;
 			children = (
+				19378FB2248ED04C00E3EBF8 /* Modules */,
 				1905F6F024832A92003059A7 /* Core */,
 				196AD63E2482F8E000BF63D7 /* AppDelegate.swift */,
 				196AD6402482F8E000BF63D7 /* ViewController.swift */,
-				196AD6442482F8E000BF63D7 /* Main.storyboard */,
+				19378FB8248ED68900E3EBF8 /* SceneDelegate.swift */,
 				196AD6472482F8E200BF63D7 /* Assets.xcassets */,
 				196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */,
 				196AD64C2482F8E200BF63D7 /* Info.plist */,
@@ -373,7 +403,6 @@
 			files = (
 				196AD64B2482F8E200BF63D7 /* LaunchScreen.storyboard in Resources */,
 				196AD6482482F8E200BF63D7 /* Assets.xcassets in Resources */,
-				196AD6462482F8E000BF63D7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +458,13 @@
 				19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */,
 				19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
+				19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */,
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
+				19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */,
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
+				19378FB7248ED1E400E3EBF8 /* MatchingView.swift in Sources */,
 				19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */,
@@ -479,14 +511,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		196AD6442482F8E000BF63D7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				196AD6452482F8E000BF63D7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
