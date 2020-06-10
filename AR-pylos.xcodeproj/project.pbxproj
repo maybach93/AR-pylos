@@ -28,7 +28,7 @@
 		19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAB248D50F000E3EBF8 /* ServerMessage.swift */; };
 		19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */; };
 		19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */; };
-		19378FB7248ED1E400E3EBF8 /* MatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB6248ED1E300E3EBF8 /* MatchingView.swift */; };
+		19378FB7248ED1E400E3EBF8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB6248ED1E300E3EBF8 /* MainView.swift */; };
 		19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378FB8248ED68900E3EBF8 /* SceneDelegate.swift */; };
 		194AD738248430160085C635 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 194AD737248430160085C635 /* RxSwift.framework */; };
 		196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD63E2482F8E000BF63D7 /* AppDelegate.swift */; };
@@ -37,6 +37,9 @@
 		196AD64B2482F8E200BF63D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196AD6492482F8E200BF63D7 /* LaunchScreen.storyboard */; };
 		196AD6562482F8E200BF63D7 /* AR_pylosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6552482F8E200BF63D7 /* AR_pylosTests.swift */; };
 		196AD6612482F8E200BF63D7 /* AR_pylosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196AD6602482F8E200BF63D7 /* AR_pylosUITests.swift */; };
+		198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A945C24903D7C006F6D1E /* FindGameView.swift */; };
+		198A946024903DE1006F6D1E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A945F24903DE1006F6D1E /* Router.swift */; };
+		198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946124903E14006F6D1E /* FindGameViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +82,7 @@
 		19378FAB248D50F000E3EBF8 /* ServerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerMessage.swift; sourceTree = "<group>"; };
 		19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedServerMessagePayload.swift; sourceTree = "<group>"; };
 		19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtension.swift; sourceTree = "<group>"; };
-		19378FB6248ED1E300E3EBF8 /* MatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingView.swift; sourceTree = "<group>"; };
+		19378FB6248ED1E300E3EBF8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		19378FB8248ED68900E3EBF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		194AD737248430160085C635 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		196AD63B2482F8E000BF63D7 /* AR-pylos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-pylos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +97,9 @@
 		196AD65C2482F8E200BF63D7 /* AR-pylosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-pylosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		196AD6602482F8E200BF63D7 /* AR_pylosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_pylosUITests.swift; sourceTree = "<group>"; };
 		196AD6622482F8E200BF63D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		198A945C24903D7C006F6D1E /* FindGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGameView.swift; sourceTree = "<group>"; };
+		198A945F24903DE1006F6D1E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		198A946124903E14006F6D1E /* FindGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGameViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,7 @@
 		1905F6F024832A92003059A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				198A945E24903DC7006F6D1E /* UI */,
 				19378FAF248ECB0700E3EBF8 /* Extension */,
 				19378F91248B337200E3EBF8 /* Network */,
 				19378F8C248AF15E00E3EBF8 /* Server */,
@@ -217,17 +224,18 @@
 		19378FB2248ED04C00E3EBF8 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				19378FB3248ED05200E3EBF8 /* Matching */,
+				198A945B24903D69006F6D1E /* FindGame */,
+				19378FB3248ED05200E3EBF8 /* Main */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		19378FB3248ED05200E3EBF8 /* Matching */ = {
+		19378FB3248ED05200E3EBF8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				19378FB6248ED1E300E3EBF8 /* MatchingView.swift */,
+				19378FB6248ED1E300E3EBF8 /* MainView.swift */,
 			);
-			path = Matching;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		194AD736248430160085C635 /* Frameworks */ = {
@@ -294,6 +302,23 @@
 				196AD6622482F8E200BF63D7 /* Info.plist */,
 			);
 			path = "AR-pylosUITests";
+			sourceTree = "<group>";
+		};
+		198A945B24903D69006F6D1E /* FindGame */ = {
+			isa = PBXGroup;
+			children = (
+				198A945C24903D7C006F6D1E /* FindGameView.swift */,
+				198A946124903E14006F6D1E /* FindGameViewModel.swift */,
+			);
+			path = FindGame;
+			sourceTree = "<group>";
+		};
+		198A945E24903DC7006F6D1E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				198A945F24903DE1006F6D1E /* Router.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -464,13 +489,16 @@
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
-				19378FB7248ED1E400E3EBF8 /* MatchingView.swift in Sources */,
+				19378FB7248ED1E400E3EBF8 /* MainView.swift in Sources */,
+				198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */,
 				19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				19378FAE248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift in Sources */,
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
+				198A946024903DE1006F6D1E /* Router.swift in Sources */,
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
+				198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */,
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
 				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
