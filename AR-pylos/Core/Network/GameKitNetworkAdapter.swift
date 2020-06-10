@@ -9,6 +9,12 @@
 //Low level interface to find and handle connection
 import Foundation
 
+protocol CommunicatorAdapter {
+    var outMessages: PublishRelay<Data> { get } //Messages to send to others
+    var inMessages: PublishSubject<Data> { get } //Messages received from others
+    
+    func findMatch() -> Observable<Bool>
+}
 
 class GameKitNetworkAdapter: CommunicatorAdapter {
     

@@ -31,7 +31,7 @@ struct FindGameView: View {
                         self.viewModel.start()
                     }
                     Button("Find via Game center") {
-                        //self.startNewGame = true
+                        self.viewModel.start()
                     }
                 })
             })
@@ -39,9 +39,9 @@ struct FindGameView: View {
             return AnyView(NavigationView {
                 Text("looking for teammate")
             })
-        case .gameCenter(let str):
+        case .gameCenter:
             return AnyView(NavigationView {
-                Text("looking for teammate \(str)")
+                Text("looking for teammate...")
             })
         }
     }

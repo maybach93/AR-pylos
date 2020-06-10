@@ -27,7 +27,6 @@ class GameMatchingCoordinator {
     
     private let disposeBag = DisposeBag()
 
-    private var asHost: Bool?
     var communicator: CommunicatorAdapter
     
     init(connectionType: ConnectionType) {
@@ -39,41 +38,40 @@ class GameMatchingCoordinator {
         }
     }
     
-    func match(asHost: Bool) {
-        self.asHost = asHost
-        communicator.findMatch().subscribe(onNext: { (result) in
-            self.foundGame()
-        }, onError: { (error) in
-            
-        }, onCompleted: {
-        
-            }, onDisposed: nil).disposed(by: disposeBag)
+    func findGame() -> Observable<Bool> {
+        return self.communicator.findMatch().flatMap({ _ in self.foundGame() })
     }
     
-    func foundGame() {
-        let challenge = GameStartChallengeModel()
-        guard let challengeData = try? JSONEncoder().encode(challenge) else { return }
-        communicator.outMessages.accept(challengeData)
-        communicator.inMessages.subscribe { [weak self] (event) in
-            guard let self = self else { return }
-            switch event {
-            case .next(let responseData):
-                guard let chanllengeResponseModel = try? JSONDecoder().decode(GameStartChallengeModel.self, from: responseData) else { return }
-
-                let coordinator = GameCoordinator()
-                if challenge.time > chanllengeResponseModel.time  {
-                    let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
-                    
-                    GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                }
-                else {
-                    GameProcess.instance.host(server: RemoteServerBridge(coordinator: coordinator))
-                }
-            case .error(_):
-                break
-            case .completed:
-                break
+    private func foundGame() -> Observable<Bool> {
+        return Observable.create { (observer) -> Disposable in
+            let challenge = GameStartChallengeModel()
+            guard let challengeData = try? JSONEncoder().encode(challenge) else {
+                observer.onCompleted()
+                return Disposables.create {}
             }
-        }.disposed(by: disposeBag)
+            self.communicator.outMessages.accept(challengeData)
+            self.communicator.inMessages.subscribe { [weak self] (event) in
+                guard let self = self else { return }
+                switch event {
+                case .next(let responseData):
+                    guard let chanllengeResponseModel = try? JSONDecoder().decode(GameStartChallengeModel.self, from: responseData) else { return }
+
+                    let coordinator = GameCoordinator()
+                    if challenge.time > chanllengeResponseModel.time  {
+                        let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
+                        
+                        GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
+                    }
+                    else {
+                        GameProcess.instance.host(server: RemoteServerBridge(coordinator: coordinator))
+                    }
+                case .error(_):
+                    break
+                case .completed:
+                    break
+                }
+            }.disposed(by: self.disposeBag)
+            return Disposables.create {}
+        }
     }
 }

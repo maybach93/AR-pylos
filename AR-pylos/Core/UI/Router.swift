@@ -8,12 +8,13 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 enum Controllers {
     case main
     case game
     case find(FindGameViewModel)
-    case prepare
+    case rootView(AnyView)
 }
 
 final class Router: ObservableObject {

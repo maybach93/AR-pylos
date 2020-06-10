@@ -23,14 +23,24 @@ struct MainView: View {
         case .main:
             return AnyView(NavigationView {
                 HStack {
+                    NavigationLink(destination: FindGameView(viewModel: FindGameViewModel()), isActive: self.$startNewGame) {
+                        EmptyView()
+                    }.isDetailLink(false)
                     Button("start a new game") {
-                        self.router.firstController = .find(FindGameViewModel())
+                        self.startNewGame = true
+//                        self.router.firstController = .rootView(AnyView(FindGameView(viewModel: FindGameViewModel())))
                     }
+                }.onAppear {
+                    self.startNewGame = false
                 }
             })
         case .find(let findGameViewModel):
             return AnyView(NavigationView {
                 FindGameView(viewModel: findGameViewModel)
+            })
+        case .rootView(let view):
+            return AnyView(NavigationView {
+                view
             })
         default:
             return AnyView(NavigationView {

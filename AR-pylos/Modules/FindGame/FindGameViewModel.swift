@@ -13,12 +13,18 @@ class FindGameViewModel: ObservableObject {
     
     @Published private(set) var state: State = .initial
 
-    private var matchingCoordinator: GameMatchingCoordinator? 
+    private let disposeBag = DisposeBag()
+    private var matchingCoordinator: GameMatchingCoordinator?
+    
     init() {
         
     }
     func start() {
-        state = .gameCenter("test")
+        self.matchingCoordinator = GameMatchingCoordinator(connectionType: .gameKit)
+        state = .gameCenter
+        self.matchingCoordinator?.findGame().subscribe(onNext: { (obs) in
+            print("ll")
+            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
 }
 
@@ -26,6 +32,6 @@ extension FindGameViewModel {
     enum State {
         case initial
         case bluetooth
-        case gameCenter(String)
+        case gameCenter
     }
 }
