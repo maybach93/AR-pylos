@@ -19,27 +19,28 @@ struct MainView: View {
         
     }
     var body: some View {
-        NavigationView {
-            HStack(content: {
-                
-                if router.firstController == .main {
-                    NavigationLink(destination: FindGameView(viewModel: FindGameViewModel()), isActive: self.$startNewGame) {
-                        EmptyView()
-                    }.isDetailLink(false)
+        switch router.firstController {
+        case .main:
+            return AnyView(NavigationView {
+                HStack {
                     Button("start a new game") {
-                        self.startNewGame = true
-                    }.transition(.opacity)
+                        self.router.firstController = .find(FindGameViewModel())
+                    }
                 }
-                else if router.firstController == .prepare {
-                    
+            })
+        case .find(let findGameViewModel):
+            return AnyView(NavigationView {
+                FindGameView(viewModel: findGameViewModel)
+            })
+        default:
+            return AnyView(NavigationView {
+                NavigationLink(destination: FindGameView(viewModel: FindGameViewModel()), isActive: self.$startNewGame) {
+                    EmptyView()
+                }.isDetailLink(false)
+                Button("start a new game") {
+                    self.startNewGame = true
                 }
-            
-                    
-            }).onReceive(router.popToRoot) { (out) in
-              //  self.openDetails = false
-            }.onAppear {
-                self.startNewGame = false
-            }
+            })
         }
     }
 }

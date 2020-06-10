@@ -9,9 +9,10 @@
 import Foundation
 import Combine
 
-enum Controllers: Equatable {
+enum Controllers {
     case main
     case game
+    case find(FindGameViewModel)
     case prepare
 }
 

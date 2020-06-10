@@ -11,15 +11,21 @@ import Foundation
 
 class FindGameViewModel: ObservableObject {
     
+    @Published private(set) var state: State = .initial
+
     private var matchingCoordinator: GameMatchingCoordinator? 
     init() {
         
+    }
+    func start() {
+        state = .gameCenter("test")
     }
 }
 
 extension FindGameViewModel {
     enum State {
         case initial
-        case 
+        case bluetooth
+        case gameCenter(String)
     }
 }

@@ -16,21 +16,37 @@ struct FindGameView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var router: Router
     @ObservedObject var viewModel: FindGameViewModel = FindGameViewModel()
-    @State private var startNewGame: Bool = false
+    
     
     init(viewModel: FindGameViewModel) {
         self.viewModel = viewModel
     }
     
+    private var content: some View {
+        switch viewModel.state {
+        case .initial:
+            return AnyView(NavigationView {
+                HStack(content: {
+                    Button("Game via bluetooth") {
+                        self.viewModel.start()
+                    }
+                    Button("Find via Game center") {
+                        //self.startNewGame = true
+                    }
+                })
+            })
+        case .bluetooth:
+            return AnyView(NavigationView {
+                Text("looking for teammate")
+            })
+        case .gameCenter(let str):
+            return AnyView(NavigationView {
+                Text("looking for teammate \(str)")
+            })
+        }
+    }
     var body: some View {
-        HStack(content: {
-            Button("Game via bluetooth") {
-                self.startNewGame = true
-            }
-            Button("Find via Game center") {
-                self.startNewGame = true
-            }
-        })
+        return content
     }
 }
 
