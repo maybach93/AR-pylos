@@ -61,9 +61,11 @@ class GameMatchingCoordinator {
                         let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
                         
                         GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
+                        observer.onNext(true)
                     }
                     else {
                         GameProcess.instance.host(server: RemoteServerBridge(coordinator: coordinator))
+                        observer.onNext(false)
                     }
                 case .error(_):
                     break

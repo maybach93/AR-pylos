@@ -7,23 +7,23 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 class FindGameViewModel: ObservableObject {
-    
+    var router: Router
     @Published private(set) var state: State = .initial
-
     private let disposeBag = DisposeBag()
     private var matchingCoordinator: GameMatchingCoordinator?
     
-    init() {
-        
+    init(router: Router) {
+        self.router = router
     }
     func start() {
         self.matchingCoordinator = GameMatchingCoordinator(connectionType: .gameKit)
         state = .gameCenter
-        self.matchingCoordinator?.findGame().subscribe(onNext: { (obs) in
-            print("ll")
+        self.matchingCoordinator?.findGame().subscribe(onNext: { (isHost) in
+            
+            self.router.firstController = .game
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
 }

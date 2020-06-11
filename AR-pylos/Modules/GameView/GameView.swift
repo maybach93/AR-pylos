@@ -1,8 +1,8 @@
 //
-//  FindGameView.swift
+//  GameView.swift
 //  AR-pylos
 //
-//  Created by Vitalii Poponov on 6/10/20.
+//  Created by Vitalii Poponov on 6/11/20.
 //  Copyright © 2020 Vitalii Poponov. All rights reserved.
 //
 
@@ -11,14 +11,14 @@ import SwiftUI
 import Combine
 
 
-struct FindGameView: View {
+struct GameView: View {
     @EnvironmentObject var router: Router
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @ObservedObject var viewModel: FindGameViewModel
+    @ObservedObject var viewModel: GameViewModel
     
     
-    init(viewModel: FindGameViewModel) {
+    init(viewModel: GameViewModel) {
         self.viewModel = viewModel
     }
     
@@ -27,21 +27,10 @@ struct FindGameView: View {
         case .initial:
             return AnyView(NavigationView {
                 HStack(content: {
-                    Button("Game via bluetooth") {
-                        self.viewModel.start()
-                    }
-                    Button("Find via Game center") {
+                    Button("Game View") {
                         self.viewModel.start()
                     }
                 })
-            })
-        case .bluetooth:
-            return AnyView(NavigationView {
-                Text("looking for teammate")
-            })
-        case .gameCenter:
-            return AnyView(NavigationView {
-                Text("looking for teammate...")
             })
         }
     }

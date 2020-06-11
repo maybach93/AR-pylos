@@ -21,13 +21,14 @@ protocol GameCoordinatorOutputProtocol {
     var playerAction: PublishSubject<Void> { get }
 }
 
+
+
 class GameCoordinator: GameCoordinatorBridgeProtocol {
     
     private let disposeBag = DisposeBag()
 
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
-    var otherPlayersActions: Observable<String> = Observable<String>.just("")
     
     //MARK: - Output
     

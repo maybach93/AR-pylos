@@ -13,8 +13,7 @@ import Combine
 struct MainView: View {
     @EnvironmentObject var router: Router
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var startNewGame: Bool = false
-    
+
     init() {
         
     }
@@ -23,15 +22,10 @@ struct MainView: View {
         case .main:
             return AnyView(NavigationView {
                 HStack {
-                    NavigationLink(destination: FindGameView(viewModel: FindGameViewModel()), isActive: self.$startNewGame) {
-                        EmptyView()
+                    NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
+                        Text("start a new game")
                     }.isDetailLink(false)
-                    Button("start a new game") {
-                        self.startNewGame = true
-//                        self.router.firstController = .rootView(AnyView(FindGameView(viewModel: FindGameViewModel())))
-                    }
-                }.onAppear {
-                    self.startNewGame = false
+
                 }
             })
         case .find(let findGameViewModel):
@@ -42,14 +36,9 @@ struct MainView: View {
             return AnyView(NavigationView {
                 view
             })
-        default:
+        case .game:
             return AnyView(NavigationView {
-                NavigationLink(destination: FindGameView(viewModel: FindGameViewModel()), isActive: self.$startNewGame) {
-                    EmptyView()
-                }.isDetailLink(false)
-                Button("start a new game") {
-                    self.startNewGame = true
-                }
+                PrepareGameView(viewModel: PrepareGameViewModel(router: router))
             })
         }
     }
