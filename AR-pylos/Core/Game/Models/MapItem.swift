@@ -9,10 +9,12 @@
 import Foundation
 
 protocol MapItemProtocol: class {
+    var id: String { get }
     var owner: Player { get }
 }
 
-class Ball: MapItemProtocol {
+class Ball: MapItemProtocol, Codable {
+    var id: String = UUID().uuidString
     unowned let owner: Player
     
     init(owner: Player) {
@@ -20,6 +22,6 @@ class Ball: MapItemProtocol {
     }
     
     static func == (lhs: Ball, rhs: Ball) -> Bool {
-        return lhs === rhs
+        return lhs.id == rhs.id
     }
 }

@@ -10,12 +10,18 @@
 //Low level interface to find and handle connection
 import Foundation
 
-protocol CommunicatorAdapter {
-    func findMatch(asHost: Bool)
-}
-
 class BluetoothNetworkAdapter: CommunicatorAdapter {
-    func findMatch(asHost: Bool) {
-        
+    
+    private let disposeBag = DisposeBag()
+
+    var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
+    var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
+    
+    func findMatch() -> Observable<Bool> {
+        //DO NOT CHANGE BLUETOOTH YET
+        return Observable.create { (observer) -> Disposable in
+            observer.onNext(true)
+            return Disposables.create {}
+        }
     }
 }

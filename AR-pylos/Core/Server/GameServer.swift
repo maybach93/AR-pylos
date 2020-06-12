@@ -16,10 +16,50 @@ protocol GameServerProtocol {
     
 }
 
-class GameServer: GameServerProtocol {
-    private var gameCoordinators: [GameCoordinatorBridgeProtocol]
+protocol GameServerContext: class {
+    var gameCoordinators: [Player: GameCoordinatorBridgeProtocol] { get }
+    var players: [Player] { get }
+    var currentPlayer: Player? { get set }
+    var game: Game { get }
+    
+    func stopServer()
+}
+
+class GameServer: GameServerProtocol, GameServerContext {
+    internal var game: Game
+    internal var gameCoordinators: [Player: GameCoordinatorBridgeProtocol]
+    internal var players: [Player] {
+        return Array(gameCoordinators.keys)
+    }
+    internal weak var currentPlayer: Player?
+
+    private let disposeBag = DisposeBag()
+
+    lazy private var gameState: BaseGameState = {
+        let state = BaseGameState(context: self)
+        return state
+    }()
     
     init(gameCoordinators: [GameCoordinatorBridgeProtocol]) {
-        self.gameCoordinators = gameCoordinators
+        let game = Game()
+        var gameCoordinatorsDict: [Player: GameCoordinatorBridgeProtocol] = [:]
+        for (index, gameCoordinator) in gameCoordinators.enumerated() {
+            let player = game.players[index]
+            gameCoordinatorsDict[player] = gameCoordinator
+        }
+        self.gameCoordinators = gameCoordinatorsDict
+        self.game = game
+        self.executeNextState()
+    }
+    
+    func executeNextState() {
+        self.gameState = self.gameState.nextState()
+        self.gameState.readyForNextStart?.subscribe(onNext: { [weak self] (isReady) in
+            self?.executeNextState()
+            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    func stopServer() {
+        GameProcess.instance.terminateServer()
     }
 }

@@ -8,8 +8,17 @@
 
 import Foundation
 
-class Player: Equatable, Hashable {
-    var id: String = UUID().uuidString
+class Player: Equatable, Hashable, Codable {
+    var id: String
+    var playerName: String?
+    
+    convenience init() {
+        self.init(id: UUID().uuidString)
+    }
+    
+    init(id: String) {
+        self.id = id
+    }
     
     static func == (lhs: Player, rhs: Player) -> Bool {
         lhs.id == rhs.id
