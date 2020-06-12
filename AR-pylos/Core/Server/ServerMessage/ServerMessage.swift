@@ -11,6 +11,7 @@ import Foundation
 enum ServerMessageType: Int, Codable {
     case initiated = 0
     case gameConfig
+    case playerTurn
 }
 
 protocol ServerMessagePayloadProtocol: Codable {
@@ -38,6 +39,8 @@ struct ServerMessage: Codable {
             payload = try container.decode(InitiatedServerMessagePayload.self, forKey: .payload)
         case .gameConfig:
             payload = try container.decode(GameConfigServerPayload.self, forKey: .payload)
+        case .playerTurn:
+            payload = try container.decode(PlayerTurnServerPayload.self, forKey: .payload)
         }
     }
     
@@ -49,6 +52,8 @@ struct ServerMessage: Codable {
             try? container.encode(payload as? InitiatedServerMessagePayload, forKey: .payload)
         case .gameConfig:
             try? container.encode(payload as? GameConfigServerPayload, forKey: .payload)
+        case .playerTurn:
+            try? container.encode(payload as? PlayerTurnServerPayload, forKey: .payload)
         }
     }
 }

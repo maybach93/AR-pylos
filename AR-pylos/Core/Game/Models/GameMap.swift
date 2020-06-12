@@ -7,7 +7,7 @@
 //
 import Foundation
 
-struct Coordinate: Equatable {
+struct Coordinate: Equatable, Codable, Hashable {
     var x: Int
     var y: Int
     var z: Int

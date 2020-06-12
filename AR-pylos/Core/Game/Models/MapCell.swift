@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MapCellProtocol {
+protocol MapCellProtocol: class {
     var allParents: [MapCellProtocol] { get }
     var cellParents: [MapCellProtocol] { get }
     
@@ -17,6 +17,7 @@ protocol MapCellProtocol {
     var childDownLeft: MapCellProtocol? { get set }
     var childDownRight: MapCellProtocol? { get set }
     var child: MapCellProtocol? { get }
+    var cellChilds: [MapCellProtocol] { get }
     
     var isAvailableToFill: Bool { get }
     var isMovable: Bool { get }
@@ -56,6 +57,10 @@ class RootMapCell: MapCellProtocol {
     }
     var cellParents: [MapCellProtocol] {
         return []
+    }
+    
+    var cellChilds: [MapCellProtocol] {
+        return [childUpLeft, childUpRight, childDownLeft, childUpRight].compactMap({ $0 })
     }
     
     required init() {
@@ -108,6 +113,10 @@ class MapCell: MapCellProtocol {
     }
     var cellParents: [MapCellProtocol] {
         return [parentUpLeft, parentUpRight, parentDownLeft, parentDownRight].compactMap({ $0 })
+    }
+    
+    var cellChilds: [MapCellProtocol] {
+        return [childUpLeft, childUpRight, childDownLeft, childUpRight].compactMap({ $0 })
     }
     
     subscript(z: Int) -> MapCellProtocol? {
