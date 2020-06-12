@@ -14,10 +14,6 @@ class FinishedGameState: BaseGameState {
         return .finished
     }
     
-    deinit {
-        print("")
-    }
-    
     override func movingFromPreviousState() {
         self.context.stopServer()
     }

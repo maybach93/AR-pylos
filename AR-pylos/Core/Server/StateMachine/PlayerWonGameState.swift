@@ -29,7 +29,7 @@ class PlayerWonGameState: BaseGameState {
     }
     
     override func nextState() -> BaseGameState {
-        let state = PlayerFinishedTurnGameState(context: context)
+        let state = FinishedGameState(context: context)
         state.movingFromPreviousState()
         return state
     }

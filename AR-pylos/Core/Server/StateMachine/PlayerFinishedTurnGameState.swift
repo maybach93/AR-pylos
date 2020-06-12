@@ -40,7 +40,7 @@ class PlayerFinishedTurnGameState: BaseGameState {
                 observer.onNext(true)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
-        })
+        }).delay(RxTimeInterval.seconds(5), scheduler: MainScheduler.instance)
     }
     
     override func nextState() -> BaseGameState {

@@ -32,7 +32,7 @@ class GameServer: GameServerProtocol, GameServerContext {
         return Array(gameCoordinators.keys)
     }
     internal weak var currentPlayer: Player?
-    
+
     private let disposeBag = DisposeBag()
 
     lazy private var gameState: BaseGameState = {

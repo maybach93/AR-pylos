@@ -44,8 +44,9 @@ class PlayerTurnGameState: BaseGameState {
                 self.context.gameCoordinators[player]?.serverStateMessages.accept(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
             }
             observer.onNext(true)
+            
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
+        })
     }
     
     override func nextState() -> BaseGameState {
