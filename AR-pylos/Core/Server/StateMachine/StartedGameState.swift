@@ -14,16 +14,18 @@ class StartedGameState: BaseGameState {
         return .started
     }
     
-    func movingFrom(previousState: BaseGameState) {
-        self.context.currentPlayer = self.context.gameCoordinators.keys.first
-        self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .gameConfig, payload: GameConfigServerPayload(player: $0, map: self.context.game.map.map, stashedItems: self.context.game.stashedItems))) })
-        self.nextState()
-        
+    override func movingFromPreviousState() {
+        self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
+            guard let self = self else { return Disposables.create {} }
+            self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .gameConfig, payload: GameConfigServerPayload(player: $0, map: self.context.game.map.map, stashedItems: self.context.game.stashedItems))) })
+            observer.onNext(true)
+            return Disposables.create {}
+        })
     }
     
     override func nextState() -> BaseGameState {
         let state = PlayerTurnGameState(context: context)
-        state.movingFrom(previousState: self)
+        state.movingFromPreviousState()
         return state
     }
 }

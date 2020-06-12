@@ -20,6 +20,10 @@ class GameProcess {
         self.gameCoordinator = nil
     }
     
+    func terminateServer() {
+        self.server = nil
+    }
+    
     func host(server: GameServerProtocol) {
         self.server = server
     }

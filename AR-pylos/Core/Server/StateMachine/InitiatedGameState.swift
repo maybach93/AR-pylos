@@ -13,25 +13,30 @@ class InitiatedGameState: BaseGameState {
     override var state: GameStateMachine {
         return .initiated
     }
-    
-    func movingFrom(previousState: BaseGameState) {
-        Observable.zip(self.context.gameCoordinators.values.map({ $0.playerStateMessage.asObservable() })).subscribe({ (event) in
-            switch event {
-            case .next(let response):
-                for player in response {
-                    self.context.gameCoordinators.keys.first(where: { $0.id == player.payload.playerId })?.playerName = (player.payload as? InitiatedPlayerMessagePayload)?.playerName
+  
+    override func movingFromPreviousState() {
+        self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
+            guard let self = self else { return Disposables.create {} }
+            Observable.zip(self.context.gameCoordinators.values.map({ $0.playerStateMessage.asObservable() })).subscribe({ [weak self] (event) in
+                switch event {
+                case .next(let response):
+                    for player in response {
+                        self?.context.gameCoordinators.keys.first(where: { $0 == player.payload.player })?.playerName = (player.payload as? InitiatedPlayerMessagePayload)?.player.playerName
+                    }
+                    self?.context.currentPlayer = self?.context.gameCoordinators.keys.first
+                    observer.onNext(true)
+                default:
+                    break
                 }
-                self.nextState()
-            default:
-                break
-            }
-            }).disposed(by: disposeBag)
-        self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .initiated, payload: InitiatedServerMessagePayload(playerId: $0.id))) })
+            }).disposed(by: self.disposeBag)
+            self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .initiated, payload: InitiatedServerMessagePayload(player: $0))) })
+            return Disposables.create {}
+        })
     }
     
     override func nextState() -> BaseGameState {
         let state = StartedGameState(context: context)
-        state.movingFrom(previousState: self)
+        state.movingFromPreviousState()
         return state
     }
 }

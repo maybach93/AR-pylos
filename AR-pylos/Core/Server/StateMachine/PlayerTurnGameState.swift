@@ -14,34 +14,43 @@ class PlayerTurnGameState: BaseGameState {
         return .playerTurn
     }
     
-    func movingFrom(previousState: BaseGameState) {
-        guard let oldCurrentPlayer = self.context.currentPlayer else { return }
-        self.context.currentPlayer = self.context.gameCoordinators.keys.map({ $0 as Player }).compactMap({ $0 }).next(current: oldCurrentPlayer )
-        
-        
-        self.context.gameCoordinators.keys.forEach { (player) in
-            let isPlayerTurn = self.context.currentPlayer == player
+    deinit {
+        print("")
+    }
+    
+    override func movingFromPreviousState() {
+        self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
+            guard let self = self else { return Disposables.create {} }
             
-            let availablePoints = self.context.game.map.availablePoints
-            let availableToMove = self.context.game.availableToMove(to: player)
-            var availableToMoveToPlayer: [Coordinate: [Coordinate]] = [:]
+            guard let oldCurrentPlayer = self.context.currentPlayer else { return Disposables.create {} }
+            self.context.currentPlayer = self.context.players.next(current: oldCurrentPlayer )
+            guard let currentPlayer = self.context.currentPlayer else { return Disposables.create {} }
             
-            availableToMove.forEach { (coordinate) in
-                guard let childs = self.context.game.map[coordinate]?.cellChilds else { return }
-                availableToMoveToPlayer[coordinate] = availablePoints.filter({ (coordinateToFilter) -> Bool in
-                    guard let mapCell = self.context.game.map[coordinateToFilter] else { return false }
-                    return !childs.contains(where: { mapCell === $0 })
-                })
+            self.context.players.forEach { (player) in
+                let isPlayerTurn = currentPlayer == player
+                
+                let availablePoints = self.context.game.map.availablePoints
+                let availableToMove = self.context.game.availableToMove(to: player)
+                var availableToMoveToPlayer: [Coordinate: [Coordinate]] = [:]
+                
+                availableToMove.forEach { (coordinate) in
+                    guard let childs = self.context.game.map[coordinate]?.cellChilds else { return }
+                    availableToMoveToPlayer[coordinate] = availablePoints.filter({ (coordinateToFilter) -> Bool in
+                        guard let mapCell = self.context.game.map[coordinateToFilter] else { return false }
+                        return !childs.contains(where: { mapCell === $0 })
+                    })
+                }
+                
+                self.context.gameCoordinators[player]?.serverStateMessages.accept(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
             }
-            
-            self.context.gameCoordinators[player]?.serverStateMessages.accept(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(playerId: player.id, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
-        }
-        
+            observer.onNext(true)
+            return Disposables.create {}
+        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
     }
     
     override func nextState() -> BaseGameState {
-        let state = StartedGameState(context: context)
-        state.movingFrom(previousState: self)
+        let state = PlayerFinishedTurnGameState(context: context)
+        state.movingFromPreviousState()
         return state
     }
 }

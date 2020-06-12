@@ -12,6 +12,8 @@ enum ServerMessageType: Int, Codable {
     case initiated = 0
     case gameConfig
     case playerTurn
+    case playerFinishedTurn
+    case playerWon
 }
 
 protocol ServerMessagePayloadProtocol: Codable {
@@ -41,6 +43,10 @@ struct ServerMessage: Codable {
             payload = try container.decode(GameConfigServerPayload.self, forKey: .payload)
         case .playerTurn:
             payload = try container.decode(PlayerTurnServerPayload.self, forKey: .payload)
+        case .playerFinishedTurn:
+            payload = try container.decode(PlayerFinishedTurnServerPayload.self, forKey: .payload)
+        case .playerWon:
+            payload = try container.decode(PlayerWonServerPayload.self, forKey: .payload)
         }
     }
     
@@ -54,6 +60,10 @@ struct ServerMessage: Codable {
             try? container.encode(payload as? GameConfigServerPayload, forKey: .payload)
         case .playerTurn:
             try? container.encode(payload as? PlayerTurnServerPayload, forKey: .payload)
+        case .playerFinishedTurn:
+            try? container.encode(payload as? PlayerFinishedTurnServerPayload, forKey: .payload)
+        case .playerWon:
+            try? container.encode(payload as? PlayerWonServerPayload, forKey: .payload)
         }
     }
 }

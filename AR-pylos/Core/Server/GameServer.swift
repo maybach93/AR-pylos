@@ -21,6 +21,8 @@ protocol GameServerContext: class {
     var players: [Player] { get }
     var currentPlayer: Player? { get set }
     var game: Game { get }
+    
+    func stopServer()
 }
 
 class GameServer: GameServerProtocol, GameServerContext {
@@ -31,8 +33,11 @@ class GameServer: GameServerProtocol, GameServerContext {
     }
     internal weak var currentPlayer: Player?
     
+    private let disposeBag = DisposeBag()
+
     lazy private var gameState: BaseGameState = {
-        return BaseGameState(context: self)
+        let state = BaseGameState(context: self)
+        return state
     }()
     
     init(gameCoordinators: [GameCoordinatorBridgeProtocol]) {
@@ -49,5 +54,12 @@ class GameServer: GameServerProtocol, GameServerContext {
     
     func executeNextState() {
         self.gameState = self.gameState.nextState()
+        self.gameState.readyForNextStart?.subscribe(onNext: { [weak self] (isReady) in
+            self?.executeNextState()
+            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
+    }
+    
+    func stopServer() {
+        GameProcess.instance.terminateServer()
     }
 }

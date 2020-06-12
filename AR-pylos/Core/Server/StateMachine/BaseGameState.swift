@@ -11,12 +11,14 @@ import Foundation
 class BaseGameState {
     
     let disposeBag = DisposeBag()
-
+    
     unowned var context: GameServerContext
+    
+    var readyForNextStart: Observable<Bool>?
     var state: GameStateMachine {
         return .none
     }
-    
+
     //MARK: - Init
     
     init(context: GameServerContext) {
@@ -25,9 +27,13 @@ class BaseGameState {
     
     //MARK: - Public
     
+    func movingFromPreviousState() {
+        
+    }
+    
     func nextState() -> BaseGameState {
         let state = InitiatedGameState(context: context)
-        state.movingFrom(previousState: self)
+        state.movingFromPreviousState()
         return state
     }
 }
