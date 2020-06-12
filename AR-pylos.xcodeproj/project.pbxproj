@@ -58,6 +58,7 @@
 		198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94852493E592006F6D1E /* PlayerWonGameState.swift */; };
 		198A94882493E6AB006F6D1E /* PlayerWonServerPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94872493E6AB006F6D1E /* PlayerWonServerPayload.swift */; };
 		198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94892493E9E9006F6D1E /* FinishedGameState.swift */; };
+		198A948E249429DA006F6D1E /* RxBluetoothKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198A948D249429DA006F6D1E /* RxBluetoothKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		198A94852493E592006F6D1E /* PlayerWonGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWonGameState.swift; sourceTree = "<group>"; };
 		198A94872493E6AB006F6D1E /* PlayerWonServerPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWonServerPayload.swift; sourceTree = "<group>"; };
 		198A94892493E9E9006F6D1E /* FinishedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedGameState.swift; sourceTree = "<group>"; };
+		198A948D249429DA006F6D1E /* RxBluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBluetoothKit.framework; path = Carthage/Build/iOS/RxBluetoothKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				198A948E249429DA006F6D1E /* RxBluetoothKit.framework in Frameworks */,
 				19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */,
 				19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */,
 				194AD738248430160085C635 /* RxSwift.framework in Frameworks */,
@@ -290,6 +293,7 @@
 		194AD736248430160085C635 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				198A948D249429DA006F6D1E /* RxBluetoothKit.framework */,
 				19378F92248B354700E3EBF8 /* GameKit.framework */,
 				19378F7624885D1900E3EBF8 /* RxCocoa.framework */,
 				19378F7524885D1900E3EBF8 /* RxRelay.framework */,
