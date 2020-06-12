@@ -10,11 +10,11 @@ import Foundation
 
 enum PlayerMessageType: Int, Codable {
     case initiated = 0
-    
+    case playerFinishedTurn
 }
 
 protocol PlayerMessagePayloadProtocol: Codable {
-    var playerId: String { get }
+    var player: Player { get }
 }
 
 struct PlayerMessage: Codable {
@@ -36,6 +36,8 @@ struct PlayerMessage: Codable {
         switch type {
         case .initiated:
             payload = try container.decode(InitiatedPlayerMessagePayload.self, forKey: .payload)
+        case .playerFinishedTurn:
+            payload = try container.decode(PlayerFinishedTurnMessagePayload.self, forKey: .payload)
         }
         
     }
@@ -46,6 +48,8 @@ struct PlayerMessage: Codable {
         switch type {
         case .initiated:
             try? container.encode(payload as? InitiatedPlayerMessagePayload, forKey: .payload)
+        case .playerFinishedTurn:
+            try? container.encode(payload as? PlayerFinishedTurnMessagePayload, forKey: .payload)
         }
     }
 }

@@ -27,9 +27,14 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     
     private let disposeBag = DisposeBag()
 
-    private var playerId: String = ""
+    private var player: Player?
+    
     private var map: [[WrappedMapCell]] = []
     private var stashedItems: [Player: [Ball]] = [:]
+    private var myStashedItems: [Ball] {
+        guard let player = self.player else { return [] }
+        return stashedItems[player] ?? []
+    }
     
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
@@ -60,6 +65,9 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         case .gameConfig:
             guard let payload = message.payload as? GameConfigServerPayload else { return }
             self.handleUpdateGameConfig(payload: payload)
+        case .playerTurn:
+            guard let payload = message.payload as? PlayerTurnServerPayload else { return }
+            self.handlePlayerTurn(payload: payload)
         default:
             break
         }
@@ -68,8 +76,9 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
 
 extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
-        self.playerId = payload.playerId
-        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(playerId: self.playerId, playerName: "vitalii")))
+        self.player = payload.player
+        self.player?.playerName = "Vitalii"
+        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
     }
 }
 
@@ -78,5 +87,20 @@ extension GameCoordinator {
         self.map = payload.map
         self.stashedItems = payload.stashedItems
         //Draw UI
+    }
+}
+
+extension GameCoordinator {
+    func handlePlayerTurn(payload: PlayerTurnServerPayload) {
+        guard let player = self.player else { return }
+        if payload.isPlayerTurn {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: player, fromCoordinate: nil, toCoordinate: payload.availablePointsFromStash![0], item: self.myStashedItems[0])))
+            }
+            //We are current player, unlock controls, update ui, wait for action from player
+        }
+        else {
+            //Update ui with waiting screen
+        }
     }
 }

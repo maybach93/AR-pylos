@@ -28,13 +28,13 @@ class WrappedMapCell: Codable {
 }
 
 struct GameConfigServerPayload: ServerMessagePayloadProtocol {
-    var playerId: String
+    var player: Player
     
     var map: [[WrappedMapCell]]
     var stashedItems: [Player: [Ball]]
     
-    init(playerId: String, map: [[MapCellProtocol]], stashedItems: [Player: [MapItemProtocol]]) {
-        self.playerId = playerId
+    init(player: Player, map: [[MapCellProtocol]], stashedItems: [Player: [MapItemProtocol]]) {
+        self.player = player
         self.map = map.map({ $0.map({ WrappedMapCell(cell: $0) })})
         self.stashedItems = stashedItems as? [Player: [Ball]] ?? [:]
     }

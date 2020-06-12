@@ -15,7 +15,7 @@ enum ServerMessageType: Int, Codable {
 }
 
 protocol ServerMessagePayloadProtocol: Codable {
-    var playerId: String { get }
+    var player: Player { get }
 }
 
 struct ServerMessage: Codable {

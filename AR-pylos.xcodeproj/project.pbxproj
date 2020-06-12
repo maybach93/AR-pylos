@@ -52,6 +52,7 @@
 		198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947924930D7A006F6D1E /* PlayerTurnGameState.swift */; };
 		198A947C24930DC6006F6D1E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947B24930DC6006F6D1E /* ArrayExtension.swift */; };
 		198A947E24931507006F6D1E /* PlayerTurnServerPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947D24931507006F6D1E /* PlayerTurnServerPayload.swift */; };
+		198A94802493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947F2493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		198A947924930D7A006F6D1E /* PlayerTurnGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTurnGameState.swift; sourceTree = "<group>"; };
 		198A947B24930DC6006F6D1E /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		198A947D24931507006F6D1E /* PlayerTurnServerPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTurnServerPayload.swift; sourceTree = "<group>"; };
+		198A947F2493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFinishedTurnMessagePayload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +387,7 @@
 			children = (
 				198A94712491B370006F6D1E /* PlayerMessage.swift */,
 				198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */,
+				198A947F2493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift */,
 			);
 			path = PlayerMessages;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
 				198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */,
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
+				198A94802493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift in Sources */,
 				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
 				198A94742491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift in Sources */,

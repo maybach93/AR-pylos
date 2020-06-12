@@ -16,7 +16,7 @@ class StartedGameState: BaseGameState {
     
     func movingFrom(previousState: BaseGameState) {
         self.context.currentPlayer = self.context.gameCoordinators.keys.first
-        self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .gameConfig, payload: GameConfigServerPayload(playerId: $0.id, map: self.context.game.map.map, stashedItems: self.context.game.stashedItems))) })
+        self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .gameConfig, payload: GameConfigServerPayload(player: $0, map: self.context.game.map.map, stashedItems: self.context.game.stashedItems))) })
         self.nextState()
         
     }

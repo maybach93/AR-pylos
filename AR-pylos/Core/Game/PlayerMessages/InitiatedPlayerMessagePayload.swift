@@ -9,6 +9,5 @@
 import Foundation
 
 struct InitiatedPlayerMessagePayload: PlayerMessagePayloadProtocol {
-    var playerId: String
-    var playerName: String
+    var player: Player
 }
