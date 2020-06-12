@@ -12,7 +12,7 @@ protocol MapItemProtocol: class {
     var owner: Player { get }
 }
 
-class Ball: MapItemProtocol {
+class Ball: MapItemProtocol, Codable {
     unowned let owner: Player
     
     init(owner: Player) {

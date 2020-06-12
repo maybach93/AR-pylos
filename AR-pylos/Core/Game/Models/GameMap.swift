@@ -18,6 +18,7 @@ protocol GameMapProtocol {
     var filledPoints: [Coordinate] { get }
     var allPoints: [Coordinate] { get }
     var availableToMovePoints: [Coordinate] { get }
+    var map: [[MapCellProtocol]] { get }
     subscript(coordinate: Coordinate) -> MapCellProtocol? { get }
     
     func fill(coordinate: Coordinate, item: MapItemProtocol?) -> Bool
@@ -25,7 +26,7 @@ protocol GameMapProtocol {
 
 struct GameMap: GameMapProtocol {
     
-    private var map: [[MapCellProtocol]]
+    private(set) var map: [[MapCellProtocol]]
     
     var availablePoints: [Coordinate] {
         return allPoints.filter({ self[$0]?.isAvailableToFill == true  })

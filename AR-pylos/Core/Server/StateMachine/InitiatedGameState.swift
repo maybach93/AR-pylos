@@ -21,10 +21,17 @@ class InitiatedGameState: BaseGameState {
                 for player in response {
                     self.context.gameCoordinators.keys.first(where: { $0.id == player.payload.playerId })?.playerName = (player.payload as? InitiatedPlayerMessagePayload)?.playerName
                 }
+                self.nextState()
             default:
                 break
             }
             }).disposed(by: disposeBag)
         self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .initiated, payload: InitiatedServerMessagePayload(playerId: $0.id))) })
+    }
+    
+    override func nextState() -> BaseGameState {
+        let state = StartedGameState(context: context)
+        state.movingFrom(previousState: self)
+        return state
     }
 }

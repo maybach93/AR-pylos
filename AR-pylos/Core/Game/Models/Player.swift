@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Player: Equatable, Hashable {
+class Player: Equatable, Hashable, Codable {
     var id: String = UUID().uuidString
     var playerName: String?
     

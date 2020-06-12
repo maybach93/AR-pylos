@@ -18,7 +18,7 @@ protocol GameServerProtocol {
 
 protocol GameServerContext: class {
     var gameCoordinators: [Player: GameCoordinatorBridgeProtocol] { get }
-    var currentPlayer: Player? { get }
+    var currentPlayer: Player? { get set }
     var game: Game { get }
 }
 

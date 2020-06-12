@@ -28,6 +28,8 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     private let disposeBag = DisposeBag()
 
     private var playerId: String = ""
+    private var map: [[WrappedMapCell]] = []
+    private var stashedItems: [Player: [Ball]] = [:]
     
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
@@ -55,10 +57,12 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         case .initiated:
             guard let payload = message.payload as? InitiatedServerMessagePayload else { return }
             handleInitiatedState(payload: payload)
+        case .gameConfig:
+            guard let payload = message.payload as? GameConfigServerPayload else { return }
+            self.handleUpdateGameConfig(payload: payload)
         default:
             break
         }
-        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(playerId: "a", playerName: "vitalii")))
     }
 }
 
@@ -66,5 +70,13 @@ extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
         self.playerId = payload.playerId
         self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(playerId: self.playerId, playerName: "vitalii")))
+    }
+}
+
+extension GameCoordinator {
+    func handleUpdateGameConfig(payload: GameConfigServerPayload) {
+        self.map = payload.map
+        self.stashedItems = payload.stashedItems
+        //Draw UI
     }
 }

@@ -16,6 +16,7 @@ protocol MapCellProtocol {
     var childUpRight: MapCellProtocol? { get set }
     var childDownLeft: MapCellProtocol? { get set }
     var childDownRight: MapCellProtocol? { get set }
+    var child: MapCellProtocol? { get }
     
     var isAvailableToFill: Bool { get }
     var isMovable: Bool { get }
@@ -26,7 +27,7 @@ protocol MapCellProtocol {
 }
 
 class RootMapCell: MapCellProtocol {
-    
+
     var item: MapItemProtocol?
     
     var childUpLeft: MapCellProtocol?
@@ -57,7 +58,7 @@ class RootMapCell: MapCellProtocol {
         return []
     }
     
-    init() {
+    required init() {
         
     }
     
@@ -70,6 +71,7 @@ class RootMapCell: MapCellProtocol {
 }
 
 class MapCell: MapCellProtocol {
+    
     var item: MapItemProtocol?
     var childUpLeft: MapCellProtocol?
     var childUpRight: MapCellProtocol?

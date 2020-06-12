@@ -47,6 +47,10 @@
 		198A946F2491AE1E006F6D1E /* DebugOpponentInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946E2491AE1E006F6D1E /* DebugOpponentInstance.swift */; };
 		198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94712491B370006F6D1E /* PlayerMessage.swift */; };
 		198A94742491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */; };
+		198A94762493008C006F6D1E /* StartedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94752493008C006F6D1E /* StartedGameState.swift */; };
+		198A9478249301AC006F6D1E /* GameConfigServerPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A9477249301AC006F6D1E /* GameConfigServerPayload.swift */; };
+		198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947924930D7A006F6D1E /* PlayerTurnGameState.swift */; };
+		198A947C24930DC6006F6D1E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A947B24930DC6006F6D1E /* ArrayExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +118,10 @@
 		198A946E2491AE1E006F6D1E /* DebugOpponentInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugOpponentInstance.swift; sourceTree = "<group>"; };
 		198A94712491B370006F6D1E /* PlayerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMessage.swift; sourceTree = "<group>"; };
 		198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedPlayerMessagePayload.swift; sourceTree = "<group>"; };
+		198A94752493008C006F6D1E /* StartedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartedGameState.swift; sourceTree = "<group>"; };
+		198A9477249301AC006F6D1E /* GameConfigServerPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfigServerPayload.swift; sourceTree = "<group>"; };
+		198A947924930D7A006F6D1E /* PlayerTurnGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTurnGameState.swift; sourceTree = "<group>"; };
+		198A947B24930DC6006F6D1E /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +223,8 @@
 			children = (
 				19378FA6248D488200E3EBF8 /* BaseGameState.swift */,
 				19378FA8248D4B5A00E3EBF8 /* InitiatedGameState.swift */,
+				198A94752493008C006F6D1E /* StartedGameState.swift */,
+				198A947924930D7A006F6D1E /* PlayerTurnGameState.swift */,
 			);
 			path = StateMachine;
 			sourceTree = "<group>";
@@ -224,6 +234,7 @@
 			children = (
 				19378FAB248D50F000E3EBF8 /* ServerMessage.swift */,
 				19378FAD248D5AE000E3EBF8 /* InitiatedServerMessagePayload.swift */,
+				198A9477249301AC006F6D1E /* GameConfigServerPayload.swift */,
 			);
 			path = ServerMessage;
 			sourceTree = "<group>";
@@ -232,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				19378FB0248ECB2500E3EBF8 /* CodableExtension.swift */,
+				198A947B24930DC6006F6D1E /* ArrayExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -535,10 +547,13 @@
 				19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */,
 				19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */,
 				198A94652491A3F8006F6D1E /* PrepareGameView.swift in Sources */,
+				198A947C24930DC6006F6D1E /* ArrayExtension.swift in Sources */,
+				198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */,
 				198A946C2491AB9B006F6D1E /* GameViewModel.swift in Sources */,
 				19378F97248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
 				19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */,
+				198A9478249301AC006F6D1E /* GameConfigServerPayload.swift in Sources */,
 				198A946A2491AB92006F6D1E /* GameView.swift in Sources */,
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
 				198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */,
@@ -556,6 +571,7 @@
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
 				198A946024903DE1006F6D1E /* Router.swift in Sources */,
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
+				198A94762493008C006F6D1E /* StartedGameState.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
 				198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */,
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
