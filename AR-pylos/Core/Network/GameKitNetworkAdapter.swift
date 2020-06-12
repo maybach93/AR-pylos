@@ -8,39 +8,37 @@
 
 //Low level interface to find and handle connection
 import Foundation
+import GameKit
 
 protocol CommunicatorAdapter {
     var outMessages: PublishRelay<Data> { get } //Messages to send to others
     var inMessages: PublishSubject<Data> { get } //Messages received from others
     
-    func findMatch() -> Observable<Bool>
+    func findMatch() -> Single<Bool>
 }
 
 class GameKitNetworkAdapter: CommunicatorAdapter {
     
     private let disposeBag = DisposeBag()
-
+    
+    private let localPlayer = GKLocalPlayer()
+    
     var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
     var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
     
-    func findMatch() -> Observable<Bool> {
-        return Observable<Bool>.create { (observer) -> Disposable in
+    init() {
+        localPlayer.authenticateHandler = { (vc, error) in
+        }
+    }
+    
+    func findMatch() -> Single<Bool> {
+        return Single<Bool>.create { (observer) -> Disposable in
             self.createBindings()
             return Disposables.create {}
         }
     }
     
     func createBindings() {
-        outMessages.subscribe { (event) in
-            switch event {
-                
-            case .next(let message):
-                print("")
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+        //This feature is not yet supported
     }
 }

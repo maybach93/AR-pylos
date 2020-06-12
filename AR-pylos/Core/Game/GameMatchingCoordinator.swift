@@ -33,20 +33,20 @@ class GameMatchingCoordinator {
         switch connectionType {
         case .gameKit:
             communicator = GameKitNetworkAdapter()
-        default:
+        case .bluetooth:
             communicator = BluetoothNetworkAdapter()
         }
     }
     
-    func findGame() -> Observable<Bool> {
+    func findGame() -> Single<Bool> {
         return self.communicator.findMatch().flatMap({ _ in self.foundGame() })
     }
     
-    private func foundGame() -> Observable<Bool> {
-        return Observable.create { (observer) -> Disposable in
+    private func foundGame() -> Single<Bool> {
+        return Single.create { (observer) -> Disposable in
             let challenge = GameStartChallengeModel()
             guard let challengeData = try? JSONEncoder().encode(challenge) else {
-                observer.onCompleted()
+                observer(.success(false))
                 return Disposables.create {}
             }
             self.communicator.outMessages.accept(challengeData)
@@ -61,11 +61,11 @@ class GameMatchingCoordinator {
                         let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
                         
                         GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                        observer.onNext(true)
+                        observer(.success(true))
                     }
                     else {
                         GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
-                        observer.onNext(false)
+                        observer(.success(false))
                     }
                 case .error(_):
                     break
