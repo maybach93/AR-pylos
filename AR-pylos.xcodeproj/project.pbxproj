@@ -44,6 +44,9 @@
 		198A94672491A41C006F6D1E /* PrepareGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94662491A41C006F6D1E /* PrepareGameViewModel.swift */; };
 		198A946A2491AB92006F6D1E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94692491AB92006F6D1E /* GameView.swift */; };
 		198A946C2491AB9B006F6D1E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946B2491AB9B006F6D1E /* GameViewModel.swift */; };
+		198A946F2491AE1E006F6D1E /* DebugOpponentInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946E2491AE1E006F6D1E /* DebugOpponentInstance.swift */; };
+		198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94712491B370006F6D1E /* PlayerMessage.swift */; };
+		198A94742491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +111,9 @@
 		198A94662491A41C006F6D1E /* PrepareGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareGameViewModel.swift; sourceTree = "<group>"; };
 		198A94692491AB92006F6D1E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		198A946B2491AB9B006F6D1E /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		198A946E2491AE1E006F6D1E /* DebugOpponentInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugOpponentInstance.swift; sourceTree = "<group>"; };
+		198A94712491B370006F6D1E /* PlayerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMessage.swift; sourceTree = "<group>"; };
+		198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitiatedPlayerMessagePayload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +160,7 @@
 		1905F6F124832A9C003059A7 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				198A94702491B362006F6D1E /* PlayerMessages */,
 				19378F7924886B5500E3EBF8 /* Models */,
 				19378F86248AED2600E3EBF8 /* GameCoordinator.swift */,
 				19378F88248AED9600E3EBF8 /* GameMatchingCoordinator.swift */,
@@ -283,6 +290,7 @@
 		196AD63D2482F8E000BF63D7 /* AR-pylos */ = {
 			isa = PBXGroup;
 			children = (
+				198A946D2491AE0A006F6D1E /* Debug */,
 				19378FB2248ED04C00E3EBF8 /* Modules */,
 				1905F6F024832A92003059A7 /* Core */,
 				196AD63E2482F8E000BF63D7 /* AppDelegate.swift */,
@@ -347,6 +355,23 @@
 				198A946B2491AB9B006F6D1E /* GameViewModel.swift */,
 			);
 			path = GameView;
+			sourceTree = "<group>";
+		};
+		198A946D2491AE0A006F6D1E /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				198A946E2491AE1E006F6D1E /* DebugOpponentInstance.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		198A94702491B362006F6D1E /* PlayerMessages */ = {
+			isa = PBXGroup;
+			children = (
+				198A94712491B370006F6D1E /* PlayerMessage.swift */,
+				198A94732491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift */,
+			);
+			path = PlayerMessages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,12 +541,14 @@
 				19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */,
 				198A946A2491AB92006F6D1E /* GameView.swift in Sources */,
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
+				198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */,
 				19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */,
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
 				198A94672491A41C006F6D1E /* PrepareGameViewModel.swift in Sources */,
 				19378FB7248ED1E400E3EBF8 /* MainView.swift in Sources */,
+				198A946F2491AE1E006F6D1E /* DebugOpponentInstance.swift in Sources */,
 				198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */,
 				19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
@@ -534,6 +561,7 @@
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
 				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,
+				198A94742491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
 				19378F90248AF20E00E3EBF8 /* GameServerBridge.swift in Sources */,
 			);

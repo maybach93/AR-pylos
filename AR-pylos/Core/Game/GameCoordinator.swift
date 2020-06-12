@@ -18,7 +18,7 @@ protocol GameCoordinatorInputProtocol {
 }
 protocol GameCoordinatorOutputProtocol {
     //Interface to send actions to server (player actions)
-    var playerAction: PublishSubject<Void> { get }
+    var playerStateMessage: PublishSubject<PlayerMessage> { get }
 }
 
 
@@ -27,19 +27,21 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     
     private let disposeBag = DisposeBag()
 
+    private var playerId: String = ""
+    
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
     //MARK: - Output
     
-    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    var playerStateMessage: PublishSubject<PlayerMessage> = PublishSubject<PlayerMessage>()
     
     init() {
         serverStateMessages.subscribe { (event) in
             switch event {
                 
             case .next(let message):
-                print("")
+                self.handle(message: message)
             case .error(_):
                 break
             case .completed:
@@ -48,4 +50,21 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         }.disposed(by: disposeBag)
     }
     
+    func handle(message: ServerMessage) {
+        switch message.type {
+        case .initiated:
+            guard let payload = message.payload as? InitiatedServerMessagePayload else { return }
+            handleInitiatedState(payload: payload)
+        default:
+            break
+        }
+        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(playerId: "a", playerName: "vitalii")))
+    }
+}
+
+extension GameCoordinator {
+    func handleInitiatedState(payload: InitiatedServerMessagePayload) {
+        self.playerId = payload.playerId
+        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(playerId: self.playerId, playerName: "vitalii")))
+    }
 }

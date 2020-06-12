@@ -9,6 +9,9 @@
 import Foundation
 
 class BaseGameState {
+    
+    let disposeBag = DisposeBag()
+
     unowned var context: GameServerContext
     var state: GameStateMachine {
         return .none

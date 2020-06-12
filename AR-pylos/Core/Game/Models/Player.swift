@@ -10,6 +10,7 @@ import Foundation
 
 class Player: Equatable, Hashable {
     var id: String = UUID().uuidString
+    var playerName: String?
     
     static func == (lhs: Player, rhs: Player) -> Bool {
         lhs.id == rhs.id
