@@ -26,6 +26,18 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     
     init(communicator: CommunicatorAdapter) {
         self.communicator = communicator
+      
+        serverStateMessages.subscribe { (event) in
+            switch event {
+                
+            case .next(let message):
+                self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: Player(id: "w"))))
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
     }
 }
 
