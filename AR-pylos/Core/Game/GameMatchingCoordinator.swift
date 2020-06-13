@@ -35,7 +35,7 @@ class GameMatchingCoordinator {
             communicator = GameKitNetworkAdapter()
         case .bluetooth(let isHost):
             if isHost {
-                communicator = BluetoothNetworkAdapter()
+                communicator = CentralBluetoothNetworkAdapter()
             }
             else {
                 communicator = PeripheralBluetoothNetworkAdapter()

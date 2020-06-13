@@ -13,8 +13,8 @@ import BluetoothKit
 
 extension PeripheralBluetoothNetworkAdapter {
     struct Constants {
-        static let dataServiceUUID = CBUUID(string: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B23")
-        static let characteristicUUID = CBUUID(string: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B24")
+        static let dataServiceUUID = UUID(uuidString: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B23")!
+        static let characteristicUUID = UUID(uuidString: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B24")!
     }
 }
 class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
