@@ -27,11 +27,11 @@ struct FindGameView: View {
         case .initial:
             return AnyView(NavigationView {
                 HStack(content: {
-                    Button("Game via bluetooth") {
-                        self.viewModel.start()
+                    Button("Create connection") {
+                        self.viewModel.start(isHost: true)
                     }
-                    Button("Find via Game center") {
-                        self.viewModel.start()
+                    Button("Look for players") {
+                        self.viewModel.start(isHost: false)
                     }
                 })
             })

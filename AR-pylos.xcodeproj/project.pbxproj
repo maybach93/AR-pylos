@@ -58,7 +58,8 @@
 		198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94852493E592006F6D1E /* PlayerWonGameState.swift */; };
 		198A94882493E6AB006F6D1E /* PlayerWonServerPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94872493E6AB006F6D1E /* PlayerWonServerPayload.swift */; };
 		198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94892493E9E9006F6D1E /* FinishedGameState.swift */; };
-		198A948E249429DA006F6D1E /* RxBluetoothKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198A948D249429DA006F6D1E /* RxBluetoothKit.framework */; };
+		198A94902494745E006F6D1E /* BluetoothKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198A948F2494745E006F6D1E /* BluetoothKit.framework */; };
+		198A949224947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,8 @@
 		198A94872493E6AB006F6D1E /* PlayerWonServerPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWonServerPayload.swift; sourceTree = "<group>"; };
 		198A94892493E9E9006F6D1E /* FinishedGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedGameState.swift; sourceTree = "<group>"; };
 		198A948D249429DA006F6D1E /* RxBluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBluetoothKit.framework; path = Carthage/Build/iOS/RxBluetoothKit.framework; sourceTree = "<group>"; };
+		198A948F2494745E006F6D1E /* BluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BluetoothKit.framework; path = Carthage/Build/iOS/BluetoothKit.framework; sourceTree = "<group>"; };
+		198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralBluetoothNetworkAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				198A948E249429DA006F6D1E /* RxBluetoothKit.framework in Frameworks */,
+				198A94902494745E006F6D1E /* BluetoothKit.framework in Frameworks */,
 				19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */,
 				19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */,
 				194AD738248430160085C635 /* RxSwift.framework in Frameworks */,
@@ -222,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				19378F96248B387E00E3EBF8 /* BluetoothNetworkAdapter.swift */,
+				198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */,
 				19378F98248B388900E3EBF8 /* GameKitNetworkAdapter.swift */,
 			);
 			path = Network;
@@ -293,6 +297,7 @@
 		194AD736248430160085C635 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				198A948F2494745E006F6D1E /* BluetoothKit.framework */,
 				198A948D249429DA006F6D1E /* RxBluetoothKit.framework */,
 				19378F92248B354700E3EBF8 /* GameKit.framework */,
 				19378F7624885D1900E3EBF8 /* RxCocoa.framework */,
@@ -549,7 +554,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxRelay.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxBluetoothKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BluetoothKit.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -557,7 +562,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxRelay.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxBluetoothKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BluetoothKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -582,6 +587,7 @@
 				198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
 				198A947E24931507006F6D1E /* PlayerTurnServerPayload.swift in Sources */,
+				198A949224947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift in Sources */,
 				198A94842493E46D006F6D1E /* PlayerFinishedTurnServerPayload.swift in Sources */,
 				198A94822493DE9D006F6D1E /* PlayerFinishedTurnGameState.swift in Sources */,
 				19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */,

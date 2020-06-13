@@ -1,25 +1,23 @@
 //
-//  BluetoothNetworkAdapter.swift
+//  PeripheralBluetoothNetworkAdapter.swift
 //  AR-pylos
 //
-//  Created by Vitalii Poponov on 6/6/20.
+//  Created by Vitalii Poponov on 6/13/20.
 //  Copyright © 2020 Vitalii Poponov. All rights reserved.
 //
 
-
-//Low level interface to find and handle connection
 import Foundation
 import CoreBluetooth
 
 import BluetoothKit
 
-extension BluetoothNetworkAdapter {
+extension PeripheralBluetoothNetworkAdapter {
     struct Constants {
         static let dataServiceUUID = CBUUID(string: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B23")
         static let characteristicUUID = CBUUID(string: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B24")
     }
 }
-class BluetoothNetworkAdapter: CommunicatorAdapter {
+class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     private let disposeBag = DisposeBag()
     
@@ -30,7 +28,7 @@ class BluetoothNetworkAdapter: CommunicatorAdapter {
     }
     func findMatch() -> Single<Bool> {
         return Single.create { (observer) -> Disposable in
-         
+           
             return Disposables.create {}
         }
     }

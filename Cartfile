@@ -1,3 +1,3 @@
 github "ReactiveX/RxSwift" ~> 5.0
-github "Polidea/RxBluetoothKit" ~> 5.3.0
 
+github "rasmusth/BluetoothKit" "master"

@@ -13,7 +13,7 @@
 import Foundation
 
 enum ConnectionType {
-    case bluetooth, gameKit
+    case bluetooth(isHost: Bool), gameKit
 }
 
 struct GameStartChallengeModel: Codable {
@@ -33,8 +33,13 @@ class GameMatchingCoordinator {
         switch connectionType {
         case .gameKit:
             communicator = GameKitNetworkAdapter()
-        case .bluetooth:
-            communicator = BluetoothNetworkAdapter()
+        case .bluetooth(let isHost):
+            if isHost {
+                communicator = BluetoothNetworkAdapter()
+            }
+            else {
+                communicator = PeripheralBluetoothNetworkAdapter()
+            }
         }
     }
     
