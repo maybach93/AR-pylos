@@ -43,15 +43,15 @@ class GameMatchingCoordinator {
         }
     }
     
-    func findGame() -> Single<Bool> {
+    func findGame() -> Single<Void> {
         return self.communicator.findMatch().flatMap({ _ in self.foundGame() })
     }
     
-    private func foundGame() -> Single<Bool> {
-        return Single.create { (observer) -> Disposable in
+    private func foundGame() -> Single<Void> {
+        return Single<Void>.create { (observer) -> Disposable in
             let challenge = GameStartChallengeModel()
             guard let challengeData = try? JSONEncoder().encode(challenge) else {
-                observer(.success(false))
+                observer(.success(()))
                 return Disposables.create {}
             }
             
@@ -66,11 +66,11 @@ class GameMatchingCoordinator {
                         let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
                         
                         GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                        observer(.success(true))
+                        observer(.success(()))
                     }
                     else {
                         GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
-                        observer(.success(false))
+                        observer(.success(()))
                     }
                 case .error(_):
                     break
