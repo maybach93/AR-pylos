@@ -54,7 +54,7 @@ class GameMatchingCoordinator {
                 observer(.success(false))
                 return Disposables.create {}
             }
-            self.communicator.outMessages.accept(challengeData)
+            
             self.communicator.inMessages.subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
@@ -78,6 +78,10 @@ class GameMatchingCoordinator {
                     break
                 }
             }.disposed(by: self.disposeBag)
+            Observable.just(Void.self).delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { _ in
+                self.communicator.outMessages.accept(challengeData)
+            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
+            
             return Disposables.create {}
         }
     }
