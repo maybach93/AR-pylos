@@ -40,7 +40,7 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
         startCentral()
     }
     deinit {
-        print("")
+        _ = try? central.stop()
     }
     
     fileprivate func startCentral() {
@@ -55,35 +55,34 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
     }
     
     func findMatch() -> Single<Void> {
-        let single = Single<Void>.create { [weak self] (observer) -> Disposable in
+        return self.didBecomeAvailable.take(1).asSingle().flatMap({ _ in
+            return self.createConnection() })
+    }
+    
+    func createConnection() -> Single<Void> {
+        return Single<Void>.create { [weak self] (observer) -> Disposable in
             guard let self = self else { return Disposables.create {} }
-            self.didBecomeAvailable.subscribe({ (event) in
-                
-                self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
-                    guard let self = self else { return }
-                    if let discovery = discoveries.first {
-                        self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
-                            guard error == nil else {
-                                print("Error connecting peripheral: \(String(describing: error))")
-                                return
-                            }
-                            self.remotePeripheral = remotePeripheral
-                            self.central.interruptScan()
-                            observer(.success(()))
+            self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
+                guard let self = self else { return }
+                if let discovery = discoveries.first {
+                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
+                        guard error == nil else {
+                            print("Error connecting peripheral: \(String(describing: error))")
+                            return
                         }
+                        self.remotePeripheral = remotePeripheral
+                        self.central.interruptScan()
+                        observer(.success(()))
                     }
-                }, stateHandler: { newState in
-                    if newState == .scanning {
-                        return
-                    } else if newState == .stopped {
-                    }
-                }, errorHandler: { error in
-                })
-            }).disposed(by: self.disposeBag)
-            
+                }
+            }, stateHandler: { newState in
+                if newState == .scanning {
+                    return
+                } else if newState == .stopped {
+                }
+            }, errorHandler: { error in })
             return Disposables.create { }
         }
-        return single
     }
 }
 
@@ -94,7 +93,6 @@ extension CentralBluetoothNetworkAdapter: BKAvailabilityObserver {
     }
     
     internal func availabilityObserver(_ availabilityObservable: BKAvailabilityObservable, availabilityDidChange availability: BKAvailability) {
-        //availabilityView.availabilityObserver(availabilityObservable, availabilityDidChange: availability)
         if availability == .available {
             didBecomeAvailable.onNext(())
         } else {
@@ -111,7 +109,7 @@ extension CentralBluetoothNetworkAdapter: BKCentralDelegate, BKRemotePeripheralD
     }
     
     internal func remotePeer(_ remotePeer: BKRemotePeer, didSendArbitraryData data: Data) {
-        //self.delegate?.didReceiveData(data: data)
+        self.inMessages.onNext(data)
     }
     
     internal func remotePeripheralIsReady(_ remotePeripheral: BKRemotePeripheral) {

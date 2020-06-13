@@ -24,7 +24,7 @@ class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
     var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
     var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
     
-    private var didBecomeAvailable = PublishSubject<Void>()
+    private var didConnectedToCentral = PublishSubject<Void>()
     private let peripheral = BKPeripheral()
     
     init() {
@@ -48,7 +48,7 @@ class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
     }
      
     func findMatch() -> Single<Void> {
-        return self.didBecomeAvailable.map({ $0 }).asSingle()
+        return self.didConnectedToCentral.map({ $0 }).asSingle()
     }
 }
 
@@ -65,21 +65,19 @@ extension PeripheralBluetoothNetworkAdapter: BKAvailabilityObserver {
 
 extension PeripheralBluetoothNetworkAdapter: BKRemotePeerDelegate {
     func remotePeer(_ remotePeer: BKRemotePeer, didSendArbitraryData data: Data) {
-        //self.delegate?.didReceiveData(data: data)
+        self.inMessages.onNext(data)
     }
 }
 
 extension PeripheralBluetoothNetworkAdapter: BKPeripheralDelegate {
     
     internal func peripheral(_ peripheral: BKPeripheral, remoteCentralDidConnect remoteCentral: BKRemoteCentral) {
-        //Logger.log("Remote central did connect: \(remoteCentral)")
         remoteCentral.delegate = self
-        didBecomeAvailable.onNext(())
+        didConnectedToCentral.onNext(())
     }
     
     internal func peripheral(_ peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
-        //Logger.log("Remote central did disconnect: \(remoteCentral)")
-        //refreshControls()
+
     }
 }
 
