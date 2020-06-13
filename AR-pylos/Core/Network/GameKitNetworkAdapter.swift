@@ -14,7 +14,7 @@ protocol CommunicatorAdapter {
     var outMessages: PublishRelay<Data> { get } //Messages to send to others
     var inMessages: PublishSubject<Data> { get } //Messages received from others
     
-    func findMatch() -> Single<Bool>
+    func findMatch() -> Single<Void>
 }
 
 class GameKitNetworkAdapter: CommunicatorAdapter {
@@ -31,8 +31,8 @@ class GameKitNetworkAdapter: CommunicatorAdapter {
         }
     }
     
-    func findMatch() -> Single<Bool> {
-        return Single<Bool>.create { (observer) -> Disposable in
+    func findMatch() -> Single<Void> {
+        return Single<Void>.create { (observer) -> Disposable in
             self.createBindings()
             return Disposables.create {}
         }

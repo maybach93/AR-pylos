@@ -23,13 +23,64 @@ class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
     var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
-    deinit {
-        print("")
+    
+    private var didBecomeAvailable = PublishSubject<Void>()
+    private let peripheral = BKPeripheral()
+    
+    init() {
+        startPeripheral()
     }
-    func findMatch() -> Single<Bool> {
-        return Single.create { (observer) -> Disposable in
-           
-            return Disposables.create {}
+    
+    deinit {
+        _ = try? peripheral.stop()
+    }
+    
+    private func startPeripheral() {
+        do {
+            peripheral.delegate = self
+            peripheral.addAvailabilityObserver(self)
+            let localName = Bundle.main.infoDictionary!["CFBundleName"] as? String
+            let configuration = BKPeripheralConfiguration(dataServiceUUID: Constants.dataServiceUUID, dataServiceCharacteristicUUID: Constants.characteristicUUID, localName: localName)
+            try peripheral.startWithConfiguration(configuration)
+        } catch let error {
+            print("Error starting: \(error)")
         }
     }
+     
+    func findMatch() -> Single<Void> {
+        return self.didBecomeAvailable.map({ $0 }).asSingle()
+    }
 }
+
+extension PeripheralBluetoothNetworkAdapter: BKAvailabilityObserver {
+    
+    func availabilityObserver(_ availabilityObservable: BKAvailabilityObservable, unavailabilityCauseDidChange unavailabilityCause: BKUnavailabilityCause) {
+        
+    }
+    
+    internal func availabilityObserver(_ availabilityObservable: BKAvailabilityObservable, availabilityDidChange availability: BKAvailability) {
+
+    }
+}
+
+extension PeripheralBluetoothNetworkAdapter: BKRemotePeerDelegate {
+    func remotePeer(_ remotePeer: BKRemotePeer, didSendArbitraryData data: Data) {
+        //self.delegate?.didReceiveData(data: data)
+    }
+}
+
+extension PeripheralBluetoothNetworkAdapter: BKPeripheralDelegate {
+    
+    internal func peripheral(_ peripheral: BKPeripheral, remoteCentralDidConnect remoteCentral: BKRemoteCentral) {
+        //Logger.log("Remote central did connect: \(remoteCentral)")
+        remoteCentral.delegate = self
+        didBecomeAvailable.onNext(())
+    }
+    
+    internal func peripheral(_ peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
+        //Logger.log("Remote central did disconnect: \(remoteCentral)")
+        //refreshControls()
+    }
+}
+
+

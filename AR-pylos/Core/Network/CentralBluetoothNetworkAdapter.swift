@@ -54,34 +54,36 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
         }
     }
     
-    func findMatch() -> Single<Bool> {
-        let single = Single<Bool>.create { [weak self] (observer) -> Disposable in
+    func findMatch() -> Single<Void> {
+        let single = Single<Void>.create { [weak self] (observer) -> Disposable in
             guard let self = self else { return Disposables.create {} }
-            self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
-                guard let self = self else { return }
-                if let discovery = discoveries.first {
-                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
-                        guard error == nil else {
-                            print("Error connecting peripheral: \(String(describing: error))")
-                            return
+            self.didBecomeAvailable.subscribe({ (event) in
+                
+                self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
+                    guard let self = self else { return }
+                    if let discovery = discoveries.first {
+                        self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
+                            guard error == nil else {
+                                print("Error connecting peripheral: \(String(describing: error))")
+                                return
+                            }
+                            self.remotePeripheral = remotePeripheral
+                            self.central.interruptScan()
+                            observer(.success(()))
                         }
-                        self.remotePeripheral = remotePeripheral
-                        self.central.interruptScan()
-                        observer(.success(true))
                     }
-                }
-            }, stateHandler: { newState in
-                if newState == .scanning {
-                    return
-                } else if newState == .stopped {
-                }
-            }, errorHandler: { error in
-            })
+                }, stateHandler: { newState in
+                    if newState == .scanning {
+                        return
+                    } else if newState == .stopped {
+                    }
+                }, errorHandler: { error in
+                })
+            }).disposed(by: self.disposeBag)
+            
             return Disposables.create { }
         }
-        return self.didBecomeAvailable.flatMap { (_) -> Single<Bool> in
-            return single
-        }.asSingle()
+        return single
     }
 }
 
