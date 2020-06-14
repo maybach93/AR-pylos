@@ -60,6 +60,8 @@
 		198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94892493E9E9006F6D1E /* FinishedGameState.swift */; };
 		198A94902494745E006F6D1E /* BluetoothKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198A948F2494745E006F6D1E /* BluetoothKit.framework */; };
 		198A949224947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */; };
+		198A94952495D666006F6D1E /* ARDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94942495D666006F6D1E /* ARDisplayView.swift */; };
+		198A949724966B22006F6D1E /* ARViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949624966B22006F6D1E /* ARViewManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		198A948D249429DA006F6D1E /* RxBluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBluetoothKit.framework; path = Carthage/Build/iOS/RxBluetoothKit.framework; sourceTree = "<group>"; };
 		198A948F2494745E006F6D1E /* BluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BluetoothKit.framework; path = Carthage/Build/iOS/BluetoothKit.framework; sourceTree = "<group>"; };
 		198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralBluetoothNetworkAdapter.swift; sourceTree = "<group>"; };
+		198A94942495D666006F6D1E /* ARDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayView.swift; sourceTree = "<group>"; };
+		198A949624966B22006F6D1E /* ARViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +396,7 @@
 		198A94682491AB87006F6D1E /* GameView */ = {
 			isa = PBXGroup;
 			children = (
+				198A94932495D655006F6D1E /* AR */,
 				198A94692491AB92006F6D1E /* GameView.swift */,
 				198A946B2491AB9B006F6D1E /* GameViewModel.swift */,
 			);
@@ -414,6 +419,15 @@
 				198A947F2493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift */,
 			);
 			path = PlayerMessages;
+			sourceTree = "<group>";
+		};
+		198A94932495D655006F6D1E /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				198A94942495D666006F6D1E /* ARDisplayView.swift */,
+				198A949624966B22006F6D1E /* ARViewManager.swift */,
+			);
+			path = AR;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -596,6 +610,7 @@
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
 				198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */,
 				19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */,
+				198A94952495D666006F6D1E /* ARDisplayView.swift in Sources */,
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
@@ -620,6 +635,7 @@
 				198A94742491B45E006F6D1E /* InitiatedPlayerMessagePayload.swift in Sources */,
 				196AD63F2482F8E000BF63D7 /* AppDelegate.swift in Sources */,
 				19378F90248AF20E00E3EBF8 /* GameServerBridge.swift in Sources */,
+				198A949724966B22006F6D1E /* ARViewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

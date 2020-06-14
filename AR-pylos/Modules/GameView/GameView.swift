@@ -17,7 +17,6 @@ struct GameView: View {
     
     @ObservedObject var viewModel: GameViewModel
     
-    
     init(viewModel: GameViewModel) {
         self.viewModel = viewModel
     }
@@ -26,10 +25,8 @@ struct GameView: View {
         switch viewModel.state {
         case .initial:
             return AnyView(NavigationView {
-                HStack(content: {
-                    Button("Game View") {
-                        self.viewModel.start()
-                    }
+                ZStack(content: {
+                    ARDisplayView(arViewManager: self.viewModel.arManager)
                 })
             })
         }

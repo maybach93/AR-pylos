@@ -14,7 +14,7 @@ class GameViewModel: ObservableObject {
     @Published private(set) var state: State = .initial
     private let disposeBag = DisposeBag()
     private weak var coordinator: GameCoordinator? = GameProcess.instance.gameCoordinator
-    
+    @Published var arManager: ARViewManager = ARViewManager()
     init(router: Router) {
         self.router = router
     }
