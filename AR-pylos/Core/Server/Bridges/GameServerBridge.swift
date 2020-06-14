@@ -13,17 +13,31 @@ import Foundation
 class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     
     //MARK: - Outputs
-    var playerAction: PublishSubject<Void> = PublishSubject<Void>()
+    var playerStateMessage: PublishSubject<PlayerMessage> = PublishSubject<PlayerMessage>()
     
     //MARK: - Inputs
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
     //MARK: - Private
     
+    private let disposeBag = DisposeBag()
+
     private var communicator: CommunicatorAdapter
     
     init(communicator: CommunicatorAdapter) {
         self.communicator = communicator
+      
+        serverStateMessages.subscribe { (event) in
+            switch event {
+                
+            case .next(let message):
+                self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: Player(id: "w"))))
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
     }
 }
 
@@ -31,7 +45,11 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
 //Reveives actions from server via communicator and emit them to coordinator
 //subscribes to actions from coordinator and sends them to RemotePlayerServerBridge(via communicator)
 class RemoteServerBridge: GameServerProtocol {
-    init(coordinator: GameCoordinatorBridgeProtocol) {
-        //With communicator and coordinator
+    private var communicator: CommunicatorAdapter
+    private var coordinator: GameCoordinatorBridgeProtocol
+    
+    init(communicator: CommunicatorAdapter, coordinator: GameCoordinatorBridgeProtocol) {
+        self.communicator = communicator
+        self.coordinator = coordinator
     }
 }

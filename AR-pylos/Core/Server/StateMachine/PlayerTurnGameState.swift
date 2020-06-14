@@ -14,10 +14,6 @@ class PlayerTurnGameState: BaseGameState {
         return .playerTurn
     }
     
-    deinit {
-        print("")
-    }
-    
     override func movingFromPreviousState() {
         self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self else { return Disposables.create {} }
