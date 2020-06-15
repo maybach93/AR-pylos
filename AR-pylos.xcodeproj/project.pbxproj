@@ -62,6 +62,7 @@
 		198A949224947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */; };
 		198A94952495D666006F6D1E /* ARDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94942495D666006F6D1E /* ARDisplayView.swift */; };
 		198A949724966B22006F6D1E /* ARViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949624966B22006F6D1E /* ARViewManager.swift */; };
+		198A94B924968377006F6D1E /* ARGameComposer.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 198A94B824967666006F6D1E /* ARGameComposer.rcproject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		198A949124947571006F6D1E /* PeripheralBluetoothNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralBluetoothNetworkAdapter.swift; sourceTree = "<group>"; };
 		198A94942495D666006F6D1E /* ARDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayView.swift; sourceTree = "<group>"; };
 		198A949624966B22006F6D1E /* ARViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewManager.swift; sourceTree = "<group>"; };
+		198A94B824967666006F6D1E /* ARGameComposer.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = ARGameComposer.rcproject; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +401,7 @@
 				198A94932495D655006F6D1E /* AR */,
 				198A94692491AB92006F6D1E /* GameView.swift */,
 				198A946B2491AB9B006F6D1E /* GameViewModel.swift */,
+				198A94B824967666006F6D1E /* ARGameComposer.rcproject */,
 			);
 			path = GameView;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				19378FB1248ECB2500E3EBF8 /* CodableExtension.swift in Sources */,
 				198A9478249301AC006F6D1E /* GameConfigServerPayload.swift in Sources */,
 				198A946A2491AB92006F6D1E /* GameView.swift in Sources */,
+				198A94B924968377006F6D1E /* ARGameComposer.rcproject in Sources */,
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
 				198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */,
 				19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */,

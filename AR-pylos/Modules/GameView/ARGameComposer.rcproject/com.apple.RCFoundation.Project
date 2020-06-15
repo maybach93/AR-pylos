@@ -1,0 +1,543 @@
+{
+  "__content" : [
+    {
+      "scenes" : [
+        {
+          "__content" : [
+            {
+              "arAnchorSpecification" : {
+                "alignment" : "horizontal",
+                "name" : "surface"
+              },
+              "behaviors" : [
+
+              ],
+              "gravity" : [
+                0,
+                -9.8000001907348633,
+                0
+              ],
+              "identifier" : "F9610871-0955-494F-A5C3-51D1A281BAB3",
+              "material" : "concrete",
+              "overrides" : {
+                "children" : {
+                  "0D6C26D8-55CE-4731-82EC-576F21620D97" : null,
+                  "1A9EAD2B-D299-4317-80B7-89CA04FCD156" : null,
+                  "1D26BA96-049E-4316-9476-1C8C6D43027E" : null,
+                  "1D114C67-71D5-4F31-9FBB-AB0BEDA65E6E" : null,
+                  "3F70FEF0-594F-4903-A102-E4BB54770E4A" : null,
+                  "4A213441-135C-450E-8EF8-1A4EAB267C1D" : null,
+                  "04B892E9-9E54-457E-934E-F09B303115BB" : null,
+                  "4ED26F62-ED38-4C6F-8D5F-90ECD918FF6F" : null,
+                  "5A80E878-6E23-4AAE-BD6D-EAC51308D62B" : null,
+                  "5C64C277-F908-4259-B740-056895DA45A8" : null,
+                  "5DAE3F32-8D18-4EA0-B6F1-7BC97E69DCF2" : null,
+                  "5F36A724-6DEE-4DD8-94CC-FAF064FCCAD2" : null,
+                  "5F71249D-150F-4128-B1F7-8E50F86267ED" : null,
+                  "7DFCCC7E-F76C-482A-AE70-A258E99927FB" : null,
+                  "7F5F1ADC-E5E4-4EF5-A5B5-FC43B071FFA5" : null,
+                  "8CD10473-EFC1-44B7-B7B6-6363BAAD8801" : null,
+                  "8E2C17D9-9D04-45AD-BF7A-C013DE7E6A5F" : null,
+                  "9C20A5E2-CB61-4DF6-B6C2-3A418DFA1BD1" : null,
+                  "9CAB0BA4-5EEA-4DA5-9F19-0475B7E2B303" : null,
+                  "9EB9785F-7A0E-45AE-955F-AEBE9770D8FB" : null,
+                  "19E3CF1D-357D-4E95-9C7E-F4FB5B3ABABD" : null,
+                  "20DF9ACC-745B-4F56-8479-90D7BC69294E" : null,
+                  "35E30786-446C-4047-B30A-C87115D3778A" : null,
+                  "42CF1D65-4D9E-4B3F-9ED6-991F572F0119" : null,
+                  "46E76372-4F1A-4E51-BFB1-284EC6C74E94" : null,
+                  "48EBE7F9-A111-4661-9182-3A8365A7F3C7" : null,
+                  "65B22B75-A6CC-4006-BC60-799D43C9BC71" : null,
+                  "73FB4EDB-B41E-4112-A340-EF8AA02C54AD" : null,
+                  "76E65303-346D-4E3C-ABE6-92A04F78A19C" : {
+                    "overrides" : {
+                      "arguments" : [
+                        [
+                          "bevelRadius",
+                          {
+                            "typeName" : "Double",
+                            "value" : 1.0000000000000001e-05
+                          }
+                        ],
+                        [
+                          "diameter",
+                          {
+                            "typeName" : "Double",
+                            "value" : 0.10000000000000001
+                          }
+                        ],
+                        [
+                          "height",
+                          {
+                            "typeName" : "Double",
+                            "value" : 0.0050000000000000001
+                          }
+                        ],
+                        [
+                          "material",
+                          {
+                            "typeName" : "String",
+                            "value" : "plastic"
+                          }
+                        ],
+                        [
+                          "materialColor",
+                          {
+                            "typeName" : "double4",
+                            "value" : [
+                              0.25,
+                              0.15000000596046448,
+                              0.05000000074505806,
+                              1
+                            ]
+                          }
+                        ],
+                        [
+                          "type",
+                          {
+                            "typeName" : "String",
+                            "value" : "cylinder"
+                          }
+                        ]
+                      ],
+                      "factory" : {
+                        "identifier" : "com.apple.rc.af.CoreAssetFactories.PrimitiveShapeAssetFactory",
+                        "version" : "1.0"
+                      },
+                      "runtimeAttributes" : [
+                        [
+                          "RuntimeIdentifier",
+                          {
+                            "typeName" : "UUID",
+                            "value" : "7784D707-4FB4-4DBB-AD22-78049C85C2CE"
+                          }
+                        ],
+                        [
+                          "entityName",
+                          {
+                            "typeName" : "String",
+                            "value" : "Placement"
+                          }
+                        ]
+                      ]
+                    },
+                    "transform" : {
+                      "matrix" : [
+                        0.00011576076212804765,
+                        0,
+                        0.80121433734893799,
+                        0,
+                        0,
+                        0.80121475458145142,
+                        0,
+                        0,
+                        -0.80121433734893799,
+                        0,
+                        0.00011576076212804765,
+                        0,
+                        0.017147896811366081,
+                        0.55142688751220703,
+                        0.46436512470245361,
+                        1
+                      ]
+                    }
+                  },
+                  "85E82E95-7B86-4CAD-A473-2F0AE98759AA" : null,
+                  "87BD081A-382C-4A67-86AA-B47B1DFD0037" : null,
+                  "89B30283-1D2D-4775-B21D-79FA7CAFF9D1" : null,
+                  "91A11578-B648-4121-9E60-6897E818B9B4" : null,
+                  "92B8A30E-DFD6-4856-939D-65F5B55E6EAB" : {
+                    "overrides" : {
+                      "arguments" : [
+                        [
+                          "item",
+                          {
+                            "typeName" : "String",
+                            "value" : "Warp Marble"
+                          }
+                        ],
+                        [
+                          "material",
+                          {
+                            "typeName" : "String",
+                            "value" : "rubber"
+                          }
+                        ],
+                        [
+                          "style",
+                          {
+                            "typeName" : "String",
+                            "value" : "Iconic"
+                          }
+                        ]
+                      ],
+                      "children" : {
+                        "iconicItem" : {
+                          "overrides" : {
+                            "factory" : null,
+                            "runtimeAttributes" : [
+                              [
+                                "RuntimeIdentifier",
+                                {
+                                  "typeName" : "UUID",
+                                  "value" : "A2BA2B78-5410-469C-9EE3-8A127472BE8F"
+                                }
+                              ]
+                            ]
+                          }
+                        },
+                        "item" : {
+                          "overrides" : {
+                            "factory" : null,
+                            "runtimeAttributes" : [
+                              [
+                                "RuntimeIdentifier",
+                                {
+                                  "typeName" : "UUID",
+                                  "value" : "F8721033-F74A-413F-BF63-D90798DF9646"
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      },
+                      "factory" : {
+                        "identifier" : "com.apple.rc.af.WarpMarble.8c6aa4a9-ef24-4a6e-b6e8-6ebb21b88eb2",
+                        "version" : "1.0"
+                      },
+                      "runtimeAttributes" : [
+                        [
+                          "RuntimeIdentifier",
+                          {
+                            "typeName" : "UUID",
+                            "value" : "40E383A8-68E8-4770-A011-1A7506FCCB70"
+                          }
+                        ],
+                        [
+                          "entityName",
+                          {
+                            "typeName" : "String",
+                            "value" : "BlackBall"
+                          }
+                        ],
+                        [
+                          "isAccessibilityEnabled",
+                          {
+                            "typeName" : "Bool",
+                            "value" : false
+                          }
+                        ]
+                      ]
+                    },
+                    "transform" : {
+                      "matrix" : [
+                        3.9999983310699463,
+                        0,
+                        0,
+                        0,
+                        0,
+                        4.0000004768371582,
+                        0,
+                        0,
+                        0,
+                        0,
+                        3.9999983310699463,
+                        0,
+                        -0.3532957136631012,
+                        0.58330225944519043,
+                        0.38430145382881165,
+                        1
+                      ]
+                    }
+                  },
+                  "114A35AB-79D0-4908-951C-F5BD1FC42D1E" : null,
+                  "190E9124-4F44-4FB0-A1E4-F0DDEDD57AFC" : null,
+                  "267F3A74-B23C-4752-9211-F1CF753CE466" : null,
+                  "291C1D17-70DB-4695-893F-3076CD9BF82E" : null,
+                  "0317A907-6CAA-441B-AFA4-36BDA4AF9AA3" : null,
+                  "441F0966-4368-4401-8E2E-636DBE19312B" : null,
+                  "0448B43C-A3C1-45C2-B4AD-6AA593ADE8B3" : null,
+                  "565B4DBE-F1C1-495B-81FC-C019AFFDE336" : null,
+                  "619B8B50-3787-4B88-ADAD-C14E5034A72D" : null,
+                  "632E476F-1E55-4E30-9723-1C51DD2E8B89" : null,
+                  "682B4730-BEF9-4D5B-933C-2AC8FFF838FC" : null,
+                  "694B4CAB-7201-4BA0-9493-1512F37E258E" : null,
+                  "876C3140-1250-4E4C-925A-B2080F866769" : null,
+                  "961BE08E-6B4A-46F2-B9E9-BB10FEC70955" : null,
+                  "0976AC6F-749E-4518-BCBB-CC784EAD3585" : null,
+                  "3220A047-9D0C-4EA0-90F4-D09C294623B2" : null,
+                  "7894B30F-C7FD-46A4-ACD5-45EF3518C990" : null,
+                  "99187A36-F9EB-43B9-AF2E-4EC8D4F194F9" : null,
+                  "175468C5-E404-4402-8DCE-E5F2DAF24F77" : {
+                    "overrides" : {
+                      "arguments" : [
+                        [
+                          "item",
+                          {
+                            "typeName" : "String",
+                            "value" : "Dining Table"
+                          }
+                        ],
+                        [
+                          "style",
+                          {
+                            "typeName" : "String",
+                            "value" : "Stylized"
+                          }
+                        ]
+                      ],
+                      "children" : {
+                        "item" : {
+                          "overrides" : {
+                            "factory" : null,
+                            "runtimeAttributes" : [
+                              [
+                                "RuntimeIdentifier",
+                                {
+                                  "typeName" : "UUID",
+                                  "value" : "4BB6BC23-A280-47DB-BD05-800669A15854"
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      },
+                      "factory" : {
+                        "identifier" : "com.apple.rc.af.DiningTable.a97e614b-2c63-4997-8a71-563aa9261a6a",
+                        "version" : "1.0"
+                      },
+                      "runtimeAttributes" : [
+                        [
+                          "RuntimeIdentifier",
+                          {
+                            "typeName" : "UUID",
+                            "value" : "076C7188-098E-4F0C-919D-7452A2B9C783"
+                          }
+                        ]
+                      ]
+                    },
+                    "transform" : {
+                      "matrix" : [
+                        0.60156136751174927,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0.60156136751174927,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0.60156136751174927,
+                        0,
+                        0,
+                        0,
+                        0.6111835241317749,
+                        1
+                      ]
+                    }
+                  },
+                  "201289BF-49E5-4EA0-8311-BF4295505B82" : null,
+                  "449902E9-3F18-4579-A1BE-7C84D904D709" : null,
+                  "01003463-4EE2-4B42-B320-A3F2256B7D1E" : null,
+                  "3283571C-709A-4EFC-A327-B141FB24777D" : null,
+                  "3426038E-18B5-4773-AFA0-75696A6351E4" : null,
+                  "8634332F-1092-4757-AC0E-96EE397C85DD" : null,
+                  "66392067-6C4A-49C2-A83A-C69AF45FD791" : null,
+                  "A9C018C3-5C3E-461F-A172-329ED1E97017" : null,
+                  "A66BD01B-8749-4074-A352-91B7F6EDF618" : null,
+                  "AA82ED99-7C80-4BA5-A86A-CDF4C45F0ED0" : null,
+                  "AD327B27-A27B-45E0-804D-1EECE2FBCBA8" : null,
+                  "AF56FB98-AAC6-405E-A46D-7E3A866D3A93" : null,
+                  "B29F013E-71F0-4D5E-8178-B00052745DFA" : null,
+                  "B91C7CA3-4AB1-4253-9A84-07383168A8A8" : null,
+                  "B0727FDE-3EAB-4E7C-8142-ECFDE3907288" : null,
+                  "B7125182-ACED-404B-99C0-F500501670A2" : null,
+                  "BC3DC069-19D1-44D3-B5B4-8578D79673CE" : null,
+                  "C9C2D5C8-3865-4EF9-8F4C-F185244C7156" : null,
+                  "C11FD07B-06C7-4336-8E9A-74370223C97F" : null,
+                  "CE797DC5-ABF8-4ED9-83D7-E7A6FE05BB66" : {
+                    "overrides" : {
+                      "arguments" : [
+                        [
+                          "item",
+                          {
+                            "typeName" : "String",
+                            "value" : "Warp Marble 2"
+                          }
+                        ],
+                        [
+                          "material",
+                          {
+                            "typeName" : "String",
+                            "value" : "paintEnamelMatte"
+                          }
+                        ],
+                        [
+                          "style",
+                          {
+                            "typeName" : "String",
+                            "value" : "Iconic"
+                          }
+                        ]
+                      ],
+                      "children" : {
+                        "iconicItem" : {
+                          "overrides" : {
+                            "factory" : null,
+                            "runtimeAttributes" : [
+                              [
+                                "RuntimeIdentifier",
+                                {
+                                  "typeName" : "UUID",
+                                  "value" : "0B358CC6-CCCA-4CD4-BB9D-C1600C12CAB9"
+                                }
+                              ]
+                            ]
+                          }
+                        },
+                        "item" : {
+                          "overrides" : {
+                            "factory" : null,
+                            "runtimeAttributes" : [
+                              [
+                                "RuntimeIdentifier",
+                                {
+                                  "typeName" : "UUID",
+                                  "value" : "DEC9D0E0-AE2F-4ECD-8B88-C6CE74EA97C8"
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      },
+                      "factory" : {
+                        "identifier" : "com.apple.rc.af.WarpMarble2.8eaa849f-55b5-440d-8da6-2edd9d7f7567",
+                        "version" : "1.0"
+                      },
+                      "runtimeAttributes" : [
+                        [
+                          "RuntimeIdentifier",
+                          {
+                            "typeName" : "UUID",
+                            "value" : "0C6EB38D-AA86-4662-9D5D-ACBC0581B0F9"
+                          }
+                        ],
+                        [
+                          "entityName",
+                          {
+                            "typeName" : "String",
+                            "value" : "WhiteBall"
+                          }
+                        ]
+                      ]
+                    },
+                    "transform" : {
+                      "matrix" : [
+                        3.4650745391845703,
+                        0,
+                        -1.9983081817626953,
+                        0,
+                        0,
+                        4.0000004768371582,
+                        0,
+                        0,
+                        1.9983081817626953,
+                        0,
+                        3.4650745391845703,
+                        0,
+                        -0.35329559445381165,
+                        0.58330231904983521,
+                        0.38430145382881165,
+                        1
+                      ]
+                    }
+                  },
+                  "CED6E759-FFE1-4129-A354-1AD9B70277C9" : null,
+                  "D4EB8F08-8DD6-4521-AACD-F91F03BC56ED" : null,
+                  "D24DA9D3-5555-44D1-B49B-B79F69C5BDA4" : null,
+                  "D48FC5A7-6159-4437-ABFE-619F6017223F" : null,
+                  "D5151A53-32C9-48BA-A72D-B595447F9FD8" : null,
+                  "DA10F3B3-8745-4CFC-944E-82304F721BE4" : null,
+                  "E2C42D48-444B-49AC-8912-3ECD2E90AE15" : null,
+                  "E90B53F8-C5A6-46F6-902F-49FAEE486A4D" : null,
+                  "E97B68BE-B3D8-46F1-9DC9-5923F8760F47" : null,
+                  "F0D42050-EB84-4603-9D96-902DA4758526" : null,
+                  "F298A889-7642-4EAB-808A-F95974E7708C" : null,
+                  "F3111138-F13A-4D79-B3F5-7F76A4C56592" : null,
+                  "FAD04C2C-F0E9-486A-A065-5E7A75588F76" : null,
+                  "FD14A191-3E1D-490C-AB72-F3541F03AB98" : null,
+                  "FDBD1D9B-1886-4D3F-A446-E3171D00AF7F" : null,
+                  "FE0A6683-640F-4724-AB5B-542702CAC858" : null,
+                  "FF83C5D0-923C-4EAB-AE03-31E62A4569D3" : null
+                },
+                "factory" : null,
+                "runtimeAttributes" : [
+                  [
+                    "isAccessibilityEnabled",
+                    {
+                      "typeName" : "Bool",
+                      "value" : false
+                    }
+                  ]
+                ]
+              },
+              "physicsMode" : "grid",
+              "title" : "ARGameScene",
+              "viewTransform" : {
+                "cameraTransform" : [
+                  0.9992414116859436,
+                  -2.5331974029541016e-07,
+                  0.038942515850067139,
+                  0,
+                  0.036611184477806091,
+                  0.34081026911735535,
+                  -0.93941891193389893,
+                  0,
+                  -0.013271789066493511,
+                  0.9401320219039917,
+                  0.34055188298225403,
+                  0,
+                  0.038201078772544861,
+                  1.5031887292861938,
+                  0.76217734813690186,
+                  1
+                ],
+                "sceneTransform" : [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.99999994039535522,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0.99999994039535522,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              }
+            }
+          ],
+          "__version" : 5
+        }
+      ],
+      "tags" : {
+        "__content" : [
+          {
+            "tagsStore" : {
+
+            }
+          }
+        ],
+        "__version" : 1
+      }
+    }
+  ],
+  "__version" : 1
+}
