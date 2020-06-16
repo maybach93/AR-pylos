@@ -28,7 +28,9 @@ struct GameView: View {
                 ZStack(content: {
                     ARDisplayView(arViewManager: self.viewModel.arManager)
                 })
-            })
+            }).onAppear {
+                self.viewModel.start()
+            }
         }
     }
     var body: some View {

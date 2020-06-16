@@ -9,7 +9,49 @@
 import Foundation
 import RealityKit
 
-class ARViewManager: ObservableObject {
+class CustomEntityTranslationGestureRecognizer: EntityTranslationGestureRecognizer {
+    weak var currentEntity: Entity?
+    unowned var arView: ARView
+    unowned var manager: ARViewManager
+    init(arView: ARView, manager: ARViewManager) {
+        self.arView = arView
+        self.manager = manager
+        super.init(target: nil, action: nil)
+    }
+    
+    @objc override dynamic open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        guard let touchLocation = touches.first?.location(in: arView),
+            let tappedEntity = arView.hitTest(touchLocation, query: .nearest, mask: .default).first?.entity, tappedEntity.name == "WhiteBall" else {
+            return
+        }
+
+        currentEntity = tappedEntity
+    }
+
+    @objc override dynamic open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+        guard let touchLocation = touches.first?.location(in: arView),
+            let currentEntity = currentEntity else {
+            return
+        }
+        
+        print(currentEntity.position)
+    }
+    
+    @objc override dynamic open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        self.currentEntity = nil
+    }
+    
+    @objc override dynamic open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        self.currentEntity = nil
+    }
+}
+
+class ARViewManager: NSObject, ObservableObject {
+    
+    private let disposeBag = DisposeBag()
+    
+    var arViewInitialized: PublishSubject<Void> = PublishSubject<Void>()
+
     typealias FilledBall = (Coordinate, Entity)
     var scene: ARGameComposer.ARGameScene!
     var whiteBall: Entity!
@@ -19,14 +61,16 @@ class ARViewManager: ObservableObject {
     var sceneStashedBalls: [Entity] = []
     var sceneFilledBalls: [FilledBall] = []
     var scenePlacements: [Entity] = []
-    
+
     weak var arView: ARView? {
         didSet {
+            guard arView != oldValue else { return }
             configureAR()
         }
     }
     
     func configureAR() {
+        guard let arView = self.arView else { return }
         scene = try! ARGameComposer.loadARGameScene()
         self.whiteBall = scene.whiteBall?.clone(recursive: true)
         self.blackBall = scene.blackBall?.clone(recursive: true)
@@ -35,15 +79,31 @@ class ARViewManager: ObservableObject {
         scene.blackBall?.removeFromParent()
         scene.placement?.removeFromParent()
         scene.generateCollisionShapes(recursive: true)
-        arView?.scene.anchors.append(scene)
-        self.updatePlacement(mapWidth: 4)
+        arView.scene.anchors.append(scene)
+        let recognizer = CustomEntityTranslationGestureRecognizer(arView: arView, manager: self)
+        arView.addGestureRecognizer(recognizer)
+        arView.isUserInteractionEnabled = true
+
+        (scene.wall1?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
+        
+//        scene.wall1?.scene?.subscribe(to: CollisionEvents.Began.self, { (event) in
+//            print("")
+//            })
+        arViewInitialized.onNext(())
     }
     
     func updateGameConfig(player: Player, map: [[WrappedMapCell]], stashedItems: [Player: [Ball]]) {
-        
+        self.scenePlacements.forEach({ $0.removeFromParent() })
+        self.scenePlacements.removeAll()
         self.updatePlacement(mapWidth: map.count)
-        //let blackBall = self.blackBall.clone(recursive: true)
-        //scene.addChild(blackBall, preservingWorldTransform: true)
+        
+        self.sceneFilledBalls.forEach({ $0.1.removeFromParent() })
+        self.sceneFilledBalls.removeAll()
+        self.updateMap(player: player, map: map)
+        
+        self.sceneStashedBalls.forEach({ $0.removeFromParent() })
+        self.sceneStashedBalls.removeAll()
+        self.updateStashedItems(playerItems: stashedItems[player] ?? [])
     }
     
     func updateMap(player: Player, map: [[WrappedMapCell]]) {
@@ -77,7 +137,10 @@ class ARViewManager: ObservableObject {
     func addBall(isWhite: Bool, position: SIMD3<Float>) -> Entity {
         let ball = isWhite ? self.whiteBall.clone(recursive: true) : self.blackBall.clone(recursive: true)
         ball.position = position
+        arView?.installGestures(.translation, for: ball as! HasCollision)
+        ball.generateCollisionShapes(recursive: false)
         scene.addChild(ball, preservingWorldTransform: true)
+        ball.name = "WhiteBall"
         return ball
     }
     

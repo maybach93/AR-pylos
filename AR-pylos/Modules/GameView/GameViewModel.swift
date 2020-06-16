@@ -19,7 +19,13 @@ class GameViewModel: ObservableObject {
         self.router = router
     }
     func start() {
-        
+        arManager.arViewInitialized.subscribe { (event) in
+            let player = Player(id: "r")
+            let other = Player(id: "g")
+            let game = Game(width: 4, playersAmount: 2)
+            var map = game.map.map.map({ $0.map({ WrappedMapCell(cell: $0) })})
+            self.arManager.updateGameConfig(player: Player(id: "r"), map: map, stashedItems: [player: [Ball(owner: player), Ball(owner: player)]])
+        }.disposed(by: disposeBag)
     }
 }
 
