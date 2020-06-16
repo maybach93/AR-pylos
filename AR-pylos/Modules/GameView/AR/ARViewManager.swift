@@ -8,9 +8,13 @@
 
 import Foundation
 import RealityKit
+import Combine
 
 class CustomEntityTranslationGestureRecognizer: EntityTranslationGestureRecognizer {
     weak var currentEntity: Entity?
+    var initialPosition: Transform?
+    var isCancelled: Bool = false
+    
     unowned var arView: ARView
     unowned var manager: ARViewManager
     init(arView: ARView, manager: ARViewManager) {
@@ -19,31 +23,56 @@ class CustomEntityTranslationGestureRecognizer: EntityTranslationGestureRecogniz
         super.init(target: nil, action: nil)
     }
     
-    @objc override dynamic open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+    func cancelTouch() {
+        self.isCancelled = true
+        if let event = event {
+            let superview = arView.superview
+
+            self.touches?.forEach({ ignore($0, for: event)})
+
+        }
+        
+    }
+    var event: UIEvent?
+    var touches: Set<UITouch>?
+    @objc override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         guard let touchLocation = touches.first?.location(in: arView),
             let tappedEntity = arView.hitTest(touchLocation, query: .nearest, mask: .default).first?.entity, tappedEntity.name == "WhiteBall" else {
             return
         }
-
+       // self.event = event
+        self.touches = touches
+        initialPosition = currentEntity?.transform
+        self.isCancelled = false
         currentEntity = tappedEntity
     }
 
-    @objc override dynamic open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+    @objc override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
         guard let touchLocation = touches.first?.location(in: arView),
             let currentEntity = currentEntity else {
             return
         }
-        
+        self.event = event
+        if  isCancelled {
+         //   self.currentEntity?.transform = Transform()
+        }
         print(currentEntity.position)
     }
     
-    @objc override dynamic open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+    @objc override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        if  isCancelled {
+          //  self.currentEntity?.transform = Transform()
+        }
         self.currentEntity = nil
     }
     
-    @objc override dynamic open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+    @objc override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        if isCancelled {
+           // self.currentEntity?.transform = Transform()
+        }
         self.currentEntity = nil
     }
+    
 }
 
 class ARViewManager: NSObject, ObservableObject {
@@ -68,7 +97,7 @@ class ARViewManager: NSObject, ObservableObject {
             configureAR()
         }
     }
-    
+    var cancelBag: Set<AnyCancellable> = []
     func configureAR() {
         guard let arView = self.arView else { return }
         scene = try! ARGameComposer.loadARGameScene()
@@ -76,19 +105,12 @@ class ARViewManager: NSObject, ObservableObject {
         self.blackBall = scene.blackBall?.clone(recursive: true)
         self.placement = scene.placement?.clone(recursive: true)
         scene.whiteBall?.removeFromParent()
-        scene.blackBall?.removeFromParent()
+        //scene.blackBall?.removeFromParent()
         scene.placement?.removeFromParent()
-        scene.generateCollisionShapes(recursive: true)
         arView.scene.anchors.append(scene)
-        let recognizer = CustomEntityTranslationGestureRecognizer(arView: arView, manager: self)
-        arView.addGestureRecognizer(recognizer)
         arView.isUserInteractionEnabled = true
 
         (scene.wall1?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
-        
-//        scene.wall1?.scene?.subscribe(to: CollisionEvents.Began.self, { (event) in
-//            print("")
-//            })
         arViewInitialized.onNext(())
     }
     
@@ -133,14 +155,44 @@ class ARViewManager: NSObject, ObservableObject {
             }
         }
     }
-    
+    var isCancel: Bool = false
+    var initialPosition: SIMD3<Float>?
+    @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
+        switch gesture.state {
+            
+        case .possible:
+            break
+        case .began:
+            self.isCancel = false
+            self.initialPosition = gesture.entity?.position
+            break
+        case .changed:
+            if isCancel {
+                gesture.entity?.position = initialPosition!
+                gesture.isEnabled = false
+                gesture.isEnabled = true
+            }
+           // gesture.entity.
+            break
+        case .ended:
+break
+            
+        case .cancelled:
+   break
+            
+        case .failed:
+           break
+            
+        @unknown default:
+            break
+        }
+    }
     func addBall(isWhite: Bool, position: SIMD3<Float>) -> Entity {
-        let ball = isWhite ? self.whiteBall.clone(recursive: true) : self.blackBall.clone(recursive: true)
-        ball.position = position
-        arView?.installGestures(.translation, for: ball as! HasCollision)
-        ball.generateCollisionShapes(recursive: false)
+        let ball = BallEntity(color: .white, position: position)
+        let gesture = arView?.installGestures(.translation, for: ball)
+        gesture?.first?.addTarget(self, action: #selector(self.onTap(_:)))
+        
         scene.addChild(ball, preservingWorldTransform: true)
-        ball.name = "WhiteBall"
         return ball
     }
     
@@ -151,6 +203,13 @@ class ARViewManager: NSObject, ObservableObject {
             let j = Int(index - Int(i) * 3)
            
             let addedBall = addBall(isWhite: true, position: [self.whiteBall.position.x + Float(j) * 0.09, self.whiteBall.position.y, self.whiteBall.position.z + Float(i) * 0.09])
+            addedBall.scene?.subscribe(to: CollisionEvents.Began.self, on: addedBall, { (event) in
+                self.isCancel = true
+            }).store(in: &cancelBag)
+            addedBall.scene?.subscribe(to: CollisionEvents.Updated.self, on: addedBall, { (event) in
+                print("efelflflfl")
+            }).store(in: &cancelBag)
+
             self.sceneStashedBalls.append(addedBall)
         }
     }

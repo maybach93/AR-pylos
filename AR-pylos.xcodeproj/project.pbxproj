@@ -63,6 +63,7 @@
 		198A94952495D666006F6D1E /* ARDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94942495D666006F6D1E /* ARDisplayView.swift */; };
 		198A949724966B22006F6D1E /* ARViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A949624966B22006F6D1E /* ARViewManager.swift */; };
 		198A94B924968377006F6D1E /* ARGameComposer.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 198A94B824967666006F6D1E /* ARGameComposer.rcproject */; };
+		198A94BC24994707006F6D1E /* BallEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94BB24994707006F6D1E /* BallEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		198A94942495D666006F6D1E /* ARDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayView.swift; sourceTree = "<group>"; };
 		198A949624966B22006F6D1E /* ARViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewManager.swift; sourceTree = "<group>"; };
 		198A94B824967666006F6D1E /* ARGameComposer.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = ARGameComposer.rcproject; sourceTree = "<group>"; };
+		198A94BB24994707006F6D1E /* BallEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +431,7 @@
 			children = (
 				198A94942495D666006F6D1E /* ARDisplayView.swift */,
 				198A949624966B22006F6D1E /* ARViewManager.swift */,
+				198A94BB24994707006F6D1E /* BallEntity.swift */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */,
 				19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */,
 				198A94652491A3F8006F6D1E /* PrepareGameView.swift in Sources */,
+				198A94BC24994707006F6D1E /* BallEntity.swift in Sources */,
 				198A947C24930DC6006F6D1E /* ArrayExtension.swift in Sources */,
 				198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */,
 				198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */,
