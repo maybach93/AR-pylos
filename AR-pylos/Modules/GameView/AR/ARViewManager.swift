@@ -10,71 +10,6 @@ import Foundation
 import RealityKit
 import Combine
 
-class CustomEntityTranslationGestureRecognizer: EntityTranslationGestureRecognizer {
-    weak var currentEntity: Entity?
-    var initialPosition: Transform?
-    var isCancelled: Bool = false
-    
-    unowned var arView: ARView
-    unowned var manager: ARViewManager
-    init(arView: ARView, manager: ARViewManager) {
-        self.arView = arView
-        self.manager = manager
-        super.init(target: nil, action: nil)
-    }
-    
-    func cancelTouch() {
-        self.isCancelled = true
-        if let event = event {
-            let superview = arView.superview
-
-            self.touches?.forEach({ ignore($0, for: event)})
-
-        }
-        
-    }
-    var event: UIEvent?
-    var touches: Set<UITouch>?
-    @objc override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-        guard let touchLocation = touches.first?.location(in: arView),
-            let tappedEntity = arView.hitTest(touchLocation, query: .nearest, mask: .default).first?.entity, tappedEntity.name == "WhiteBall" else {
-            return
-        }
-       // self.event = event
-        self.touches = touches
-        initialPosition = currentEntity?.transform
-        self.isCancelled = false
-        currentEntity = tappedEntity
-    }
-
-    @objc override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
-        guard let touchLocation = touches.first?.location(in: arView),
-            let currentEntity = currentEntity else {
-            return
-        }
-        self.event = event
-        if  isCancelled {
-         //   self.currentEntity?.transform = Transform()
-        }
-        print(currentEntity.position)
-    }
-    
-    @objc override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-        if  isCancelled {
-          //  self.currentEntity?.transform = Transform()
-        }
-        self.currentEntity = nil
-    }
-    
-    @objc override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-        if isCancelled {
-           // self.currentEntity?.transform = Transform()
-        }
-        self.currentEntity = nil
-    }
-    
-}
-
 extension ARViewManager {
     enum EntityNames: String {
         case stashedBall = "stashedBall"
@@ -169,6 +104,7 @@ class ARViewManager: NSObject, ObservableObject {
     }
     var isCancel: Bool = false
     var initialPosition: SIMD3<Float>?
+    var intersectedItem: Entity?
     @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
         switch gesture.state {
             
@@ -179,6 +115,10 @@ class ARViewManager: NSObject, ObservableObject {
             self.initialPosition = gesture.entity?.position
             break
         case .changed:
+            let vel = gesture.velocity(in: gesture.entity)
+            if intersectedItem != nil {
+                
+            }
             if isCancel {
                 gesture.entity?.position = initialPosition!
                 gesture.isEnabled = false
@@ -222,7 +162,7 @@ break
                 case .stashedBall:
                     break
                 case .filledBall:
-                    break
+                    self.intersectedItem = event.entityB
                 case .table:
                     break
                 case .wall1, .wall2, .wall3, .wall4:
