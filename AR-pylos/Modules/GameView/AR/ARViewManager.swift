@@ -75,6 +75,20 @@ class CustomEntityTranslationGestureRecognizer: EntityTranslationGestureRecogniz
     
 }
 
+extension ARViewManager {
+    enum EntityNames: String {
+        case stashedBall = "stashedBall"
+        case filledBall = "filledBall"
+        case table = "Table"
+        case wall1 = "Wall1"
+        case wall2 = "Wall2"
+        case wall3 = "Wall3"
+        case wall4 = "Wall4"
+    }
+    struct Constants {
+        static let initialStashPosition: SIMD3<Float> = SIMD3<Float>(-0.3532956, 0.5906566, 0.3836859)
+    }
+}
 class ARViewManager: NSObject, ObservableObject {
     
     private let disposeBag = DisposeBag()
@@ -83,8 +97,6 @@ class ARViewManager: NSObject, ObservableObject {
 
     typealias FilledBall = (Coordinate, Entity)
     var scene: ARGameComposer.ARGameScene!
-    var whiteBall: Entity!
-    var blackBall: Entity!
     var placement: Entity!
     
     var sceneStashedBalls: [Entity] = []
@@ -101,16 +113,15 @@ class ARViewManager: NSObject, ObservableObject {
     func configureAR() {
         guard let arView = self.arView else { return }
         scene = try! ARGameComposer.loadARGameScene()
-        self.whiteBall = scene.whiteBall?.clone(recursive: true)
-        self.blackBall = scene.blackBall?.clone(recursive: true)
         self.placement = scene.placement?.clone(recursive: true)
-        scene.whiteBall?.removeFromParent()
-        //scene.blackBall?.removeFromParent()
         scene.placement?.removeFromParent()
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
 
         (scene.wall1?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
+        (scene.wall2?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
+        (scene.wall3?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
+        (scene.wall4?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
         arViewInitialized.onNext(())
     }
     
@@ -138,6 +149,7 @@ class ARViewManager: NSObject, ObservableObject {
                 zeroPoint.x + ((Float(coordinate.x) + Float(coordinate.z) / 2.0) * 0.08),
                 zeroPoint.y + Float(coordinate.z) * 0.057,
                 zeroPoint.z + ((Float(coordinate.y) + Float(coordinate.z) / 2.0) * 0.08)])
+            addedBall.name = EntityNames.filledBall.rawValue
             self.sceneFilledBalls.append((coordinate, addedBall))
         }
         
@@ -202,9 +214,20 @@ break
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)
            
-            let addedBall = addBall(isWhite: true, position: [self.whiteBall.position.x + Float(j) * 0.09, self.whiteBall.position.y, self.whiteBall.position.z + Float(i) * 0.09])
+            let addedBall = addBall(isWhite: true, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
+            addedBall.name = EntityNames.stashedBall.rawValue
             addedBall.scene?.subscribe(to: CollisionEvents.Began.self, on: addedBall, { (event) in
-                self.isCancel = true
+                guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
+                switch entityName {
+                case .stashedBall:
+                    break
+                case .filledBall:
+                    break
+                case .table:
+                    break
+                case .wall1, .wall2, .wall3, .wall4:
+                    self.isCancel = true
+                }
             }).store(in: &cancelBag)
             addedBall.scene?.subscribe(to: CollisionEvents.Updated.self, on: addedBall, { (event) in
                 print("efelflflfl")
