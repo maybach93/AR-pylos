@@ -10,17 +10,17 @@ import Foundation
 import RealityKit
 
 class BallEntity: Entity, HasModel, HasCollision {
-    required init(color: UIColor) {
+    required init(color: UIColor, radius: Float) {
         super.init()
 
         self.components[CollisionComponent] = CollisionComponent(
-            shapes: [.generateSphere(radius: 0.04)],
+            shapes: [.generateSphere(radius: radius)],
             mode: .trigger,
             filter: .sensor
         )
       
         self.components[ModelComponent] = ModelComponent(
-            mesh: .generateSphere(radius: 0.04),
+            mesh: .generateSphere(radius: radius),
             materials: [SimpleMaterial(
                 color: color,
                 isMetallic: false)
@@ -28,8 +28,8 @@ class BallEntity: Entity, HasModel, HasCollision {
         )
     }
     
-    convenience init(color: UIColor, position: SIMD3<Float>) {
-        self.init(color: color)
+    convenience init(color: UIColor, position: SIMD3<Float>, radius: Float) {
+        self.init(color: color, radius: radius)
         self.position = position
     }
     
