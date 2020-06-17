@@ -80,7 +80,9 @@ extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
         self.player = payload.player
         self.player?.playerName = "Vitalii"
-        _ = self.arManager.arViewInitialized.take(1).map({ _ in self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!))) })
+        self.arManager.arViewInitialized.distinctUntilChanged().filter({ $0 }).subscribe { (event) in
+            self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
+        }.disposed(by: disposeBag)
     }
 }
 

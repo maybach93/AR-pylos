@@ -35,7 +35,7 @@ class ARViewManager: NSObject, ObservableObject {
     private let disposeBag = DisposeBag()
     private var cancelBag: Set<AnyCancellable> = []
     
-    var arViewInitialized: PublishSubject<Void> = PublishSubject<Void>()
+    var arViewInitialized: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var playerPickedItem: PublishSubject<Coordinate?> = PublishSubject<Coordinate?>()
     var playerPlacedItem: PublishSubject<(Coordinate?, Coordinate)> = PublishSubject<(Coordinate?, Coordinate)>()
     
@@ -141,7 +141,7 @@ class ARViewManager: NSObject, ObservableObject {
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
         
-        arViewInitialized.onNext(())
+        arViewInitialized.onNext(true)
     }
     
     private func updateStashedItems(playerItems: [Ball]) {
