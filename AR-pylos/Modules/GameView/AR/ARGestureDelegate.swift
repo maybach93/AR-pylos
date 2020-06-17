@@ -27,6 +27,7 @@ class ARGestureDelegate {
     }
     
     var lastIntersectionPosition: SIMD3<Float>?
+    var snappedAvailableEntity: Entity?
     
     @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
         switch gesture.state {
@@ -40,6 +41,11 @@ class ARGestureDelegate {
                 switch entityName {
                 case .stashedBall:
                     break
+                case .availableBall:
+                if self.snappedAvailableEntity != event.entityB {
+                    event.entityA.position = event.entityB.position
+                    self.snappedAvailableEntity = event.entityB
+                }
                 case .filledBall:
                     self.lastIntersectionPosition = event.entityB.position
                 case .table:
@@ -56,9 +62,13 @@ class ARGestureDelegate {
                     if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
                         event.entityA.position.y += 0.007
                     }
-                case .table:
+                case .availableBall:
+                    if self.snappedAvailableEntity != event.entityB {
+//                        event.entityA.position = event.entityB.position
+//                        self.snappedAvailableEntity = event.entityB
+                    }
+                default:
                     break
-
                 }
             }).store(in: &cancelBag)
             entity.scene?.subscribe(to: CollisionEvents.Ended.self, on: entity, { (event) in
@@ -66,9 +76,12 @@ class ARGestureDelegate {
                 switch entityName {
                 case .stashedBall, .filledBall:
                     break
-                case .table:
+                case .availableBall:
+                    if self.snappedAvailableEntity == event.entityB {
+                        self.snappedAvailableEntity = nil
+                    }
+                default:
                     break
-
                 }
             }).store(in: &cancelBag)
 
