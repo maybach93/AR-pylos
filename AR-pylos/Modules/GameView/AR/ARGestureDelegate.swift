@@ -28,14 +28,17 @@ class ARGestureDelegate {
     
     var lastIntersectionPosition: SIMD3<Float>?
     var snappedAvailableEntity: Entity?
+    var initialPosition: SIMD3<Float>?
     
     @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
+        guard let entity = gesture.entity else { return }
         switch gesture.state {
             
         case .possible:
             break
         case .began:
-            guard let entity = gesture.entity else { return }
+            self.arViewManager.gestureBeganTouch(entity: entity)
+            self.initialPosition = entity.position
             entity.scene?.subscribe(to: CollisionEvents.Began.self, on: entity, { (event) in
                 guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
@@ -53,7 +56,7 @@ class ARGestureDelegate {
                 }
             }).store(in: &cancelBag)
             entity.scene?.subscribe(to: CollisionEvents.Updated.self, on: entity, { (event) in
-                guard event.entityA == gesture.entity else { return }
+                guard event.entityA == entity else { return }
                 guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall, .filledBall:
@@ -86,7 +89,6 @@ class ARGestureDelegate {
             }).store(in: &cancelBag)
 
         case .changed:
-            guard let entity = gesture.entity else { return }
             let position = entity.position
             
             if let intersectionPosition = self.lastIntersectionPosition {
@@ -105,6 +107,12 @@ class ARGestureDelegate {
             }
             break
         case .ended, .cancelled, .failed:
+            self.arViewManager.gestureFinishedTouch(entity: entity, availablePlaced: snappedAvailableEntity)
+            if let initialPosition = initialPosition, snappedAvailableEntity == nil {
+                entity.position = initialPosition
+            }
+            self.initialPosition = nil
+            self.snappedAvailableEntity = nil
             cancelBag.removeAll()
         @unknown default:
             break
