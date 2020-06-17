@@ -8,6 +8,7 @@
 
 import Foundation
 import RealityKit
+import Combine
 
 extension ARGestureDelegate {
     struct Constants {
@@ -19,40 +20,70 @@ class ARGestureDelegate {
     
     unowned var arViewManager: ARViewManager
     
+    var cancelBag: Set<AnyCancellable> = []
+    
     init(arViewManager: ARViewManager) {
         self.arViewManager = arViewManager
     }
     
-    var isCancel: Bool = false
-    var initialPosition: SIMD3<Float>?
-    var intersectedItem: Entity?
     var lastIntersectionPosition: SIMD3<Float>?
+    
     @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
         switch gesture.state {
             
         case .possible:
             break
         case .began:
-            self.isCancel = false
-            self.initialPosition = gesture.entity?.position
-            break
+            guard let entity = gesture.entity else { return }
+            entity.scene?.subscribe(to: CollisionEvents.Began.self, on: entity, { (event) in
+                guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
+                switch entityName {
+                case .stashedBall:
+                    break
+                case .filledBall:
+                    self.lastIntersectionPosition = event.entityB.position
+                case .table:
+                    break
+                }
+            }).store(in: &cancelBag)
+            entity.scene?.subscribe(to: CollisionEvents.Updated.self, on: entity, { (event) in
+                guard event.entityA == gesture.entity else { return }
+                guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
+                switch entityName {
+                case .stashedBall, .filledBall:
+                    self.lastIntersectionPosition = event.entityB.position
+                    
+                    if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
+                        event.entityA.position.y += 0.007
+                    }
+                case .table:
+                    break
+
+                }
+            }).store(in: &cancelBag)
+            entity.scene?.subscribe(to: CollisionEvents.Ended.self, on: entity, { (event) in
+                guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
+                switch entityName {
+                case .stashedBall, .filledBall:
+                    break
+                case .table:
+                    break
+
+                }
+            }).store(in: &cancelBag)
+
         case .changed:
-            let position = gesture.entity!.position
-            let entityY = position.y
-            let intersectionY = intersectedItem?.position.y ?? 0
-            if intersectedItem != nil {
-                if entityY - intersectionY - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
-                    gesture.entity?.position.y += 0.007
-                }
-                
-               // gesture.entity?.position.y += 0.007
-            }
-            else if entityY > ARViewManager.Constants.initialStashPosition.y + ARViewManager.Constants.yTranslation {
-                let intersectionPosition = self.lastIntersectionPosition!
+            guard let entity = gesture.entity else { return }
+            let position = entity.position
+            
+            if let intersectionPosition = self.lastIntersectionPosition {
                 if abs(position.x - intersectionPosition.x) > ARViewManager.Constants.ballDiameter || abs(position.z - intersectionPosition.z) > ARViewManager.Constants.ballDiameter {
-                    gesture.entity?.position.y -= 0.007
+                    if entity.position.y > ARViewManager.Constants.initialStashPosition.y + ARViewManager.Constants.yTranslation {
+                        gesture.entity?.position.y -= ARViewManager.Constants.yTranslation
+                    }
                 }
             }
+            
             if !Constants.boundsXRange.contains(position.x) {
                 gesture.entity?.position.x = position.x < Constants.boundsXRange.lowerBound ? Constants.boundsXRange.lowerBound : Constants.boundsXRange.upperBound
             }
@@ -60,15 +91,8 @@ class ARGestureDelegate {
                 gesture.entity?.position.z = position.z < Constants.boundsZRange.lowerBound ? Constants.boundsZRange.lowerBound : Constants.boundsZRange.upperBound
             }
             break
-        case .ended:
-break
-            
-        case .cancelled:
-   break
-            
-        case .failed:
-           break
-            
+        case .ended, .cancelled, .failed:
+            cancelBag.removeAll()
         @unknown default:
             break
         }

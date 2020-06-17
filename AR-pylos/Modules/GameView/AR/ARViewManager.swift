@@ -15,10 +15,6 @@ extension ARViewManager {
         case stashedBall = "stashedBall"
         case filledBall = "filledBall"
         case table = "Table"
-        case wall1 = "Wall1"
-        case wall2 = "Wall2"
-        case wall3 = "Wall3"
-        case wall4 = "Wall4"
     }
     struct Constants {
         static let initialStashPosition: SIMD3<Float> = SIMD3<Float>(-0.3532956, 0.5906566, 0.3836859)
@@ -144,44 +140,7 @@ class ARViewManager: NSObject, ObservableObject {
            
             let addedBall = addBall(isWhite: true, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
             addedBall.name = EntityNames.stashedBall.rawValue
-            addedBall.scene?.subscribe(to: CollisionEvents.Began.self, on: addedBall, { (event) in
-                guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
-                switch entityName {
-                case .stashedBall:
-                    break
-                case .filledBall:
-                    self.gestureDelegate.intersectedItem = event.entityB
-                    self.gestureDelegate.lastIntersectionPosition = self.gestureDelegate.intersectedItem?.position
-                case .table:
-                    break
-                case .wall1, .wall2, .wall3, .wall4:
-                    self.gestureDelegate.isCancel = true
-                }
-            }).store(in: &cancelBag)
-            addedBall.scene?.subscribe(to: CollisionEvents.Updated.self, on: addedBall, { (event) in
-                guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
-                switch entityName {
-                case .stashedBall, .filledBall:
-                    self.gestureDelegate.intersectedItem = event.entityB
-                    self.gestureDelegate.lastIntersectionPosition = self.gestureDelegate.intersectedItem?.position
-                case .table:
-                    break
-                case .wall1, .wall2, .wall3, .wall4:
-                    self.gestureDelegate.isCancel = true
-                }
-            }).store(in: &cancelBag)
-            addedBall.scene?.subscribe(to: CollisionEvents.Ended.self, on: addedBall, { (event) in
-                guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
-                switch entityName {
-                case .stashedBall, .filledBall:
-                    self.gestureDelegate.intersectedItem = nil
-                case .table:
-                    break
-                case .wall1, .wall2, .wall3, .wall4:
-                    self.gestureDelegate.isCancel = true
-                }
-            }).store(in: &cancelBag)
-
+            
             self.sceneStashedBalls.append(addedBall)
         }
     }
