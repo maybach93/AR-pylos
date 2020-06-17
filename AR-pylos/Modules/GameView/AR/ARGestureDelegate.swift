@@ -9,6 +9,12 @@
 import Foundation
 import RealityKit
 
+extension ARGestureDelegate {
+    struct Constants {
+        static let boundsXRange = Range(uncheckedBounds: (lower: Float(-0.532), upper: Float(0.51)))
+        static let boundsZRange = Range(uncheckedBounds: (lower: Float(0.308), upper: Float(0.91)))
+    }
+}
 class ARGestureDelegate {
     
     unowned var arViewManager: ARViewManager
@@ -34,7 +40,6 @@ class ARGestureDelegate {
             let position = gesture.entity!.position
             let entityY = position.y
             let intersectionY = intersectedItem?.position.y ?? 0
-            let vel = gesture.velocity(in: gesture.entity)
             if intersectedItem != nil {
                 if entityY - intersectionY - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
                     gesture.entity?.position.y += 0.007
@@ -48,12 +53,12 @@ class ARGestureDelegate {
                     gesture.entity?.position.y -= 0.007
                 }
             }
-            if isCancel {
-                gesture.entity?.position = initialPosition!
-                gesture.isEnabled = false
-                gesture.isEnabled = true
+            if !Constants.boundsXRange.contains(position.x) {
+                gesture.entity?.position.x = position.x < Constants.boundsXRange.lowerBound ? Constants.boundsXRange.lowerBound : Constants.boundsXRange.upperBound
             }
-           // gesture.entity.
+            if !Constants.boundsZRange.contains(position.z) {
+                gesture.entity?.position.z = position.z < Constants.boundsZRange.lowerBound ? Constants.boundsZRange.lowerBound : Constants.boundsZRange.upperBound
+            }
             break
         case .ended:
 break

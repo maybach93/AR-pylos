@@ -11,10 +11,11 @@ import SwiftUI
 import RealityKit
 
 struct ARDisplayView: View {
-    
+
     @ObservedObject var arViewManager: ARViewManager
     
     init(arViewManager: ARViewManager) {
+          
         self.arViewManager = arViewManager
     }
     var body: some View {

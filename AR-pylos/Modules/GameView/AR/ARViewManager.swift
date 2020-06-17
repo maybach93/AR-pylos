@@ -22,8 +22,30 @@ extension ARViewManager {
     }
     struct Constants {
         static let initialStashPosition: SIMD3<Float> = SIMD3<Float>(-0.3532956, 0.5906566, 0.3836859)
+        static let boundPosition: SIMD3<Float> = SIMD3<Float>(0, 0.66, 0.61180633)
         static let ballDiameter: Float = 0.08
         static let yTranslation: Float = 0.007
+    }
+}
+
+class BoundsEntity: Entity, HasModel, HasCollision {
+    required init(size: SIMD3<Float>) {
+        super.init()
+
+        self.components[CollisionComponent] = CollisionComponent(
+            shapes: [.generateBox(size: size)],
+            mode: .default,
+            filter: .default
+        )
+    }
+    
+    convenience init(position: SIMD3<Float>, size: SIMD3<Float>) {
+        self.init(size: size)
+        self.position = position
+    }
+    
+    required init() {
+        fatalError("init() has not been implemented")
     }
 }
 class ARViewManager: NSObject, ObservableObject {
@@ -58,11 +80,7 @@ class ARViewManager: NSObject, ObservableObject {
         scene.placement?.removeFromParent()
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
-
-        (scene.wall1?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
-        (scene.wall2?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
-        (scene.wall3?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
-        (scene.wall4?.children.first as? HasModel)?.model?.materials = [SimpleMaterial(color: .clear, isMetallic: true)]
+        
         arViewInitialized.onNext(())
     }
     
@@ -108,61 +126,11 @@ class ARViewManager: NSObject, ObservableObject {
             }
         }
     }
-    var isCancel: Bool = false
-    var initialPosition: SIMD3<Float>?
-    var intersectedItem: Entity?
-    var lastIntersectionPosition: SIMD3<Float>?
-    @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
-        switch gesture.state {
-            
-        case .possible:
-            break
-        case .began:
-            self.isCancel = false
-            self.initialPosition = gesture.entity?.position
-            break
-        case .changed:
-            let position = gesture.entity!.position
-            let entityY = position.y
-            let intersectionY = intersectedItem?.position.y ?? 0
-            let vel = gesture.velocity(in: gesture.entity)
-            if intersectedItem != nil {
-                if entityY - intersectionY - Constants.ballDiameter + Constants.yTranslation < 0 {
-                    gesture.entity?.position.y += 0.007
-                }
-                
-               // gesture.entity?.position.y += 0.007
-            }
-            else if entityY > Constants.initialStashPosition.y + Constants.yTranslation {
-                let intersectionPosition = self.lastIntersectionPosition!
-                if abs(position.x - intersectionPosition.x) > Constants.ballDiameter || abs(position.z - intersectionPosition.z) > Constants.ballDiameter {
-                    gesture.entity?.position.y -= 0.007
-                }
-            }
-            if isCancel {
-                gesture.entity?.position = initialPosition!
-                gesture.isEnabled = false
-                gesture.isEnabled = true
-            }
-           // gesture.entity.
-            break
-        case .ended:
-break
-            
-        case .cancelled:
-   break
-            
-        case .failed:
-           break
-            
-        @unknown default:
-            break
-        }
-    }
+    
     func addBall(isWhite: Bool, position: SIMD3<Float>) -> Entity {
         let ball = BallEntity(color: .white, position: position, radius: Constants.ballDiameter / 2)
         let gesture = arView?.installGestures(.translation, for: ball)
-        gesture?.first?.addTarget(self, action: #selector(self.onTap(_:)))
+        gesture?.first?.addTarget(gestureDelegate, action: #selector(gestureDelegate.onTap(_:)))
         
         scene.addChild(ball, preservingWorldTransform: true)
         return ball
@@ -182,35 +150,35 @@ break
                 case .stashedBall:
                     break
                 case .filledBall:
-                    self.intersectedItem = event.entityB
-                    self.lastIntersectionPosition = self.intersectedItem?.position
+                    self.gestureDelegate.intersectedItem = event.entityB
+                    self.gestureDelegate.lastIntersectionPosition = self.gestureDelegate.intersectedItem?.position
                 case .table:
                     break
                 case .wall1, .wall2, .wall3, .wall4:
-                    self.isCancel = true
+                    self.gestureDelegate.isCancel = true
                 }
             }).store(in: &cancelBag)
             addedBall.scene?.subscribe(to: CollisionEvents.Updated.self, on: addedBall, { (event) in
                 guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall, .filledBall:
-                    self.intersectedItem = event.entityB
-                    self.lastIntersectionPosition = self.intersectedItem?.position
+                    self.gestureDelegate.intersectedItem = event.entityB
+                    self.gestureDelegate.lastIntersectionPosition = self.gestureDelegate.intersectedItem?.position
                 case .table:
                     break
                 case .wall1, .wall2, .wall3, .wall4:
-                    self.isCancel = true
+                    self.gestureDelegate.isCancel = true
                 }
             }).store(in: &cancelBag)
             addedBall.scene?.subscribe(to: CollisionEvents.Ended.self, on: addedBall, { (event) in
                 guard let entityName = EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall, .filledBall:
-                    self.intersectedItem = nil
+                    self.gestureDelegate.intersectedItem = nil
                 case .table:
                     break
                 case .wall1, .wall2, .wall3, .wall4:
-                    self.isCancel = true
+                    self.gestureDelegate.isCancel = true
                 }
             }).store(in: &cancelBag)
 
