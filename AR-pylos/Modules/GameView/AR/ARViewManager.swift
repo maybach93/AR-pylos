@@ -36,6 +36,7 @@ class ARViewManager: NSObject, ObservableObject {
     private var cancelBag: Set<AnyCancellable> = []
     
     var arViewInitialized: PublishSubject<Void> = PublishSubject<Void>()
+    var playerPickedItem: PublishSubject<Coordinate?> = PublishSubject<Coordinate?>()
     
     lazy private var gestureDelegate: ARGestureDelegate = {
         return ARGestureDelegate(arViewManager: self)
@@ -57,16 +58,7 @@ class ARViewManager: NSObject, ObservableObject {
         }
     }
     
-    private func configureAR() {
-        guard let arView = self.arView else { return }
-        scene = try! ARGameComposer.loadARGameScene()
-        self.placement = scene.placement?.clone(recursive: true)
-        scene.placement?.removeFromParent()
-        arView.scene.anchors.append(scene)
-        arView.isUserInteractionEnabled = true
-        
-        arViewInitialized.onNext(())
-    }
+    //MARK: - Public
     
     public func updateGameConfig(player: Player, map: [[WrappedMapCell]], stashedItems: [Player: [Ball]]) {
         self.scenePlacements.forEach({ $0.removeFromParent() })
@@ -81,16 +73,47 @@ class ARViewManager: NSObject, ObservableObject {
         self.sceneStashedBalls.removeAll()
         self.updateStashedItems(playerItems: stashedItems[player] ?? [])
     }
+    
+    public func updatePlayerTurn(availableToMove: [Coordinate]) {
+        self.arView?.gestureRecognizers?.removeAll()
+        (self.sceneFilledBalls.filter({ availableToMove.contains($0.0) }).map({ $0.1 }) + self.sceneStashedBalls).forEach { (entity) in
+            let gesture = arView?.installGestures(.translation, for: entity as! HasCollision)
+            gesture?.first?.addTarget(gestureDelegate, action: #selector(gestureDelegate.onTap(_:)))
+        }
+    }
+    
+    public func updateAvailablePoints(coordinates: [Coordinate]) {
+        self.sceneAvailableToFill.forEach({ $0.1.removeFromParent() })
+        self.sceneAvailableToFill.removeAll()
+        
+        coordinates.forEach { (coordinate) in
+            let addedBall = addBall(type: .availableToFill, position: position(for: coordinate))
+            addedBall.name = EntityNames.availableBall.rawValue
+            self.sceneAvailableToFill.append((coordinate, addedBall))
+        }
+    }
+    
+    //MARK: - Private
+    
+    private func configureAR() {
+        guard let arView = self.arView else { return }
+        scene = try! ARGameComposer.loadARGameScene()
+        self.placement = scene.placement?.clone(recursive: true)
+        scene.placement?.removeFromParent()
+        arView.scene.anchors.append(scene)
+        arView.isUserInteractionEnabled = true
+        
+        arViewInitialized.onNext(())
+    }
+    
     private func updateStashedItems(playerItems: [Ball]) {
         let itemsCount = playerItems.count
         for index in 0...(itemsCount - 1) {
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)
            
-            let addedBall = addBall(isWhite: true, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
+            let addedBall = addBall(type: .white, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
             addedBall.name = EntityNames.stashedBall.rawValue
-            let gesture = arView?.installGestures(.translation, for: addedBall as! HasCollision)
-            gesture?.first?.addTarget(gestureDelegate, action: #selector(gestureDelegate.onTap(_:)))
             self.sceneStashedBalls.append(addedBall)
         }
     }
@@ -106,19 +129,20 @@ class ARViewManager: NSObject, ObservableObject {
         }
     }
     
+    private func position(for coordinate: Coordinate) -> SIMD3<Float> {
+        let zeroPoint: SIMD3<Float> = [self.placement.position.x, self.placement.position.y + 0.04, self.placement.position.z]
+        return [
+            zeroPoint.x + ((Float(coordinate.x) + Float(coordinate.z) / 2.0) * 0.08),
+            zeroPoint.y + Float(coordinate.z) * 0.057,
+            zeroPoint.z + ((Float(coordinate.y) + Float(coordinate.z) / 2.0) * 0.08)]
+    }
+    
     private func updateMap(player: Player, map: [[WrappedMapCell]]) {
         
         func add(cell: WrappedMapCell, coordinate: Coordinate) {
-            cell.item = Ball(owner: player)
             guard let item = cell.item else { return }
-            guard coordinate.z < 2 else { return }
-            let zeroPoint: SIMD3<Float> = [self.placement.position.x, self.placement.position.y + 0.04, self.placement.position.z]
-            //isWhite: item.owner == player
-            let addedBall = addBall(isWhite: coordinate.z == 0, position: [
-                zeroPoint.x + ((Float(coordinate.x) + Float(coordinate.z) / 2.0) * 0.08),
-                zeroPoint.y + Float(coordinate.z) * 0.057,
-                zeroPoint.z + ((Float(coordinate.y) + Float(coordinate.z) / 2.0) * 0.08)])
-            addedBall.name = coordinate.z == 1 ? EntityNames.availableBall.rawValue : EntityNames.filledBall.rawValue
+            let addedBall = addBall(type: item.owner == player ? .white : .black, position: position(for: coordinate))
+            addedBall.name = EntityNames.filledBall.rawValue
             self.sceneFilledBalls.append((coordinate, addedBall))
         }
         
@@ -137,9 +161,21 @@ class ARViewManager: NSObject, ObservableObject {
         }
     }
     
-    private func addBall(isWhite: Bool, position: SIMD3<Float>) -> Entity {
-        let ball = BallEntity(color: isWhite ? .white: UIColor.green.withAlphaComponent(0.3), position: position, radius: Constants.ballDiameter / (isWhite ? 2 : 3))
-
+    private func addBall(type: BallType, position: SIMD3<Float>) -> Entity {
+        let color: UIColor
+        let size: Float
+        switch type {
+        case .white:
+            color = .white
+            size = Constants.ballDiameter / 2
+        case .black:
+            color = .black
+            size = Constants.ballDiameter / 2
+        case .availableToFill:
+            color = .green
+            size = Constants.ballDiameter / 3
+        }
+        let ball = BallEntity(color: color, position: position, radius: size)
         scene.addChild(ball, preservingWorldTransform: true)
         return ball
     }

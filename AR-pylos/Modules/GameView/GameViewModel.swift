@@ -26,6 +26,15 @@ class GameViewModel: ObservableObject {
             var map = game.map.map.map({ $0.map({ WrappedMapCell(cell: $0) })})
             self.arManager.updateGameConfig(player: Player(id: "r"), map: map, stashedItems: [player: [Ball(owner: player), Ball(owner: player)]])
         }.disposed(by: disposeBag)
+        arManager.playerPickedItem.subscribe { [weak self] (event) in
+            guard let payload = self?.coordinator?.currentServerPayload as? PlayerTurnServerPayload else { return }
+            if let coordinate = event.element.unsafelyUnwrapped {
+                self?.arManager.updateAvailablePoints(coordinates: payload.availableToMove?[coordinate] ?? [])
+            }
+            else {
+                self?.arManager.updateAvailablePoints(coordinates: payload.availablePointsFromStash ?? [])
+            }
+        }.disposed(by: disposeBag)
     }
 }
 
