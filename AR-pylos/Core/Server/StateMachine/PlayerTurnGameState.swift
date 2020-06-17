@@ -32,11 +32,12 @@ class PlayerTurnGameState: BaseGameState {
                 availableToMove.forEach { (coordinate) in
                     guard let childs = self.context.game.map[coordinate]?.cellChilds else { return }
                     availableToMoveToPlayer[coordinate] = availablePoints.filter({ (coordinateToFilter) -> Bool in
+                        guard coordinateToFilter.z > coordinate.z else { return false }
                         guard let mapCell = self.context.game.map[coordinateToFilter] else { return false }
                         return !childs.contains(where: { mapCell === $0 })
                     })
                 }
-                
+                availableToMoveToPlayer = availableToMoveToPlayer.filter({ !$0.value.isEmpty })
                 self.context.gameCoordinators[player]?.serverStateMessages.accept(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
             }
             observer.onNext(true)

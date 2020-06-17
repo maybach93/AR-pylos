@@ -45,7 +45,7 @@ class RootMapCell: MapCellProtocol {
     }
     
     var isMovable: Bool {
-        return isFilled && childUpLeft == nil && childUpRight == nil && childDownLeft == nil && childDownRight == nil
+        return isFilled && self.cellChilds.filter({ !$0.isFilled }).count == self.cellChilds.count
     }
     
     var isFilled: Bool {
@@ -60,7 +60,7 @@ class RootMapCell: MapCellProtocol {
     }
     
     var cellChilds: [MapCellProtocol] {
-        return [childUpLeft, childUpRight, childDownLeft, childUpRight].compactMap({ $0 })
+        return [childUpLeft, childUpRight, childDownLeft, childDownRight].compactMap({ $0 })
     }
     
     required init() {

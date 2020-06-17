@@ -211,7 +211,7 @@ class ARViewManager: NSObject, ObservableObject {
             size = Constants.ballDiameter / 2
         case .availableToFill:
             color = UIColor.green.withAlphaComponent(0.3)
-            size = Constants.ballDiameter / 3
+            size = Constants.ballDiameter / 4
         }
         let ball = BallEntity(color: color, position: position, radius: size)
         scene.addChild(ball, preservingWorldTransform: false)
