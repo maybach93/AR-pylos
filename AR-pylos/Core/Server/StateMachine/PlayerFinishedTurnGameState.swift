@@ -26,7 +26,8 @@ class PlayerFinishedTurnGameState: BaseGameState {
                     _ = self.context.game.moveItem(player: currentPlayer, fromCoordinate: fromCoordinate, toCoordinate: payload.toCoordinate)
                 }
                 else {
-                    _ = self.context.game.fillItem(player: currentPlayer, item: payload.item, coordinate: payload.toCoordinate)
+                    guard let stashedItem = self.context.game.stashedItems[payload.player]?.first else { return }
+                    _ = self.context.game.fillItem(player: currentPlayer, item: stashedItem, coordinate: payload.toCoordinate)
                 }
 
                 if self.context.game.map.availablePoints.isEmpty {
@@ -36,7 +37,7 @@ class PlayerFinishedTurnGameState: BaseGameState {
                 observer.onNext(true)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(5), scheduler: MainScheduler.instance)
+        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
     }
     
     override func nextState() -> BaseGameState {

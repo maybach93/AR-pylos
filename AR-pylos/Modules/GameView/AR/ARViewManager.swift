@@ -162,7 +162,7 @@ class ARViewManager: NSObject, ObservableObject {
                 let placement = self.placement.clone(recursive: true)
                 placement.position = [self.placement.position.x + Float(i) * 0.08, self.placement.position.y, self.placement.position.z + Float(j) * 0.08]
                 self.scenePlacements.append(placement)
-                scene.addChild(placement, preservingWorldTransform: true)
+                scene.addChild(placement, preservingWorldTransform: false)
             }
         }
     }

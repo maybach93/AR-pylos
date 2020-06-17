@@ -15,7 +15,7 @@ protocol MapItemProtocol: class {
 
 class Ball: MapItemProtocol, Codable {
     var id: String = UUID().uuidString
-    unowned let owner: Player
+    let owner: Player
     
     init(owner: Player) {
         self.owner = owner

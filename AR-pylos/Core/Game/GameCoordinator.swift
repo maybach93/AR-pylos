@@ -48,12 +48,35 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     init() {
         serverStateMessages.subscribe { (event) in
             switch event {
-                
             case .next(let message):
                 self.handle(message: message)
             case .error(_):
                 break
             case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
+        arManager.playerPickedItem.subscribe { [weak self] (event) in
+            guard let self = self else { return }
+            switch event {
+            case .next(let coordinate):
+                guard let payload = self.currentServerPayload as? PlayerTurnServerPayload else { return }
+                if let coordinate = coordinate {
+                    self.arManager.updateAvailablePoints(coordinates: payload.availableToMove?[coordinate] ?? [])
+                }
+                else {
+                    self.arManager.updateAvailablePoints(coordinates: payload.availablePointsFromStash ?? [])
+                }
+            case .error(_), .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
+        arManager.playerPlacedItem.subscribe { [weak self] (event) in
+            guard let self = self else { return }
+            switch event {
+            case .next(let item):
+                self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: self.player!, fromCoordinate: item.0, toCoordinate: item.1, item: self.myStashedItems[0])))
+            case .error(_), .completed:
                 break
             }
         }.disposed(by: disposeBag)
@@ -96,16 +119,13 @@ extension GameCoordinator {
 
 extension GameCoordinator {
     func handlePlayerTurn(payload: PlayerTurnServerPayload) {
-        guard let player = self.player else { return }
         if payload.isPlayerTurn {
             self.currentServerPayload = payload
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: player, fromCoordinate: nil, toCoordinate: payload.availablePointsFromStash![0], item: self.myStashedItems[0])))
-            }
-            //We are current player, unlock controls, update ui, wait for action from player
+            let availableToMove: [Coordinate] = Array((payload.availableToMove ?? [:]).keys)
+            self.arManager.updatePlayerTurn(availableToMove:availableToMove)
         }
         else {
-            //Update ui with waiting screen
+            self.arManager.updateWaitingState()
         }
     }
 }

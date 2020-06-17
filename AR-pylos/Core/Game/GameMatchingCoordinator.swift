@@ -28,13 +28,14 @@ class GameMatchingCoordinator {
     private let disposeBag = DisposeBag()
 
     var communicator: CommunicatorAdapter
-    
+    var isHost: Bool = false
     init(connectionType: ConnectionType) {
         switch connectionType {
         case .gameKit:
             communicator = GameKitNetworkAdapter()
         case .bluetooth(let isHost):
             if isHost {
+                self.isHost = true
                 communicator = CentralBluetoothNetworkAdapter()
             }
             else {
@@ -49,40 +50,17 @@ class GameMatchingCoordinator {
     
     private func foundGame() -> Single<Void> {
         return Single<Void>.create { (observer) -> Disposable in
-            let challenge = GameStartChallengeModel()
-            guard let challengeData = try? JSONEncoder().encode(challenge) else {
+            let coordinator = GameCoordinator()
+            GameProcess.instance.gameCoordinator = coordinator
+            if self.isHost {
+                let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
+                GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
                 observer(.success(()))
-                return Disposables.create {}
             }
-            
-            self.communicator.inMessages.subscribe { [weak self] (event) in
-                guard let self = self else { return }
-                switch event {
-                case .next(let responseData):
-                    guard let chanllengeResponseModel = try? JSONDecoder().decode(GameStartChallengeModel.self, from: responseData) else { return }
-
-                    let coordinator = GameCoordinator()
-                    GameProcess.instance.gameCoordinator = coordinator
-                    if challenge.time > chanllengeResponseModel.time {
-                        let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
-                        
-                        GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                        observer(.success(()))
-                    }
-                    else {
-                        GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
-                        observer(.success(()))
-                    }
-                case .error(_):
-                    break
-                case .completed:
-                    break
-                }
-            }.disposed(by: self.disposeBag)
-            Observable.just(Void.self).delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { _ in
-                self.communicator.outMessages.accept(challengeData)
-            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
-            
+            else {
+                GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
+                observer(.success(()))
+            }
             return Disposables.create {}
         }
     }
