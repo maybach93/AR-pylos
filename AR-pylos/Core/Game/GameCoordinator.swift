@@ -36,6 +36,7 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         return stashedItems[player] ?? []
     }
     
+    public var currentServerPayload: ServerMessagePayloadProtocol?
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
@@ -94,6 +95,7 @@ extension GameCoordinator {
     func handlePlayerTurn(payload: PlayerTurnServerPayload) {
         guard let player = self.player else { return }
         if payload.isPlayerTurn {
+            self.currentServerPayload = payload
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: player, fromCoordinate: nil, toCoordinate: payload.availablePointsFromStash![0], item: self.myStashedItems[0])))
             }
