@@ -14,10 +14,6 @@ class PlayerWonGameState: BaseGameState {
         return .playerWon
     }
     
-    deinit {
-        print("")
-    }
-    
     override func movingFromPreviousState() {
         self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self, let currentPlayer = self.context.currentPlayer else { return Disposables.create {} }

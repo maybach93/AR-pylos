@@ -32,9 +32,9 @@ struct PrepareGameView: View {
             }.onAppear {
                 self.viewModel.start()
             })
-        case .game:
+        case .game(let coordinator):
             return AnyView(NavigationView {
-                GameView(viewModel: GameViewModel(router: router))
+                GameView(viewModel: GameViewModel(router: router, coordinator: coordinator))
             })
         }
     }

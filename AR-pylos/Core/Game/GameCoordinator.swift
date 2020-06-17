@@ -38,6 +38,9 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     }
     
     public var currentServerPayload: ServerMessagePayloadProtocol?
+    
+    var gameEnded: PublishSubject<Void> = PublishSubject<Void>()
+    
     //MARK: - Input
     var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
     
@@ -93,6 +96,9 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         case .playerTurn:
             guard let payload = message.payload as? PlayerTurnServerPayload else { return }
             self.handlePlayerTurn(payload: payload)
+        case .playerWon:
+            guard let payload = message.payload as? PlayerWonServerPayload else { return }
+            self.handlePlayerWon(payload: payload)
         default:
             break
         }
@@ -127,5 +133,11 @@ extension GameCoordinator {
         else {
             self.arManager.updateWaitingState()
         }
+    }
+}
+extension GameCoordinator {
+    func handlePlayerWon(payload: PlayerWonServerPayload) {
+        self.gameEnded.onNext(())
+        self.arManager.updateFinishState(isWon: payload.winner == self.player!)
     }
 }

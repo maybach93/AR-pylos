@@ -21,9 +21,7 @@ class FindGameViewModel: ObservableObject {
     func start(isHost: Bool) {
         self.matchingCoordinator = GameMatchingCoordinator(connectionType: .bluetooth(isHost: isHost))
         state = .gameCenter
-        self.matchingCoordinator?.findGame().subscribe({ (event) in
-            self.router.firstController = .game
-            }).disposed(by: disposeBag)
+        self.matchingCoordinator?.findGame().subscribe(onSuccess: { self.router.firstController = .game($0) }).disposed(by: disposeBag)
     }
 }
 

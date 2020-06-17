@@ -44,22 +44,21 @@ class GameMatchingCoordinator {
         }
     }
     
-    func findGame() -> Single<Void> {
+    func findGame() -> Single<GameCoordinator> {
         return self.communicator.findMatch().flatMap({ _ in self.foundGame() })
     }
     
-    private func foundGame() -> Single<Void> {
-        return Single<Void>.create { (observer) -> Disposable in
+    private func foundGame() -> Single<GameCoordinator> {
+        return Single<GameCoordinator>.create { (observer) -> Disposable in
             let coordinator = GameCoordinator()
-            GameProcess.instance.gameCoordinator = coordinator
             if self.isHost {
                 let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
                 GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                observer(.success(()))
+                observer(.success(coordinator))
             }
             else {
                 GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
-                observer(.success(()))
+                observer(.success(coordinator))
             }
             return Disposables.create {}
         }

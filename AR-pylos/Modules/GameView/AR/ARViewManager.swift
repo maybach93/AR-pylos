@@ -61,6 +61,12 @@ class ARViewManager: NSObject, ObservableObject {
     
     //MARK: - Public
     
+    public func resetTracking() {
+        if let configuration = arView?.session.configuration {
+            arView?.session.run(configuration, options: .resetTracking)
+        }
+    }
+    
     public func updateGameConfig(player: Player, map: [[WrappedMapCell]], stashedItems: [Player: [Ball]]) {
         self.scenePlacements.forEach({ $0.removeFromParent() })
         self.scenePlacements.removeAll()
@@ -81,6 +87,15 @@ class ARViewManager: NSObject, ObservableObject {
         (self.sceneFilledBalls.filter({ availableToMove.contains($0.0) }).map({ $0.1 }) + self.sceneStashedBalls).forEach { (entity) in
             let gesture = arView?.installGestures(.translation, for: entity as! HasCollision)
             gesture?.first?.addTarget(gestureDelegate, action: #selector(gestureDelegate.onTap(_:)))
+        }
+    }
+    
+    public func updateFinishState(isWon: Bool) {
+        if isWon {
+            scene.winner?.isEnabled = true
+        }
+        else {
+            scene.looser?.isEnabled = true
         }
     }
     
@@ -138,6 +153,8 @@ class ARViewManager: NSObject, ObservableObject {
         scene = try! ARGameComposer.loadARGameScene()
         self.placement = scene.placement?.clone(recursive: true)
         scene.placement?.removeFromParent()
+        scene.looser?.isEnabled = false
+        scene.winner?.isEnabled = false
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
         
