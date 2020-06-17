@@ -100,6 +100,8 @@ class ARViewManager: NSObject, ObservableObject {
         }
     }
     
+    //MARK: - Internal
+    
     internal func gestureFinishedTouch(entity: Entity, availablePlaced: Entity?) {
         guard let availablePlaced = availablePlaced else { return }
         guard let entityName = ARViewManager.EntityNames(rawValue: entity.name) else { return }

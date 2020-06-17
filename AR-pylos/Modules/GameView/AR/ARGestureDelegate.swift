@@ -65,11 +65,6 @@ class ARGestureDelegate {
                     if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
                         event.entityA.position.y += 0.007
                     }
-                case .availableBall:
-                    if self.snappedAvailableEntity != event.entityB {
-//                        event.entityA.position = event.entityB.position
-//                        self.snappedAvailableEntity = event.entityB
-                    }
                 default:
                     break
                 }
