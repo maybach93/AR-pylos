@@ -26,7 +26,7 @@ struct GameView: View {
         case .initial:
             return AnyView(NavigationView {
                 ZStack(content: {
-                    ARDisplayView(arViewManager: self.viewModel.arManager)
+                    ARDisplayView(arViewManager: self.viewModel.coordinator.arManager)
                 })
             }).onAppear {
                 self.viewModel.start()

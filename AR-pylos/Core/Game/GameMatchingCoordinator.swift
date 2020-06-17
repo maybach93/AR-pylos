@@ -62,7 +62,8 @@ class GameMatchingCoordinator {
                     guard let chanllengeResponseModel = try? JSONDecoder().decode(GameStartChallengeModel.self, from: responseData) else { return }
 
                     let coordinator = GameCoordinator()
-                    if challenge.time < chanllengeResponseModel.time {
+                    GameProcess.instance.gameCoordinator = coordinator
+                    if challenge.time > chanllengeResponseModel.time {
                         let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
                         
                         GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))

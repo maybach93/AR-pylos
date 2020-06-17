@@ -27,9 +27,10 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     
     private let disposeBag = DisposeBag()
 
-    private var player: Player?
+    @Published var arManager: ARViewManager = ARViewManager()
     
-    private var map: [[WrappedMapCell]] = []
+    private var player: Player?
+    internal var map: [[WrappedMapCell]] = []
     private var stashedItems: [Player: [Ball]] = [:]
     private var myStashedItems: [Ball] {
         guard let player = self.player else { return [] }
@@ -79,7 +80,7 @@ extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
         self.player = payload.player
         self.player?.playerName = "Vitalii"
-        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
+        _ = self.arManager.arViewInitialized.take(1).map({ _ in self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!))) })
     }
 }
 
@@ -87,7 +88,7 @@ extension GameCoordinator {
     func handleUpdateGameConfig(payload: GameConfigServerPayload) {
         self.map = payload.map
         self.stashedItems = payload.stashedItems
-        //Draw UI
+        self.arManager.updateGameConfig(player: self.player!, map: self.map, stashedItems: self.stashedItems)
     }
 }
 
