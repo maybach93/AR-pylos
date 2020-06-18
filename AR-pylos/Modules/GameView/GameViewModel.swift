@@ -18,7 +18,7 @@ class GameViewModel: ObservableObject {
     init(router: Router, coordinator: GameCoordinator) {
         self.router = router
         self.coordinator = coordinator
-        coordinator.gameEnded.take(1).subscribe(onNext: { _ in self.gameEnd() }).disposed(by: disposeBag)
+        coordinator.gameEnded.take(1).subscribe(onNext: { [weak self] _ in self?.gameEnd() }).disposed(by: disposeBag)
     }
     func start() {
 
@@ -32,6 +32,7 @@ class GameViewModel: ObservableObject {
     
     func exitGamePressed() {
         router.firstController = .main
+        self.state = .initial
         GameProcess.instance.terminateServer()
     }
 }

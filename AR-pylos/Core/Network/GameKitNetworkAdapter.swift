@@ -10,6 +10,9 @@
 import Foundation
 import GameKit
 
+struct ConnectionError: Error {
+    
+}
 protocol CommunicatorAdapter {
     var outMessages: PublishRelay<Data> { get } //Messages to send to others
     var inMessages: PublishSubject<Data> { get } //Messages received from others

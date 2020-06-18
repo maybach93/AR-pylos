@@ -14,7 +14,7 @@ protocol GameCoordinatorBridgeProtocol: class, GameCoordinatorInputProtocol, Gam
 }
 protocol GameCoordinatorInputProtocol {
     //Interface to receive actions from server
-    var serverStateMessages: PublishRelay<ServerMessage> { get }
+    var serverStateMessages: PublishSubject<ServerMessage> { get }
 }
 protocol GameCoordinatorOutputProtocol {
     //Interface to send actions to server (player actions)
@@ -42,47 +42,33 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
     var gameEnded: PublishSubject<Void> = PublishSubject<Void>()
     
     //MARK: - Input
-    var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
+    var serverStateMessages: PublishSubject<ServerMessage> = PublishSubject<ServerMessage>()
     
     //MARK: - Output
     
     var playerStateMessage: PublishSubject<PlayerMessage> = PublishSubject<PlayerMessage>()
     
     init() {
-        serverStateMessages.subscribe { (event) in
-            switch event {
-            case .next(let message):
-                self.handle(message: message)
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
-        arManager.playerPickedItem.subscribe { [weak self] (event) in
+        serverStateMessages.subscribe(onNext: { [weak self] (message) in
+            self?.handle(message: message)
+            }, onError: { [weak self] (_) in
+                self?.gameEnded.onNext(())
+        }).disposed(by: disposeBag)
+        arManager.playerPickedItem.subscribe(onNext: { [weak self] (coordinate) in
             guard let self = self else { return }
-            switch event {
-            case .next(let coordinate):
-                guard let payload = self.currentServerPayload as? PlayerTurnServerPayload else { return }
-                if let coordinate = coordinate {
-                    self.arManager.updateAvailablePoints(coordinates: payload.availableToMove?[coordinate] ?? [])
-                }
-                else {
-                    self.arManager.updateAvailablePoints(coordinates: payload.availablePointsFromStash ?? [])
-                }
-            case .error(_), .completed:
-                break
+            guard let payload = self.currentServerPayload as? PlayerTurnServerPayload else { return }
+            if let coordinate = coordinate {
+                self.arManager.updateAvailablePoints(coordinates: payload.availableToMove?[coordinate] ?? [])
             }
-        }.disposed(by: disposeBag)
-        arManager.playerPlacedItem.subscribe { [weak self] (event) in
+            else {
+                self.arManager.updateAvailablePoints(coordinates: payload.availablePointsFromStash ?? [])
+            }
+        }).disposed(by: disposeBag)
+        
+        arManager.playerPlacedItem.subscribe(onNext: { [weak self] (item) in
             guard let self = self else { return }
-            switch event {
-            case .next(let item):
-                self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: self.player!, fromCoordinate: item.0, toCoordinate: item.1, item: self.myStashedItems[0])))
-            case .error(_), .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+            self.playerStateMessage.onNext(PlayerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnMessagePayload(player: self.player!, fromCoordinate: item.0, toCoordinate: item.1, item: self.myStashedItems[0])))
+        }).disposed(by: disposeBag)
     }
     
     func handle(message: ServerMessage) {
@@ -109,7 +95,8 @@ extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
         self.player = payload.player
         self.player?.playerName = "Vitalii"
-        self.arManager.arViewInitialized.distinctUntilChanged().filter({ $0 }).subscribe { (event) in
+        self.arManager.arViewInitialized.distinctUntilChanged().filter({ $0 }).subscribe { [weak self] (event) in
+            guard let self = self else { return }
             self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
         }.disposed(by: disposeBag)
     }

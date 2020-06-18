@@ -16,7 +16,7 @@ enum ConnectionType {
     case bluetooth(isHost: Bool), gameKit
 }
 
-struct GameStartChallengeModel: Codable {
+struct GameSyncModel: Codable {
     var time: TimeInterval
     init() {
         self.time = Date.timeIntervalSinceReferenceDate
@@ -49,17 +49,28 @@ class GameMatchingCoordinator {
     }
     
     private func foundGame() -> Single<GameCoordinator> {
-        return Single<GameCoordinator>.create { (observer) -> Disposable in
-            let coordinator = GameCoordinator()
-            if self.isHost {
-                let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
-                GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
-                observer(.success(coordinator))
+        return Single<GameCoordinator>.create { [weak self] (observer) -> Disposable in
+            guard let self = self else { return Disposables.create {} }
+            let challenge = GameSyncModel()
+            guard let challengeData = try? JSONEncoder().encode(challenge) else { return Disposables.create {} }
+            self.communicator.outMessages.accept(challengeData)
+            let dispose: Disposable = Observable<Int>.interval(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance).subscribe { (_) in
+                self.communicator.outMessages.accept(challengeData)
             }
-            else {
-                GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
-                observer(.success(coordinator))
-            }
+            self.communicator.inMessages.take(1).subscribe(onNext: { (data) in
+                let coordinator = GameCoordinator()
+                if self.isHost {
+                    let remotePlayerCoordinator = RemotePlayerServerBridge(communicator: self.communicator)
+                    GameProcess.instance.host(server: GameServer(gameCoordinators: [coordinator, remotePlayerCoordinator]))
+                    observer(.success(coordinator))
+                }
+                else {
+                    GameProcess.instance.host(server: RemoteServerBridge(communicator: self.communicator, coordinator: coordinator))
+                    observer(.success(coordinator))
+                }
+                dispose.dispose()
+            }).disposed(by: self.disposeBag)
+            
             return Disposables.create {}
         }
     }

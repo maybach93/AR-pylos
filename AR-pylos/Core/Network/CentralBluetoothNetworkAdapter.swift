@@ -38,9 +38,9 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     init() {
         startCentral()
-        outMessages.subscribe(onNext: { (data) in
-            guard let remotePeripheral = self.remotePeripheral else { return }
-            self.central.sendData(data, toRemotePeer: remotePeripheral, completionHandler: nil)
+        outMessages.subscribe(onNext: { [weak self] (data) in
+            guard let remotePeripheral = self?.remotePeripheral else { return }
+            self?.central.sendData(data, toRemotePeer: remotePeripheral, completionHandler: nil)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
     deinit {
@@ -69,13 +69,13 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
             self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
                 guard let self = self else { return }
                 if let discovery = discoveries.first {
-                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
+                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { [weak self] remotePeripheral, error in
                         guard error == nil else {
                             print("Error connecting peripheral: \(String(describing: error))")
                             return
                         }
-                        self.remotePeripheral = remotePeripheral
-                        self.central.interruptScan()
+                        self?.remotePeripheral = remotePeripheral
+                        self?.central.interruptScan()
                         observer(.success(()))
                     }
                 }
@@ -120,6 +120,7 @@ extension CentralBluetoothNetworkAdapter: BKCentralDelegate, BKRemotePeripheralD
     }
     
     func central(_ central: BKCentral, remotePeripheralDidDisconnect remotePeripheral: BKRemotePeripheral) {
+        self.inMessages.onError(ConnectionError())
     }
     
 }

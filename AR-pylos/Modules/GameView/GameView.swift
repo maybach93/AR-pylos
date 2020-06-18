@@ -16,7 +16,8 @@ struct GameView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @ObservedObject var viewModel: GameViewModel
-    
+    @State private var exitAlert = false
+
     init(viewModel: GameViewModel) {
         self.viewModel = viewModel
     }
@@ -32,12 +33,21 @@ struct GameView: View {
                         HStack {
                             Spacer()
                             if viewModel.state == .gameEnd {
-                                Button("exit game") {
+                                Button("Exit game") {
                                     self.viewModel.exitGamePressed()
                                 }
                             }
                             else {
-                                Button("reset tracking") {
+                                Button("Exit game") {
+                                    self.exitAlert = true
+                                }.alert(isPresented: $exitAlert) {
+                                    Alert(title: Text("Confirm exit current game"), primaryButton: Alert.Button.default(Text("Confirm"), action: {
+                                        self.viewModel.exitGamePressed()
+                                    }), secondaryButton: Alert.Button.cancel(Text("Cancel"), action: {
+                                        self.exitAlert = false
+                                    }))
+                                }
+                                Button("Reset tracking") {
                                     self.viewModel.resetTracking()
                                 }
                             }
