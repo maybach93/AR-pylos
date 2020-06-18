@@ -1,0 +1,11 @@
+framework module BluetoothKit {
+  umbrella header "BluetoothKit.h"
+
+  export *
+  module * { export * }
+}
+
+module BluetoothKit.Swift {
+    header "BluetoothKit-Swift.h"
+    requires objc
+}

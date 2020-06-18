@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-
 struct PrepareGameView: View {
     @EnvironmentObject var router: Router
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
