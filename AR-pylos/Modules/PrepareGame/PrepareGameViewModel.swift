@@ -20,7 +20,8 @@ class PrepareGameViewModel: ObservableObject {
         self.router = router
     }
     func start() {
-        self.state = .game(coordinator)
+        self.router.firstController = .rootView(AnyView(GameView(viewModel: GameViewModel(router: router, coordinator: coordinator))))
+        self.state = .initial
     }
 }
 
