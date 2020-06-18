@@ -29,9 +29,9 @@ class PeripheralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     init() {
         startPeripheral()
-        outMessages.subscribe(onNext: { (data) in
-            guard let remoteCentral = self.peripheral.connectedRemoteCentrals.first else { return }
-            self.peripheral.sendData(data, toRemotePeer: remoteCentral, completionHandler: nil)
+        outMessages.subscribe(onNext: { [weak self] (data) in
+            guard let remoteCentral = self?.peripheral.connectedRemoteCentrals.first else { return }
+            self?.peripheral.sendData(data, toRemotePeer: remoteCentral, completionHandler: nil)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
     

@@ -21,9 +21,7 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     //MARK: - Private
     
     private let disposeBag = DisposeBag()
-    deinit {
-        print("")
-    }
+
     private var communicator: CommunicatorAdapter
     
     init(communicator: CommunicatorAdapter) {

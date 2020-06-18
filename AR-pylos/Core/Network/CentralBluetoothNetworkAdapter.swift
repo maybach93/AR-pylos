@@ -38,9 +38,9 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     init() {
         startCentral()
-        outMessages.subscribe(onNext: { (data) in
-            guard let remotePeripheral = self.remotePeripheral else { return }
-            self.central.sendData(data, toRemotePeer: remotePeripheral, completionHandler: nil)
+        outMessages.subscribe(onNext: { [weak self] (data) in
+            guard let remotePeripheral = self?.remotePeripheral else { return }
+            self?.central.sendData(data, toRemotePeer: remotePeripheral, completionHandler: nil)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: disposeBag)
     }
     deinit {
