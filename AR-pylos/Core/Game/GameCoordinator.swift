@@ -82,11 +82,12 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         case .playerTurn:
             guard let payload = message.payload as? PlayerTurnServerPayload else { return }
             self.handlePlayerTurn(payload: payload)
+        case .playerFinishedTurn:
+            guard let payload = message.payload as? PlayerFinishedTurnServerPayload else { return }
+            self.handlePlayerFinishedTurn(payload: payload)
         case .playerWon:
             guard let payload = message.payload as? PlayerWonServerPayload else { return }
             self.handlePlayerWon(payload: payload)
-        default:
-            break
         }
     }
 }
@@ -119,6 +120,14 @@ extension GameCoordinator {
         }
         else {
             self.arManager.updateWaitingState()
+        }
+    }
+}
+extension GameCoordinator {
+    func handlePlayerFinishedTurn(payload: PlayerFinishedTurnServerPayload) {
+        self.handleUpdateGameConfig(payload: payload.gameConfig)
+        if payload.player != payload.currentPlayer {
+            self.arManager.updateOpponentTurn(fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate)
         }
     }
 }

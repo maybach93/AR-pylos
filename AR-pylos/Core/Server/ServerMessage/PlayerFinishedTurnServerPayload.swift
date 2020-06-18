@@ -15,4 +15,6 @@ struct PlayerFinishedTurnServerPayload: ServerMessagePayloadProtocol {
     var fromCoordinate: Coordinate? //Return nil if taken from stash
     var toCoordinate: Coordinate
     var item: Ball
+    
+    var gameConfig: GameConfigServerPayload
 }

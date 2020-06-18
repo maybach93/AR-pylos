@@ -91,6 +91,7 @@ class ARViewManager: NSObject, ObservableObject {
     }
     
     public func updateFinishState(isWon: Bool) {
+        self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         if isWon {
             scene.winner?.isEnabled = true
         }
@@ -102,6 +103,18 @@ class ARViewManager: NSObject, ObservableObject {
     public func updateWaitingState() {
         scene.cube?.isEnabled = true
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
+    }
+    
+    public func updateOpponentTurn(fromCoordinate: Coordinate?, toCoordinate: Coordinate) {
+        guard let entityToAnimate = self.sceneFilledBalls.first(where: { $0.0 == toCoordinate })?.1 else { return }
+        let position = entityToAnimate.transform
+        if let fromCoordinate = fromCoordinate {
+            entityToAnimate.transform.translation = self.position(for: fromCoordinate)
+        }
+        else {
+            entityToAnimate.transform.translation = Constants.initialStashPosition
+        }
+        entityToAnimate.move(to: position, relativeTo: scene, duration: TimeInterval(2))
     }
     
     public func updateAvailablePoints(coordinates: [Coordinate]) {
