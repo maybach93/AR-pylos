@@ -21,36 +21,23 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     //MARK: - Private
     
     private let disposeBag = DisposeBag()
-
+    deinit {
+        print("")
+    }
     private var communicator: CommunicatorAdapter
     
     init(communicator: CommunicatorAdapter) {
         self.communicator = communicator
       
-        serverStateMessages.subscribe { (event) in
-            switch event {
-                
-            case .next(let message):
-                guard let data = try? JSONEncoder().encode(message) else { return }
-                self.communicator.outMessages.accept(data)
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+        serverStateMessages.subscribe(onNext: { [weak self] (message) in
+            guard let data = try? JSONEncoder().encode(message) else { return }
+            self?.communicator.outMessages.accept(data)
+        }).disposed(by: disposeBag)
         
-        self.communicator.inMessages.subscribe { (event) in
-            switch event {
-            case .next(let data):
-                guard let message = try? JSONDecoder().decode(PlayerMessage.self, from: data) else { return }
-                self.playerStateMessage.onNext(message)
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+        self.communicator.inMessages.subscribe(onNext: { [weak self] (data) in
+            guard let message = try? JSONDecoder().decode(PlayerMessage.self, from: data) else { return }
+            self?.playerStateMessage.onNext(message)
+        }).disposed(by: disposeBag)
     }
 }
 
@@ -68,28 +55,14 @@ class RemoteServerBridge: GameServerProtocol {
         self.communicator = communicator
         self.coordinator = coordinator
         
-        self.coordinator.playerStateMessage.subscribe { (event) in
-            switch event {
-            case .next(let message):
-                guard let data = try? JSONEncoder().encode(message) else { return }
-                self.communicator.outMessages.accept(data)
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+        self.coordinator.playerStateMessage.subscribe(onNext: { [weak self] (message) in
+            guard let data = try? JSONEncoder().encode(message) else { return }
+            self?.communicator.outMessages.accept(data)
+        }).disposed(by: disposeBag)
         
-        self.communicator.inMessages.subscribe { (event) in
-            switch event {
-            case .next(let data):
-                guard let message = try? JSONDecoder().decode(ServerMessage.self, from: data) else { return }
-                self.coordinator.serverStateMessages.accept(message)
-            case .error(_):
-                break
-            case .completed:
-                break
-            }
-        }.disposed(by: disposeBag)
+        self.communicator.inMessages.subscribe(onNext: { [weak self] (data) in
+            guard let message = try? JSONDecoder().decode(ServerMessage.self, from: data) else { return }
+            self?.coordinator.serverStateMessages.accept(message)
+        }).disposed(by: disposeBag)
     }
 }

@@ -22,7 +22,7 @@ extension CentralBluetoothNetworkAdapter {
 class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     private let disposeBag = DisposeBag()
-    
+
     var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
     var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
     
@@ -69,13 +69,13 @@ class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
             self.central.scanContinuouslyWithChangeHandler({ [weak self] changes, discoveries in
                 guard let self = self else { return }
                 if let discovery = discoveries.first {
-                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { remotePeripheral, error in
+                    self.central.connect(remotePeripheral: discovery.remotePeripheral) { [weak self] remotePeripheral, error in
                         guard error == nil else {
                             print("Error connecting peripheral: \(String(describing: error))")
                             return
                         }
-                        self.remotePeripheral = remotePeripheral
-                        self.central.interruptScan()
+                        self?.remotePeripheral = remotePeripheral
+                        self?.central.interruptScan()
                         observer(.success(()))
                     }
                 }

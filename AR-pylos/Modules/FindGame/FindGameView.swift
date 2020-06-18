@@ -34,15 +34,21 @@ struct FindGameView: View {
                         self.viewModel.start(isHost: false)
                     }
                 })
-            })
+            }).onDisappear {
+                self.viewModel.onDissapear()
+            }
         case .bluetooth:
             return AnyView(NavigationView {
                 Text("looking for teammate")
-            })
+            }).onDisappear {
+                self.viewModel.onDissapear()
+            }
         case .gameCenter:
             return AnyView(NavigationView {
                 Text("looking for teammate...")
-            })
+            }).onDisappear {
+                self.viewModel.onDissapear()
+            }
         }
     }
     var body: some View {
