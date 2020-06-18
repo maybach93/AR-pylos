@@ -31,7 +31,20 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
             switch event {
                 
             case .next(let message):
-                self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: Player(id: "w"))))
+                guard let data = try? JSONEncoder().encode(message) else { return }
+                self.communicator.outMessages.accept(data)
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
+        
+        self.communicator.inMessages.subscribe { (event) in
+            switch event {
+            case .next(let data):
+                guard let message = try? JSONDecoder().decode(PlayerMessage.self, from: data) else { return }
+                self.playerStateMessage.onNext(message)
             case .error(_):
                 break
             case .completed:
@@ -45,11 +58,38 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
 //Reveives actions from server via communicator and emit them to coordinator
 //subscribes to actions from coordinator and sends them to RemotePlayerServerBridge(via communicator)
 class RemoteServerBridge: GameServerProtocol {
+    
+    private let disposeBag = DisposeBag()
+
     private var communicator: CommunicatorAdapter
     private var coordinator: GameCoordinatorBridgeProtocol
     
     init(communicator: CommunicatorAdapter, coordinator: GameCoordinatorBridgeProtocol) {
         self.communicator = communicator
         self.coordinator = coordinator
+        
+        self.coordinator.playerStateMessage.subscribe { (event) in
+            switch event {
+            case .next(let message):
+                guard let data = try? JSONEncoder().encode(message) else { return }
+                self.communicator.outMessages.accept(data)
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
+        
+        self.communicator.inMessages.subscribe { (event) in
+            switch event {
+            case .next(let data):
+                guard let message = try? JSONDecoder().decode(ServerMessage.self, from: data) else { return }
+                self.coordinator.serverStateMessages.accept(message)
+            case .error(_):
+                break
+            case .completed:
+                break
+            }
+        }.disposed(by: disposeBag)
     }
 }

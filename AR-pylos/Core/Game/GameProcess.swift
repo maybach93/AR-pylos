@@ -10,15 +10,8 @@ import Foundation
 
 class GameProcess {
     var server: GameServerProtocol?
-    var gameCoordinator: GameCoordinator?
     
     static var instance = GameProcess()
-    
-    func terminate() {
-        //Send command to server and GameCoordinator to stop game
-        self.server = nil
-        self.gameCoordinator = nil
-    }
     
     func terminateServer() {
         self.server = nil
@@ -26,10 +19,6 @@ class GameProcess {
     
     func host(server: GameServerProtocol) {
         self.server = server
-    }
-    
-    func startProcess(coordinator: GameCoordinator) {
-        self.gameCoordinator = coordinator
     }
 }
 

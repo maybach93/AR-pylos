@@ -35,8 +35,9 @@ class ARViewManager: NSObject, ObservableObject {
     private let disposeBag = DisposeBag()
     private var cancelBag: Set<AnyCancellable> = []
     
-    var arViewInitialized: PublishSubject<Void> = PublishSubject<Void>()
+    var arViewInitialized: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var playerPickedItem: PublishSubject<Coordinate?> = PublishSubject<Coordinate?>()
+    var playerPlacedItem: PublishSubject<(Coordinate?, Coordinate)> = PublishSubject<(Coordinate?, Coordinate)>()
     
     lazy private var gestureDelegate: ARGestureDelegate = {
         return ARGestureDelegate(arViewManager: self)
@@ -60,6 +61,12 @@ class ARViewManager: NSObject, ObservableObject {
     
     //MARK: - Public
     
+    public func resetTracking() {
+        if let configuration = arView?.session.configuration {
+            arView?.session.run(configuration, options: .resetTracking)
+        }
+    }
+    
     public func updateGameConfig(player: Player, map: [[WrappedMapCell]], stashedItems: [Player: [Ball]]) {
         self.scenePlacements.forEach({ $0.removeFromParent() })
         self.scenePlacements.removeAll()
@@ -75,11 +82,26 @@ class ARViewManager: NSObject, ObservableObject {
     }
     
     public func updatePlayerTurn(availableToMove: [Coordinate]) {
-        self.arView?.gestureRecognizers?.removeAll()
+        scene.cube?.isEnabled = false
+        self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         (self.sceneFilledBalls.filter({ availableToMove.contains($0.0) }).map({ $0.1 }) + self.sceneStashedBalls).forEach { (entity) in
             let gesture = arView?.installGestures(.translation, for: entity as! HasCollision)
             gesture?.first?.addTarget(gestureDelegate, action: #selector(gestureDelegate.onTap(_:)))
         }
+    }
+    
+    public func updateFinishState(isWon: Bool) {
+        if isWon {
+            scene.winner?.isEnabled = true
+        }
+        else {
+            scene.looser?.isEnabled = true
+        }
+    }
+    
+    public func updateWaitingState() {
+        scene.cube?.isEnabled = true
+        self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
     }
     
     public func updateAvailablePoints(coordinates: [Coordinate]) {
@@ -93,6 +115,37 @@ class ARViewManager: NSObject, ObservableObject {
         }
     }
     
+    //MARK: - Internal
+    
+    internal func gestureFinishedTouch(entity: Entity, availablePlaced: Entity?) {
+        guard let availablePlaced = availablePlaced else { return }
+        guard let entityName = ARViewManager.EntityNames(rawValue: entity.name) else { return }
+        switch entityName {
+        case .stashedBall:
+            guard let coordinate = self.sceneAvailableToFill.first(where: { $0.1 === availablePlaced })?.0 else { return }
+            self.playerPlacedItem.onNext((nil, coordinate))
+        case .filledBall:
+            let coordinatePicked = self.sceneFilledBalls.first(where: { $0.1 === entity })?.0
+            guard let coordinatePlaced = self.sceneAvailableToFill.first(where: { $0.1 === availablePlaced })?.0 else { return }
+            self.playerPlacedItem.onNext((coordinatePicked, coordinatePlaced))
+        default:
+            break
+        }
+        self.updateAvailablePoints(coordinates: [])
+    }
+    
+    internal func gestureBeganTouch(entity: Entity) {
+        guard let entityName = ARViewManager.EntityNames(rawValue: entity.name) else { return }
+        switch entityName {
+        case .stashedBall:
+            self.playerPickedItem.onNext(nil)
+        case .filledBall:
+            let coordinate = self.sceneFilledBalls.first(where: { $0.1 === entity })?.0
+            self.playerPickedItem.onNext(coordinate)
+        default:
+            break
+        }
+    }
     //MARK: - Private
     
     private func configureAR() {
@@ -100,14 +153,17 @@ class ARViewManager: NSObject, ObservableObject {
         scene = try! ARGameComposer.loadARGameScene()
         self.placement = scene.placement?.clone(recursive: true)
         scene.placement?.removeFromParent()
+        scene.looser?.isEnabled = false
+        scene.winner?.isEnabled = false
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
         
-        arViewInitialized.onNext(())
+        arViewInitialized.onNext(true)
     }
     
     private func updateStashedItems(playerItems: [Ball]) {
         let itemsCount = playerItems.count
+        guard itemsCount > 0 else { return }
         for index in 0...(itemsCount - 1) {
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)
@@ -124,7 +180,7 @@ class ARViewManager: NSObject, ObservableObject {
                 let placement = self.placement.clone(recursive: true)
                 placement.position = [self.placement.position.x + Float(i) * 0.08, self.placement.position.y, self.placement.position.z + Float(j) * 0.08]
                 self.scenePlacements.append(placement)
-                scene.addChild(placement, preservingWorldTransform: true)
+                scene.addChild(placement, preservingWorldTransform: false)
             }
         }
     }
@@ -172,11 +228,11 @@ class ARViewManager: NSObject, ObservableObject {
             color = .black
             size = Constants.ballDiameter / 2
         case .availableToFill:
-            color = .green
-            size = Constants.ballDiameter / 3
+            color = UIColor.green.withAlphaComponent(0.3)
+            size = Constants.ballDiameter / 4
         }
         let ball = BallEntity(color: color, position: position, radius: size)
-        scene.addChild(ball, preservingWorldTransform: true)
+        scene.addChild(ball, preservingWorldTransform: false)
         return ball
     }
 

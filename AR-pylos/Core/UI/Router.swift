@@ -12,7 +12,7 @@ import SwiftUI
 
 enum Controllers {
     case main
-    case game
+    case game(GameCoordinator)
     case find(FindGameViewModel)
     case rootView(AnyView)
 }

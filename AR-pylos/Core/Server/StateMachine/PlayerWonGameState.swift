@@ -14,10 +14,6 @@ class PlayerWonGameState: BaseGameState {
         return .playerWon
     }
     
-    deinit {
-        print("")
-    }
-    
     override func movingFromPreviousState() {
         self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self, let currentPlayer = self.context.currentPlayer else { return Disposables.create {} }
@@ -25,7 +21,7 @@ class PlayerWonGameState: BaseGameState {
             self.context.players.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .playerWon, payload: PlayerWonServerPayload(player: $0, winner: currentPlayer)))})
             observer.onNext(true)
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
+        }).delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
     }
     
     override func nextState() -> BaseGameState {

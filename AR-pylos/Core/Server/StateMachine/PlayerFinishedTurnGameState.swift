@@ -26,17 +26,19 @@ class PlayerFinishedTurnGameState: BaseGameState {
                     _ = self.context.game.moveItem(player: currentPlayer, fromCoordinate: fromCoordinate, toCoordinate: payload.toCoordinate)
                 }
                 else {
-                    _ = self.context.game.fillItem(player: currentPlayer, item: payload.item, coordinate: payload.toCoordinate)
+                    guard let stashedItem = self.context.game.stashedItems[payload.player]?.first else { return }
+                    _ = self.context.game.fillItem(player: currentPlayer, item: stashedItem, coordinate: payload.toCoordinate)
                 }
 
                 if self.context.game.map.availablePoints.isEmpty {
                     self.isCurrentPlayerWon = true
                 }
+                
                 self.context.players.filter({ $0 != currentPlayer }).forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnServerPayload(player: $0, currentPlayer: currentPlayer, fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate, item: payload.item))) })
                 observer.onNext(true)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(5), scheduler: MainScheduler.instance)
+        })
     }
     
     override func nextState() -> BaseGameState {

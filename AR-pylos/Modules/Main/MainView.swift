@@ -36,9 +36,9 @@ struct MainView: View {
             return AnyView(NavigationView {
                 view
             })
-        case .game:
+        case .game(let coordinator):
             return AnyView(NavigationView {
-                PrepareGameView(viewModel: PrepareGameViewModel(router: router))
+                PrepareGameView(viewModel: PrepareGameViewModel(router: router, coordinator: coordinator))
             })
         }
     }

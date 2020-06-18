@@ -23,10 +23,26 @@ struct GameView: View {
     
     private var content: some View {
         switch viewModel.state {
-        case .initial:
+        case .initial, .gameEnd:
             return AnyView(NavigationView {
                 ZStack(content: {
-                    ARDisplayView(arViewManager: self.viewModel.arManager)
+                    ARDisplayView(arViewManager: self.viewModel.coordinator.arManager)
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            if viewModel.state == .gameEnd {
+                                Button("exit game") {
+                                    self.viewModel.exitGamePressed()
+                                }
+                            }
+                            else {
+                                Button("reset tracking") {
+                                    self.viewModel.resetTracking()
+                                }
+                            }
+                        }
+                    }
                 })
             }).onAppear {
                 self.viewModel.start()

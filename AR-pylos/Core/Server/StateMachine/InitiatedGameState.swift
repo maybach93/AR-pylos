@@ -29,7 +29,9 @@ class InitiatedGameState: BaseGameState {
                     break
                 }
             }).disposed(by: self.disposeBag)
-            self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .initiated, payload: InitiatedServerMessagePayload(player: $0))) })
+            Observable.just(Void.self).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance).subscribe(onNext: { _ in
+                self.context.gameCoordinators.keys.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .initiated, payload: InitiatedServerMessagePayload(player: $0))) })
+            }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
         })
     }

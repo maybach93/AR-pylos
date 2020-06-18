@@ -34,8 +34,8 @@ struct GameMap: GameMapProtocol {
     
     var availableToMovePoints: [Coordinate] {
         let movablePoints = allPoints.filter({ self[$0]?.isMovable == true })
-        let highestAvailableToMoveZ = movablePoints.max(by: { $0.z > $1.z })?.z ?? 0 - 1
-        return movablePoints.filter({ $0.z <= highestAvailableToMoveZ })
+        let highestAvailableToMoveZ = availablePoints.max(by: { $0.z < $1.z })?.z ?? 0
+        return movablePoints.filter({ $0.z < highestAvailableToMoveZ })
     }
     
     var allPoints: [Coordinate] {

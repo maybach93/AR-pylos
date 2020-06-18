@@ -13,21 +13,20 @@ class PrepareGameViewModel: ObservableObject {
     var router: Router
     @Published private(set) var state: State = .initial
     private let disposeBag = DisposeBag()
-    private weak var coordinator: GameCoordinator? = GameProcess.instance.gameCoordinator
+    private var coordinator: GameCoordinator
     
-    init(router: Router) {
+    init(router: Router, coordinator: GameCoordinator) {
+        self.coordinator = coordinator
         self.router = router
     }
     func start() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.state = .game
-        }
+        self.state = .game(coordinator)
     }
 }
 
 extension PrepareGameViewModel {
     enum State {
         case initial
-        case game
+        case game(GameCoordinator)
     }
 }
