@@ -11,6 +11,8 @@
 		192FDE98249BD48700297977 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FDE97249BD48700297977 /* SettingsView.swift */; };
 		192FDE9A249BD49200297977 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FDE99249BD49200297977 /* SettingsViewModel.swift */; };
 		192FDE9F249BD9C900297977 /* BluetoothKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 192FDE9D249BD98700297977 /* BluetoothKit.framework */; };
+		192FDEA2249BEB4D00297977 /* LocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FDEA1249BEB4D00297977 /* LocalRepository.swift */; };
+		192FDEA4249BF09D00297977 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FDEA3249BF09D00297977 /* Colors.swift */; };
 		19378F7724885D1900E3EBF8 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F7524885D1900E3EBF8 /* RxRelay.framework */; };
 		19378F7824885D1900E3EBF8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19378F7624885D1900E3EBF8 /* RxCocoa.framework */; };
 		19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19378F7A24886B6300E3EBF8 /* MapItem.swift */; };
@@ -90,6 +92,8 @@
 		192FDE97249BD48700297977 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		192FDE99249BD49200297977 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		192FDE9D249BD98700297977 /* BluetoothKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BluetoothKit.framework; sourceTree = "<group>"; };
+		192FDEA1249BEB4D00297977 /* LocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRepository.swift; sourceTree = "<group>"; };
+		192FDEA3249BF09D00297977 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		19378F7424885CC900E3EBF8 /* AR-pylos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AR-pylos-Bridging-Header.h"; sourceTree = "<group>"; };
 		19378F7524885D1900E3EBF8 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
 		19378F7624885D1900E3EBF8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 		1905F6F024832A92003059A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				192FDEA0249BEB3300297977 /* Repository */,
 				198A945E24903DC7006F6D1E /* UI */,
 				19378FAF248ECB0700E3EBF8 /* Extension */,
 				19378F91248B337200E3EBF8 /* Network */,
@@ -223,6 +228,15 @@
 				192FDE9D249BD98700297977 /* BluetoothKit.framework */,
 			);
 			path = Libraries;
+			sourceTree = "<group>";
+		};
+		192FDEA0249BEB3300297977 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				192FDEA1249BEB4D00297977 /* LocalRepository.swift */,
+				192FDEA3249BF09D00297977 /* Colors.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		19378F7924886B5500E3EBF8 /* Models */ = {
@@ -629,6 +643,7 @@
 				198A946A2491AB92006F6D1E /* GameView.swift in Sources */,
 				198A94B924968377006F6D1E /* ARGameComposer.rcproject in Sources */,
 				19378FA7248D488200E3EBF8 /* BaseGameState.swift in Sources */,
+				192FDEA4249BF09D00297977 /* Colors.swift in Sources */,
 				198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */,
 				19378FB9248ED68900E3EBF8 /* SceneDelegate.swift in Sources */,
 				198A94952495D666006F6D1E /* ARDisplayView.swift in Sources */,
@@ -648,6 +663,7 @@
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				198A94762493008C006F6D1E /* StartedGameState.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
+				192FDEA2249BEB4D00297977 /* LocalRepository.swift in Sources */,
 				198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */,
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
 				198A94882493E6AB006F6D1E /* PlayerWonServerPayload.swift in Sources */,

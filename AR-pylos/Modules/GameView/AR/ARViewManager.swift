@@ -12,8 +12,8 @@ import Combine
 
 extension ARViewManager {
     enum BallType {
-        case white
-        case black
+        case my
+        case opponent
         case availableToFill
     }
     enum EntityNames: String {
@@ -34,6 +34,14 @@ class ARViewManager: NSObject, ObservableObject {
     
     private let disposeBag = DisposeBag()
     private var cancelBag: Set<AnyCancellable> = []
+    private var repository: LocalRepository = LocalRepository()
+    lazy var myColor: UIColor = {
+        return (Colors(rawValue: repository.get(Int.self, LocalRepository.Keys.playerColor) ?? 0) ?? .white).uiColor
+    }()
+    
+    lazy var opponentColor: UIColor = {
+        return (Colors(rawValue: repository.get(Int.self, LocalRepository.Keys.opponentColor) ?? 0) ?? .black).uiColor
+    }()
     
     var arViewInitialized: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var playerPickedItem: PublishSubject<Coordinate?> = PublishSubject<Coordinate?>()
@@ -181,7 +189,7 @@ class ARViewManager: NSObject, ObservableObject {
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)
            
-            let addedBall = addBall(type: .white, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
+            let addedBall = addBall(type: .my, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
             addedBall.name = EntityNames.stashedBall.rawValue
             self.sceneStashedBalls.append(addedBall)
         }
@@ -210,7 +218,7 @@ class ARViewManager: NSObject, ObservableObject {
         
         func add(cell: WrappedMapCell, coordinate: Coordinate) {
             guard let item = cell.item else { return }
-            let addedBall = addBall(type: item.owner == player ? .white : .black, position: position(for: coordinate))
+            let addedBall = addBall(type: item.owner == player ? .my : .opponent, position: position(for: coordinate))
             addedBall.name = EntityNames.filledBall.rawValue
             self.sceneFilledBalls.append((coordinate, addedBall))
         }
@@ -234,11 +242,11 @@ class ARViewManager: NSObject, ObservableObject {
         let color: UIColor
         let size: Float
         switch type {
-        case .white:
-            color = .white
+        case .my:
+            color = self.myColor
             size = Constants.ballDiameter / 2
-        case .black:
-            color = .black
+        case .opponent:
+            color = self.opponentColor
             size = Constants.ballDiameter / 2
         case .availableToFill:
             color = UIColor.green.withAlphaComponent(0.3)

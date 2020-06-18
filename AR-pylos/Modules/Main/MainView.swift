@@ -22,10 +22,14 @@ struct MainView: View {
         case .main:
             return AnyView(NavigationView {
                 HStack {
-                    NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
-                        Text("start a new game")
-                    }.isDetailLink(false)
-
+                    VStack {
+                        NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
+                            Text("Start a new game")
+                            }.isDetailLink(false).padding(20)
+                        NavigationLink(destination: SettingsView(viewModel: SettingsViewModel(router: router))) {
+                            Text("Settings")
+                            }.isDetailLink(false).padding(20)
+                    }
                 }
             })
         case .find(let findGameViewModel):

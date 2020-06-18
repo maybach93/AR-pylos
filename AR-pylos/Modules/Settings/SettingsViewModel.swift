@@ -7,3 +7,49 @@
 //
 
 import Foundation
+import SwiftUI
+
+class SettingsViewModel: ObservableObject {
+    var router: Router
+    @Published private(set) var state: State = .initial
+    private let disposeBag = DisposeBag()
+    private let repository: LocalRepository = LocalRepository()
+    
+    @Published private var yourSelectedColorIndexRaw = 0
+    @Published private var opponentSelectedColorIndexRaw = 1
+    
+    var yourSelectedColorIndex: Binding<Int> {
+        return Binding<Int>(get: { return self.yourSelectedColorIndexRaw }, set: {
+            if $0 == self.opponentSelectedColorIndexRaw {
+                self.opponentSelectedColorIndexRaw = self.yourSelectedColorIndexRaw
+            }
+            self.yourSelectedColorIndexRaw = $0
+        })
+    }
+    var opponentSelectedColorIndex: Binding<Int> {
+        return Binding<Int>(get: { return self.opponentSelectedColorIndexRaw }, set: {
+            if $0 == self.yourSelectedColorIndexRaw {
+                self.yourSelectedColorIndexRaw = self.opponentSelectedColorIndexRaw
+            }
+            self.opponentSelectedColorIndexRaw = $0
+        })
+    }
+    
+    init(router: Router) {
+        self.router = router
+        self.yourSelectedColorIndexRaw = self.repository.get(Int.self, LocalRepository.Keys.playerColor) ?? 0
+        self.opponentSelectedColorIndexRaw = self.repository.get(Int.self, LocalRepository.Keys.opponentColor) ?? 1
+    }
+    func onDissapear() {
+        self.state = .initial
+        self.repository.set(value: yourSelectedColorIndexRaw, LocalRepository.Keys.playerColor)
+        self.repository.set(value: opponentSelectedColorIndexRaw, LocalRepository.Keys.opponentColor)
+    }
+    
+}
+
+extension SettingsViewModel {
+    enum State {
+        case initial
+    }
+}
