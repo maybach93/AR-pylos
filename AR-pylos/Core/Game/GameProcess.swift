@@ -13,11 +13,6 @@ class GameProcess {
     
     static var instance = GameProcess()
     
-    func terminate() {
-        //Send command to server and GameCoordinator to stop game
-        self.server = nil
-    }
-    
     func terminateServer() {
         self.server = nil
     }

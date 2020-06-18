@@ -21,7 +21,7 @@ class PlayerWonGameState: BaseGameState {
             self.context.players.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .playerWon, payload: PlayerWonServerPayload(player: $0, winner: currentPlayer)))})
             observer.onNext(true)
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
+        }).delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
     }
     
     override func nextState() -> BaseGameState {

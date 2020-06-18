@@ -10,6 +10,8 @@ import Foundation
 
 class PlayerTurnGameState: BaseGameState {
     
+    private var isCurrentPlayerLost: Bool = false
+    
     override var state: GameStateMachine {
         return .playerTurn
     }
@@ -38,6 +40,10 @@ class PlayerTurnGameState: BaseGameState {
                     })
                 }
                 availableToMoveToPlayer = availableToMoveToPlayer.filter({ !$0.value.isEmpty })
+                if isPlayerTurn && availableToMoveToPlayer.keys.count == 0 && self.context.game.stashedItems[player]?.count == 0 {
+                    self.context.currentPlayer = self.context.players.next(current: player)
+                    self.isCurrentPlayerLost = true
+                }
                 self.context.gameCoordinators[player]?.serverStateMessages.accept(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
             }
             observer.onNext(true)
@@ -47,7 +53,7 @@ class PlayerTurnGameState: BaseGameState {
     }
     
     override func nextState() -> BaseGameState {
-        let state = PlayerFinishedTurnGameState(context: context)
+        let state = self.isCurrentPlayerLost ? PlayerWonGameState(context: context) : PlayerFinishedTurnGameState(context: context)
         state.movingFromPreviousState()
         return state
     }

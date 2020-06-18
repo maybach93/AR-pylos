@@ -163,6 +163,7 @@ class ARViewManager: NSObject, ObservableObject {
     
     private func updateStashedItems(playerItems: [Ball]) {
         let itemsCount = playerItems.count
+        guard itemsCount > 0 else { return }
         for index in 0...(itemsCount - 1) {
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)

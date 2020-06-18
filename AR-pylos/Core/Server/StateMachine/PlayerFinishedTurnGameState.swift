@@ -33,11 +33,12 @@ class PlayerFinishedTurnGameState: BaseGameState {
                 if self.context.game.map.availablePoints.isEmpty {
                     self.isCurrentPlayerWon = true
                 }
+                
                 self.context.players.filter({ $0 != currentPlayer }).forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnServerPayload(player: $0, currentPlayer: currentPlayer, fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate, item: payload.item))) })
                 observer.onNext(true)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
-        }).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance)
+        })
     }
     
     override func nextState() -> BaseGameState {

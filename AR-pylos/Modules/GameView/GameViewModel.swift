@@ -32,6 +32,7 @@ class GameViewModel: ObservableObject {
     
     func exitGamePressed() {
         router.firstController = .main
+        GameProcess.instance.terminateServer()
     }
 }
 
