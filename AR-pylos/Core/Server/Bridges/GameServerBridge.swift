@@ -16,7 +16,7 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
     var playerStateMessage: PublishSubject<PlayerMessage> = PublishSubject<PlayerMessage>()
     
     //MARK: - Inputs
-    var serverStateMessages: PublishRelay<ServerMessage> = PublishRelay<ServerMessage>()
+    var serverStateMessages: PublishSubject<ServerMessage> = PublishSubject<ServerMessage>()
     
     //MARK: - Private
     
@@ -35,6 +35,8 @@ class RemotePlayerServerBridge: GameCoordinatorBridgeProtocol {
         self.communicator.inMessages.subscribe(onNext: { [weak self] (data) in
             guard let message = try? JSONDecoder().decode(PlayerMessage.self, from: data) else { return }
             self?.playerStateMessage.onNext(message)
+        }, onError: { [weak self] (error) in
+            self?.playerStateMessage.onError(error)
         }).disposed(by: disposeBag)
     }
 }
@@ -58,9 +60,11 @@ class RemoteServerBridge: GameServerProtocol {
             self?.communicator.outMessages.accept(data)
         }).disposed(by: disposeBag)
         
-        self.communicator.inMessages.subscribe(onNext: { [weak self] (data) in
+        self.communicator.inMessages.subscribe(onNext: {  [weak self] (data) in
             guard let message = try? JSONDecoder().decode(ServerMessage.self, from: data) else { return }
-            self?.coordinator.serverStateMessages.accept(message)
+            self?.coordinator.serverStateMessages.onNext(message)
+        }, onError: { [weak self] (error) in
+            self?.coordinator.serverStateMessages.onError(error)
         }).disposed(by: disposeBag)
     }
 }

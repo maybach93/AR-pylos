@@ -50,6 +50,11 @@ class GameServer: GameServerProtocol, GameServerContext {
         self.gameCoordinators = gameCoordinatorsDict
         self.game = game
         self.executeNextState()
+        Observable.from(self.gameCoordinators.values.compactMap({ $0.playerStateMessage })).merge(maxConcurrent: 1)
+            .subscribe(onError: { [weak self] (_) in
+                self?.gameCoordinators.values.forEach({ $0.serverStateMessages.onError(ConnectionError()) })
+                self?.stopServer()
+            }).disposed(by: disposeBag)
     }
     
     func executeNextState() {

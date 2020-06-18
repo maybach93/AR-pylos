@@ -18,7 +18,7 @@ class PlayerWonGameState: BaseGameState {
         self.readyForNextStart = Observable.create({ [weak self] (observer) -> Disposable in
             guard let self = self, let currentPlayer = self.context.currentPlayer else { return Disposables.create {} }
  
-            self.context.players.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.accept(ServerMessage(type: .playerWon, payload: PlayerWonServerPayload(player: $0, winner: currentPlayer)))})
+            self.context.players.forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.onNext(ServerMessage(type: .playerWon, payload: PlayerWonServerPayload(player: $0, winner: currentPlayer)))})
             observer.onNext(true)
             return Disposables.create {}
         }).delay(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)

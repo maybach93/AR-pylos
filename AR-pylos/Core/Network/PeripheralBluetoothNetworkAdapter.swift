@@ -81,7 +81,7 @@ extension PeripheralBluetoothNetworkAdapter: BKPeripheralDelegate {
     }
     
     internal func peripheral(_ peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
-
+        self.inMessages.onError(ConnectionError())
     }
 }
 

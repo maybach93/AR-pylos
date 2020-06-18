@@ -22,7 +22,7 @@ extension CentralBluetoothNetworkAdapter {
 class CentralBluetoothNetworkAdapter: CommunicatorAdapter {
     
     private let disposeBag = DisposeBag()
-
+    
     var outMessages: PublishRelay<Data> = PublishRelay<Data>() //Messages to send to others
     var inMessages: PublishSubject<Data> = PublishSubject<Data>() //Messages received from others
     
@@ -120,6 +120,7 @@ extension CentralBluetoothNetworkAdapter: BKCentralDelegate, BKRemotePeripheralD
     }
     
     func central(_ central: BKCentral, remotePeripheralDidDisconnect remotePeripheral: BKRemotePeripheral) {
+        self.inMessages.onError(ConnectionError())
     }
     
 }
