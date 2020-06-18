@@ -32,6 +32,8 @@ class ARGestureDelegate {
     
     @objc func onTap(_ gesture: EntityTranslationGestureRecognizer) {
         guard let entity = gesture.entity else { return }
+        let position = entity.position
+        
         switch gesture.state {
             
         case .possible:
@@ -61,9 +63,10 @@ class ARGestureDelegate {
                 switch entityName {
                 case .stashedBall, .filledBall:
                     self.lastIntersectionPosition = event.entityB.position
-                    
-                    if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
-                        event.entityA.position.y += 0.007
+                    if self.snappedAvailableEntity == nil || (abs(position.x - event.entityB.position.x) < ARViewManager.Constants.ballDiameter * 0.8 || abs(position.z - event.entityB.position.z) < ARViewManager.Constants.ballDiameter * 0.8) {
+                        if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
+                            event.entityA.position.y += 0.007
+                        }
                     }
                 default:
                     break
@@ -84,8 +87,6 @@ class ARGestureDelegate {
             }).store(in: &cancelBag)
 
         case .changed:
-            let position = entity.position
-            
             if let intersectionPosition = self.lastIntersectionPosition {
                 if abs(position.x - intersectionPosition.x) > ARViewManager.Constants.ballDiameter || abs(position.z - intersectionPosition.z) > ARViewManager.Constants.ballDiameter {
                     if entity.position.y > ARViewManager.Constants.initialStashPosition.y + ARViewManager.Constants.yTranslation {
