@@ -41,29 +41,29 @@ class ARGestureDelegate {
         case .began:
             self.arViewManager.gestureBeganTouch(entity: entity)
             self.initialPosition = entity.position
-            entity.scene?.subscribe(to: CollisionEvents.Began.self, on: entity, { (event) in
+            entity.scene?.subscribe(to: CollisionEvents.Began.self, on: entity, { [weak self] (event) in
                 guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall:
                     break
                 case .availableBall:
-                if self.snappedAvailableEntity != event.entityB {
+                if self?.snappedAvailableEntity != event.entityB {
                     event.entityA.position = event.entityB.position
-                    self.snappedAvailableEntity = event.entityB
+                    self?.snappedAvailableEntity = event.entityB
                 }
                 case .filledBall:
-                    self.lastIntersectionPosition = event.entityB.position
+                    self?.lastIntersectionPosition = event.entityB.position
                 case .table:
                     break
                 }
             }).store(in: &cancelBag)
-            entity.scene?.subscribe(to: CollisionEvents.Updated.self, on: entity, { (event) in
+            entity.scene?.subscribe(to: CollisionEvents.Updated.self, on: entity, { [weak self] (event) in
                 guard event.entityA == entity else { return }
                 guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall, .filledBall:
-                    self.lastIntersectionPosition = event.entityB.position
-                    if self.snappedAvailableEntity == nil || (abs(position.x - event.entityB.position.x) < ARViewManager.Constants.ballDiameter * 0.8 || abs(position.z - event.entityB.position.z) < ARViewManager.Constants.ballDiameter * 0.8) {
+                    self?.lastIntersectionPosition = event.entityB.position
+                    if self?.snappedAvailableEntity == nil || (abs(position.x - event.entityB.position.x) < ARViewManager.Constants.ballDiameter * 0.8 || abs(position.z - event.entityB.position.z) < ARViewManager.Constants.ballDiameter * 0.8) {
                         if event.entityA.position.y - event.entityB.position.y - ARViewManager.Constants.ballDiameter + ARViewManager.Constants.yTranslation < 0 {
                             event.entityA.position.y += 0.007
                         }
@@ -72,14 +72,14 @@ class ARGestureDelegate {
                     break
                 }
             }).store(in: &cancelBag)
-            entity.scene?.subscribe(to: CollisionEvents.Ended.self, on: entity, { (event) in
+            entity.scene?.subscribe(to: CollisionEvents.Ended.self, on: entity, { [weak self] (event) in
                 guard let entityName = ARViewManager.EntityNames(rawValue: event.entityB.name) else { return }
                 switch entityName {
                 case .stashedBall, .filledBall:
                     break
                 case .availableBall:
-                    if self.snappedAvailableEntity == event.entityB {
-                        self.snappedAvailableEntity = nil
+                    if self?.snappedAvailableEntity == event.entityB {
+                        self?.snappedAvailableEntity = nil
                     }
                 default:
                     break

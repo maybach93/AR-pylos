@@ -16,7 +16,7 @@ struct GameView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @ObservedObject var viewModel: GameViewModel
-    
+
     init(viewModel: GameViewModel) {
         self.viewModel = viewModel
     }
@@ -37,6 +37,9 @@ struct GameView: View {
                                 }
                             }
                             else {
+                                Button("exit game") {
+                                    self.viewModel.exitGamePressed()
+                                }
                                 Button("reset tracking") {
                                     self.viewModel.resetTracking()
                                 }

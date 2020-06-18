@@ -12,7 +12,7 @@ import RealityKit
 
 struct ARDisplayView: View {
 
-    @ObservedObject var arViewManager: ARViewManager
+    weak var arViewManager: ARViewManager?
     
     init(arViewManager: ARViewManager) {
           
@@ -25,15 +25,15 @@ struct ARDisplayView: View {
 
 struct ARViewContainer: UIViewRepresentable {
    
-    @ObservedObject var arViewManager: ARViewManager
+    weak var arViewManager: ARViewManager?
     
-    init(arViewManager: ARViewManager) {
+    init(arViewManager: ARViewManager?) {
         self.arViewManager = arViewManager
     }
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
-        arViewManager.arView = arView
+        arViewManager?.arView = arView
         return arView
     }
     
