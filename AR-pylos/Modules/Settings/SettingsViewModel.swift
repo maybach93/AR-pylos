@@ -15,8 +15,15 @@ class SettingsViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
     private let repository: LocalRepository = LocalRepository()
     
+    @Published private var nameRaw = ""
     @Published private var yourSelectedColorIndexRaw = 0
     @Published private var opponentSelectedColorIndexRaw = 1
+    
+    var name: Binding<String> {
+        return Binding<String>(get: { return self.nameRaw }, set: {
+            self.nameRaw = $0
+        })
+    }
     
     var yourSelectedColorIndex: Binding<Int> {
         return Binding<Int>(get: { return self.yourSelectedColorIndexRaw }, set: {
@@ -39,11 +46,13 @@ class SettingsViewModel: ObservableObject {
         self.router = router
         self.yourSelectedColorIndexRaw = self.repository.get(Int.self, LocalRepository.Keys.playerColor) ?? 0
         self.opponentSelectedColorIndexRaw = self.repository.get(Int.self, LocalRepository.Keys.opponentColor) ?? 1
+        self.nameRaw = self.repository.get(String.self, LocalRepository.Keys.playerName) ?? ""
     }
     func onDissapear() {
         self.state = .initial
         self.repository.set(value: yourSelectedColorIndexRaw, LocalRepository.Keys.playerColor)
         self.repository.set(value: opponentSelectedColorIndexRaw, LocalRepository.Keys.opponentColor)
+        self.repository.set(value: nameRaw, LocalRepository.Keys.playerName)
     }
     
 }

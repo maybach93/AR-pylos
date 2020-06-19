@@ -31,7 +31,7 @@ struct FindGameView: View {
                         self.viewModel.start(isHost: true)
                     }) {
                         ZStack {
-                            Rectangle().fill(Color.orange)
+                            Rectangle().fill(Color.orange.opacity(0.8))
                             Text("Create game")
                                 .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
                                 .font(.title).foregroundColor(Color.black.opacity(0.6))
@@ -41,7 +41,7 @@ struct FindGameView: View {
                         self.viewModel.start(isHost: false)
                     }) {
                         ZStack {
-                            Rectangle().fill(Color.green)
+                            Rectangle().fill(Color.green.opacity(0.8))
                             Text("Join game")
                                 .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
                                 .font(.title).foregroundColor(Color.black.opacity(0.6))
@@ -55,10 +55,10 @@ struct FindGameView: View {
             return AnyView(NavigationView {
                 ZStack {
                     if isHost {
-                        Color.orange.edgesIgnoringSafeArea(.all)
+                        Color.orange.opacity(0.8).edgesIgnoringSafeArea(.all)
                     }
                     else {
-                        Color.green.edgesIgnoringSafeArea(.all)
+                        Color.green.opacity(0.8).edgesIgnoringSafeArea(.all)
                     }
                     VStack {
                         Text("Searching for nearby players")

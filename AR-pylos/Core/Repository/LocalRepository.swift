@@ -13,6 +13,7 @@ extension LocalRepository {
         case playerColor
         case opponentColor
         case showOnboarding
+        case playerName
     }
 }
 class LocalRepository {

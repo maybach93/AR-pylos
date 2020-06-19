@@ -16,7 +16,7 @@ struct OnboardingButton: ViewModifier {
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
             .background(RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .fill(Color.blue.opacity(0.8)))
+                .fill(Color.green.opacity(0.8)))
             .padding(.bottom)
     }
 }

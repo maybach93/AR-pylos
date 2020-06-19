@@ -26,27 +26,30 @@ struct SettingsView: View {
         switch viewModel.state {
         case .initial:
             return AnyView(NavigationView {
-                HStack(content: {
-                    VStack {
-                        Text("Your ball color").padding()
+                VStack {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Your name").padding([.leading, .trailing], 10)
+                        TextField("Enter your name", text: self.viewModel.name).padding([.leading, .trailing, .bottom], 10).font(.title).foregroundColor(Color.green.opacity(0.8))
+                        Text("Your ball color").padding([.leading, .trailing], 10)
                         Picker("Colors", selection: self.viewModel.yourSelectedColorIndex) {
                             ForEach(0 ..< colors.count) { index in
                                 Text(self.colors[index]).tag(index)
                             }
                         }
-                        .pickerStyle(SegmentedPickerStyle())
-                        Text("Opponent ball color").padding()
+                        .pickerStyle(SegmentedPickerStyle()).padding([.leading, .trailing, .bottom], 10)
+                        Text("Opponent ball color").padding([.leading, .trailing], 10)
                         Picker("Colors", selection: self.viewModel.opponentSelectedColorIndex) {
                             ForEach(0 ..< colors.count) { index in
                                 Text(self.colors[index]).tag(index)
                             }
                         }
-                        .pickerStyle(SegmentedPickerStyle())
-                        Spacer()
-                        // 3.
+                        .pickerStyle(SegmentedPickerStyle()).padding([.leading, .trailing, .bottom], 10)
                         
                     }
-                })
+                    Spacer()
+                }
+                    
+                
             }.navigationBarTitle("Settings").onDisappear(perform: {
                 self.viewModel.onDissapear()
             }))
