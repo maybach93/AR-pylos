@@ -69,6 +69,8 @@
 		198A94BC24994707006F6D1E /* BallEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94BB24994707006F6D1E /* BallEntity.swift */; };
 		198A94BE24996D26006F6D1E /* ARGestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94BD24996D26006F6D1E /* ARGestureDelegate.swift */; };
 		19DB91BB249C67F3003BCEDD /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */; };
+		19DB91BE249D0D7E003BCEDD /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91BD249D0D7E003BCEDD /* VideoPlayer.swift */; };
+		19DB91C1249D103B003BCEDD /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 19DB91C0249D103B003BCEDD /* video.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +160,8 @@
 		198A94BB24994707006F6D1E /* BallEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallEntity.swift; sourceTree = "<group>"; };
 		198A94BD24996D26006F6D1E /* ARGestureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGestureDelegate.swift; sourceTree = "<group>"; };
 		19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		19DB91BD249D0D7E003BCEDD /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		19DB91C0249D103B003BCEDD /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,7 +378,7 @@
 		196AD63D2482F8E000BF63D7 /* AR-pylos */ = {
 			isa = PBXGroup;
 			children = (
-				192FDE9C249BD95100297977 /* Libraries */,
+				19DB91BF249D0E95003BCEDD /* Resources */,
 				19378FB2248ED04C00E3EBF8 /* Modules */,
 				1905F6F024832A92003059A7 /* Core */,
 				196AD63E2482F8E000BF63D7 /* AppDelegate.swift */,
@@ -418,6 +422,7 @@
 		198A945E24903DC7006F6D1E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				19DB91BC249D0D66003BCEDD /* Elements */,
 				19DB91B9249C67E1003BCEDD /* Controls */,
 				198A945F24903DE1006F6D1E /* Router.swift */,
 			);
@@ -471,6 +476,23 @@
 				19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */,
 			);
 			path = Controls;
+			sourceTree = "<group>";
+		};
+		19DB91BC249D0D66003BCEDD /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				19DB91BD249D0D7E003BCEDD /* VideoPlayer.swift */,
+			);
+			path = Elements;
+			sourceTree = "<group>";
+		};
+		19DB91BF249D0E95003BCEDD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				19DB91C0249D103B003BCEDD /* video.mov */,
+				192FDE9C249BD95100297977 /* Libraries */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -579,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				196AD64B2482F8E200BF63D7 /* LaunchScreen.storyboard in Resources */,
+				19DB91C1249D103B003BCEDD /* video.mov in Resources */,
 				196AD6482482F8E200BF63D7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,7 +634,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxRelay.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/AR-pylos/Libraries/BluetoothKit.framework",
+				"$(SRCROOT)/AR-pylos/Resources/Libraries/BluetoothKit.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -641,6 +664,7 @@
 				198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */,
 				198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */,
 				198A946C2491AB9B006F6D1E /* GameViewModel.swift in Sources */,
+				19DB91BE249D0D7E003BCEDD /* VideoPlayer.swift in Sources */,
 				19378F97248B387E00E3EBF8 /* CentralBluetoothNetworkAdapter.swift in Sources */,
 				198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
@@ -855,7 +879,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/AR-pylos/Libraries",
+					"$(PROJECT_DIR)/AR-pylos/Resources/Libraries",
 				);
 				INFOPLIST_FILE = "AR-pylos/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -880,7 +904,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/AR-pylos/Libraries",
+					"$(PROJECT_DIR)/AR-pylos/Resources/Libraries",
 				);
 				INFOPLIST_FILE = "AR-pylos/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

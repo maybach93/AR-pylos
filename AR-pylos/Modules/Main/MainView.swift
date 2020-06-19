@@ -21,16 +21,26 @@ struct MainView: View {
         switch router.firstController {
         case .main:
             return AnyView(NavigationView {
-                HStack {
-                    VStack {
-                        Text("Pylos").font(.system(size: 80, weight: .thin, design: .default))
-                        Spacer(minLength: 80)
-                        NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
-                            Text("Start a new game")
-                            }.isDetailLink(false).padding(20)
-                        NavigationLink(destination: SettingsView(viewModel: SettingsViewModel(router: router))) {
-                            Text("Settings")
-                            }.isDetailLink(false).padding(20)
+                ZStack {
+                    VideoPlayerView(url: Bundle.main.url(forResource: "video", withExtension: "mov"))
+                        .overlay(Color.white.opacity(0.3))
+                        .blur(radius: 3)
+                        .edgesIgnoringSafeArea(.all)
+                    HStack {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Text("Pylos").font(.system(size: 80, weight: .thin, design: .default)).padding(40)
+                            }
+                            
+                            Spacer(minLength: 80)
+                            NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
+                                Text("Start a new game")
+                                }.isDetailLink(false).padding(20)
+                            NavigationLink(destination: SettingsView(viewModel: SettingsViewModel(router: router))) {
+                                Text("Settings")
+                                }.isDetailLink(false).padding(20)
+                        }
                     }
                 }
             })
