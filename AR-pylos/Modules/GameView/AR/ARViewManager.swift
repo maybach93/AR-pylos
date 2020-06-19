@@ -91,6 +91,10 @@ class ARViewManager: NSObject, ObservableObject {
     
     public func updatePlayerTurn(availableToMove: [Coordinate]) {
         scene.cube?.isEnabled = false
+        scene.bell?.isEnabled = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.scene.bell?.isEnabled = false
+        }
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         (self.sceneFilledBalls.filter({ availableToMove.contains($0.0) }).map({ $0.1 }) + self.sceneStashedBalls).forEach { (entity) in
             let gesture = arView?.installGestures(.translation, for: entity as! HasCollision)
@@ -101,16 +105,34 @@ class ARViewManager: NSObject, ObservableObject {
     public func updateFinishState(isWon: Bool) {
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         if isWon {
-            scene.winner?.isEnabled = true
+            scene.hat?.isEnabled = true
+            scene.cube?.isEnabled = false
         }
         else {
-            scene.looser?.isEnabled = true
+            
         }
     }
     
     public func updateWaitingState() {
         scene.cube?.isEnabled = true
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
+    }
+    
+    public func updateText(value: String, with hiding: Bool) {
+        guard let textEntity = scene.text?.children[0].children[0] else { return }
+        var textModelComponent: ModelComponent = (textEntity.components[ModelComponent])!
+        textModelComponent.mesh = .generateText(value,
+                                 extrusionDepth: 0.05,
+                                 font: .init(descriptor: UIFontDescriptor(name: "Helvetica-Light", size: 0.8), size: 0.15),
+                                 alignment: .left)
+        
+        textEntity.components.set(textModelComponent)
+        scene.text?.isEnabled = true
+        if hiding {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.scene.text?.isEnabled = false
+            }
+        }
     }
     
     public func updateOpponentTurn(fromCoordinate: Coordinate?, toCoordinate: Coordinate) {
@@ -174,11 +196,11 @@ class ARViewManager: NSObject, ObservableObject {
         scene = try! ARGameComposer.loadARGameScene()
         self.placement = scene.placement?.clone(recursive: true)
         scene.placement?.removeFromParent()
-        scene.looser?.isEnabled = false
-        scene.winner?.isEnabled = false
+        scene.hat?.isEnabled = false
+        scene.bell?.isEnabled = false
+        scene.text?.isEnabled = false
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
-        
         arViewInitialized.onNext(true)
     }
     
