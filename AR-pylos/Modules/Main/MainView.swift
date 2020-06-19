@@ -16,7 +16,6 @@ struct MainView: View {
 
     @State var showOnboarding: Bool = false
     init() {
-        self.viewModel = MainViewModel()
         self.showOnboarding = viewModel.showOnboarding
     }
     var viewModel = MainViewModel()

@@ -25,4 +25,7 @@ class LocalRepository {
     func set(value: Any, _ key: Keys) {
         return storage.set(value, forKey: key.rawValue)
     }
+    func remove(_ key: Keys) {
+        return storage.removeObject(forKey: key.rawValue)
+    }
 }

@@ -45,6 +45,13 @@ struct SettingsView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle()).padding([.leading, .trailing, .bottom], 10)
                         
+                        HStack {
+                            Text("Show onboarding on launch").padding([.leading, .trailing], 10)
+                            Toggle(isOn: self.viewModel.showOnboarding) {
+                                Text("")
+                            }.padding()
+                        }
+                        
                     }
                     Spacer()
                 }
