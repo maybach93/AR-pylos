@@ -22,7 +22,7 @@ enum Colors: Int {
         case .orange:
             return .brown
         case .purple:
-            return .purple
+            return UIColor(red: 50.0 / 255.0, green: 24.0 / 255.0, blue: 100.0 / 255.0, alpha: 1)
         case .black:
             return .black
         case .white:

@@ -68,6 +68,7 @@
 		198A94B924968377006F6D1E /* ARGameComposer.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 198A94B824967666006F6D1E /* ARGameComposer.rcproject */; };
 		198A94BC24994707006F6D1E /* BallEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94BB24994707006F6D1E /* BallEntity.swift */; };
 		198A94BE24996D26006F6D1E /* ARGestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94BD24996D26006F6D1E /* ARGestureDelegate.swift */; };
+		19DB91BB249C67F3003BCEDD /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		198A94B824967666006F6D1E /* ARGameComposer.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = ARGameComposer.rcproject; sourceTree = "<group>"; };
 		198A94BB24994707006F6D1E /* BallEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallEntity.swift; sourceTree = "<group>"; };
 		198A94BD24996D26006F6D1E /* ARGestureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGestureDelegate.swift; sourceTree = "<group>"; };
+		19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,6 +418,7 @@
 		198A945E24903DC7006F6D1E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				19DB91B9249C67E1003BCEDD /* Controls */,
 				198A945F24903DE1006F6D1E /* Router.swift */,
 			);
 			path = UI;
@@ -460,6 +463,14 @@
 				198A94BD24996D26006F6D1E /* ARGestureDelegate.swift */,
 			);
 			path = AR;
+			sourceTree = "<group>";
+		};
+		19DB91B9249C67E1003BCEDD /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */,
+			);
+			path = Controls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -653,6 +664,7 @@
 				198A94672491A41C006F6D1E /* PrepareGameViewModel.swift in Sources */,
 				19378FB7248ED1E400E3EBF8 /* MainView.swift in Sources */,
 				198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */,
+				19DB91BB249C67F3003BCEDD /* ActivityIndicator.swift in Sources */,
 				19378FAC248D50F000E3EBF8 /* ServerMessage.swift in Sources */,
 				19378F7B24886B6300E3EBF8 /* MapItem.swift in Sources */,
 				198A94BE24996D26006F6D1E /* ARGestureDelegate.swift in Sources */,

@@ -23,6 +23,8 @@ struct MainView: View {
             return AnyView(NavigationView {
                 HStack {
                     VStack {
+                        Text("Pylos").font(.system(size: 80, weight: .thin, design: .default))
+                        Spacer(minLength: 80)
                         NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
                             Text("Start a new game")
                             }.isDetailLink(false).padding(20)

@@ -26,21 +26,28 @@ struct FindGameView: View {
         switch viewModel.state {
         case .initial:
             return AnyView(NavigationView {
-                HStack(content: {
-                    Button("Create connection") {
+                VStack(content: {
+                    Button("Create game") {
                         self.viewModel.start(isHost: true)
-                    }
-                    Button("Look for players") {
+                    }.padding(20)
+                    Button("Join game") {
                         self.viewModel.start(isHost: false)
-                    }
+                    }.padding(20)
                 })
-            }).onDisappear {
+                }.navigationBarTitle("Start game")).onDisappear {
                 self.viewModel.onDissapear()
             }
         case .bluetooth:
             return AnyView(NavigationView {
-                Text("looking for teammate")
-            }).onDisappear {
+                ZStack {
+                    Color.green.edgesIgnoringSafeArea(.all)
+                    VStack {
+                        Text("looking for teammate")
+                        ActivityIndicator()
+                            .frame(width: 100, height: 100)
+                    }.foregroundColor(Color.white)
+                }
+            }.navigationBarTitle("Start game")).onDisappear {
                 self.viewModel.onDissapear()
             }
         case .gameCenter:
