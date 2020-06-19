@@ -27,19 +27,37 @@ struct MainView: View {
                         .blur(radius: 3)
                         .edgesIgnoringSafeArea(.all)
                     HStack {
-                        VStack {
+                        VStack(alignment: .center, spacing: 20) {
                             HStack {
                                 Spacer()
-                                Text("Pylos").font(.system(size: 80, weight: .thin, design: .default)).padding(40)
+                                Text("Pylos").font(.system(size: 100, weight: .thin, design: .default)).padding(40)
                             }
                             
-                            Spacer(minLength: 80)
+                            Spacer()
                             NavigationLink(destination: FindGameView(viewModel: FindGameViewModel(router: router))) {
-                                Text("Start a new game")
-                                }.isDetailLink(false).padding(20)
+                                Text("Play")
+                                    .fontWeight(.regular)
+                                    .font(.title)
+                                    .padding([.leading, .trailing], 60)
+                                    .padding([.top, .bottom], 20)
+                                    .foregroundColor(.white)
+                                    .background(Color.black.opacity(0.5))
+                                    .cornerRadius(40)
+                
+                                }.isDetailLink(false)
                             NavigationLink(destination: SettingsView(viewModel: SettingsViewModel(router: router))) {
                                 Text("Settings")
-                                }.isDetailLink(false).padding(20)
+                                    .fontWeight(.medium)
+                                    .font(.headline)
+                                    .padding([.leading, .trailing], 40)
+                                    .padding([.top, .bottom], 10)
+                                    .foregroundColor(Color.black.opacity(0.5))
+                                    .cornerRadius(40)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 40)
+                                        .stroke(Color.black.opacity(0.5), lineWidth: 2)
+                                ).padding(.bottom, 10)
+                                }.isDetailLink(false)
                         }
                     }
                 }

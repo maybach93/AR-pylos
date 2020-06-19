@@ -35,13 +35,38 @@ struct GameView: View {
                         HStack {
                             Spacer()
                             if viewModel.state == .gameEnd {
-                                Button("Exit game") {
+                                Button(action: {
                                     self.viewModel.exitGamePressed()
-                                }
+                                }) {
+                                    Text("Exit game")
+                                    .fontWeight(.light)
+                                    .font(.footnote)
+                                    .padding([.leading, .trailing], 10)
+                                    .padding([.top, .bottom], 5)
+                                    .foregroundColor(.white)
+                                    .background(Color.black.opacity(0.5))
+                                    .cornerRadius(20)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.black.opacity(0.5), lineWidth: 1)
+                                    )
+                                }.padding(.trailing, 5)
                             }
                             else {
-                                Button("Exit game") {
+                                Button(action: {
                                     self.exitAlert = true
+                                }) {
+                                    Text("Exit game")
+                                    .fontWeight(.light)
+                                    .font(.footnote)
+                                    .padding([.leading, .trailing], 10)
+                                    .padding([.top, .bottom], 5)
+                                    .foregroundColor(Color.black.opacity(0.5))
+                                    .cornerRadius(20)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.black.opacity(0.5), lineWidth: 1)
+                                    )
                                 }.alert(isPresented: $exitAlert) {
                                     self.viewModel.coordinator.arManager.arView?.session.pause()
                                     return Alert(title: Text("Confirm exit current game"), primaryButton: Alert.Button.default(Text("Confirm"), action: {
@@ -53,11 +78,20 @@ struct GameView: View {
                                         }
                                     }))
                                 }
-                                Button("Reset tracking") {
+                                Button(action: {
                                     self.viewModel.resetTracking()
-                                }
+                                }) {
+                                    Text("Reset tracking")
+                                    .fontWeight(.light)
+                                    .font(.footnote)
+                                    .padding([.leading, .trailing], 10)
+                                    .padding([.top, .bottom], 5)
+                                    .foregroundColor(.white)
+                                    .background(Color.black.opacity(0.5))
+                                    .cornerRadius(20)
+                                }.padding(.trailing, 5)
                             }
-                        }
+                        }.padding(.bottom, 10)
                     }
                 })
             }).onAppear {
