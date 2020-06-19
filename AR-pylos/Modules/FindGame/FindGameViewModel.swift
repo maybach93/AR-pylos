@@ -23,8 +23,12 @@ class FindGameViewModel: ObservableObject {
     }
     func start(isHost: Bool) {
         self.matchingCoordinator = GameMatchingCoordinator(connectionType: .bluetooth(isHost: isHost))
-        state = .bluetooth
-        self.matchingCoordinator?.findGame().subscribe(onSuccess: { [weak self] in self?.router.firstController = .game($0) }).disposed(by: disposeBag)
+        state = .bluetooth(isHost)
+
+        self.matchingCoordinator?.findGame().subscribe(onSuccess: { [weak self] (coordinator) in
+            guard let self = self else { return }
+            self.router.firstController = .rootView(AnyView(GameView(viewModel: GameViewModel(router: self.router, coordinator: coordinator))))
+        }).disposed(by: disposeBag)
     }
     func onDissapear() {
         self.matchingCoordinator = nil
@@ -36,7 +40,7 @@ class FindGameViewModel: ObservableObject {
 extension FindGameViewModel {
     enum State {
         case initial
-        case bluetooth
+        case bluetooth(Bool)
         case gameCenter
     }
 }

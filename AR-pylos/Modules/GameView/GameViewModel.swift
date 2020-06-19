@@ -14,7 +14,7 @@ class GameViewModel: ObservableObject {
     @Published private(set) var state: State = .initial
     private let disposeBag = DisposeBag()
     public var coordinator: GameCoordinator
-    
+
     init(router: Router, coordinator: GameCoordinator) {
         self.router = router
         self.coordinator = coordinator

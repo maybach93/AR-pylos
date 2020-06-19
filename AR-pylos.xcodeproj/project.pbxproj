@@ -45,8 +45,6 @@
 		198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A945C24903D7C006F6D1E /* FindGameView.swift */; };
 		198A946024903DE1006F6D1E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A945F24903DE1006F6D1E /* Router.swift */; };
 		198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946124903E14006F6D1E /* FindGameViewModel.swift */; };
-		198A94652491A3F8006F6D1E /* PrepareGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94642491A3F8006F6D1E /* PrepareGameView.swift */; };
-		198A94672491A41C006F6D1E /* PrepareGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94662491A41C006F6D1E /* PrepareGameViewModel.swift */; };
 		198A946A2491AB92006F6D1E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94692491AB92006F6D1E /* GameView.swift */; };
 		198A946C2491AB9B006F6D1E /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A946B2491AB9B006F6D1E /* GameViewModel.swift */; };
 		198A94722491B370006F6D1E /* PlayerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A94712491B370006F6D1E /* PlayerMessage.swift */; };
@@ -136,8 +134,6 @@
 		198A945C24903D7C006F6D1E /* FindGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGameView.swift; sourceTree = "<group>"; };
 		198A945F24903DE1006F6D1E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		198A946124903E14006F6D1E /* FindGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGameViewModel.swift; sourceTree = "<group>"; };
-		198A94642491A3F8006F6D1E /* PrepareGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareGameView.swift; sourceTree = "<group>"; };
-		198A94662491A41C006F6D1E /* PrepareGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareGameViewModel.swift; sourceTree = "<group>"; };
 		198A94692491AB92006F6D1E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		198A946B2491AB9B006F6D1E /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		198A94712491B370006F6D1E /* PlayerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMessage.swift; sourceTree = "<group>"; };
@@ -328,7 +324,6 @@
 			children = (
 				192FDE96249BD42900297977 /* Settings */,
 				198A94682491AB87006F6D1E /* GameView */,
-				198A94632491A3E8006F6D1E /* PrepareGame */,
 				198A945B24903D69006F6D1E /* FindGame */,
 				19378FB3248ED05200E3EBF8 /* Main */,
 			);
@@ -427,15 +422,6 @@
 				198A945F24903DE1006F6D1E /* Router.swift */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		198A94632491A3E8006F6D1E /* PrepareGame */ = {
-			isa = PBXGroup;
-			children = (
-				198A94642491A3F8006F6D1E /* PrepareGameView.swift */,
-				198A94662491A41C006F6D1E /* PrepareGameViewModel.swift */,
-			);
-			path = PrepareGame;
 			sourceTree = "<group>";
 		};
 		198A94682491AB87006F6D1E /* GameView */ = {
@@ -658,7 +644,6 @@
 			files = (
 				19378F99248B388900E3EBF8 /* GameKitNetworkAdapter.swift in Sources */,
 				19378FA4248D3DCB00E3EBF8 /* GameStateMachine.swift in Sources */,
-				198A94652491A3F8006F6D1E /* PrepareGameView.swift in Sources */,
 				198A94BC24994707006F6D1E /* BallEntity.swift in Sources */,
 				198A947C24930DC6006F6D1E /* ArrayExtension.swift in Sources */,
 				198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */,
@@ -685,7 +670,6 @@
 				19378F85248ADF0200E3EBF8 /* GameServer.swift in Sources */,
 				19378FA9248D4B5A00E3EBF8 /* InitiatedGameState.swift in Sources */,
 				19378F89248AED9600E3EBF8 /* GameMatchingCoordinator.swift in Sources */,
-				198A94672491A41C006F6D1E /* PrepareGameViewModel.swift in Sources */,
 				19378FB7248ED1E400E3EBF8 /* MainView.swift in Sources */,
 				198A945D24903D7C006F6D1E /* FindGameView.swift in Sources */,
 				19DB91BB249C67F3003BCEDD /* ActivityIndicator.swift in Sources */,

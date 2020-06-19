@@ -26,23 +26,42 @@ struct FindGameView: View {
         switch viewModel.state {
         case .initial:
             return AnyView(NavigationView {
-                VStack(content: {
-                    Button("Create game") {
+                VStack(alignment: .leading, spacing: 0) {
+                    Button(action: {
                         self.viewModel.start(isHost: true)
-                    }.padding(20)
-                    Button("Join game") {
+                    }) {
+                        ZStack {
+                            Rectangle().fill(Color.orange)
+                            Text("Create game")
+                                .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
+                                .font(.title).foregroundColor(Color.black.opacity(0.6))
+                        }
+                    }
+                    Button(action: {
                         self.viewModel.start(isHost: false)
-                    }.padding(20)
-                })
+                    }) {
+                        ZStack {
+                            Rectangle().fill(Color.green)
+                            Text("Join game")
+                                .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
+                                .font(.title).foregroundColor(Color.black.opacity(0.6))
+                        }
+                    }
+                    }.edgesIgnoringSafeArea(.all)
                 }.navigationBarTitle("Start game")).onDisappear {
                 self.viewModel.onDissapear()
             }
-        case .bluetooth:
+        case .bluetooth(let isHost):
             return AnyView(NavigationView {
                 ZStack {
-                    Color.green.edgesIgnoringSafeArea(.all)
+                    if isHost {
+                        Color.orange.edgesIgnoringSafeArea(.all)
+                    }
+                    else {
+                        Color.green.edgesIgnoringSafeArea(.all)
+                    }
                     VStack {
-                        Text("looking for teammate")
+                        Text("Searching for nearby players")
                         ActivityIndicator()
                             .frame(width: 100, height: 100)
                     }.foregroundColor(Color.white)
