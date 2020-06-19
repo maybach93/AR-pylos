@@ -12,6 +12,7 @@ extension LocalRepository {
     enum Keys: String {
         case playerColor
         case opponentColor
+        case showOnboarding
     }
 }
 class LocalRepository {

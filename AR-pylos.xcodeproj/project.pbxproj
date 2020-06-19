@@ -69,6 +69,11 @@
 		19DB91BB249C67F3003BCEDD /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */; };
 		19DB91BE249D0D7E003BCEDD /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91BD249D0D7E003BCEDD /* VideoPlayer.swift */; };
 		19DB91C1249D103B003BCEDD /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = 19DB91C0249D103B003BCEDD /* video.mov */; };
+		19DB91C6249D2D0D003BCEDD /* OnboardingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91C5249D2D0D003BCEDD /* OnboardingItemView.swift */; };
+		19DB91C8249D2D4C003BCEDD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91C7249D2D4C003BCEDD /* OnboardingView.swift */; };
+		19DB91CA249D2D64003BCEDD /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91C9249D2D64003BCEDD /* OnboardingContainerView.swift */; };
+		19DB91CE249D3025003BCEDD /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91CD249D3025003BCEDD /* MainViewModel.swift */; };
+		19DB91D1249D3A21003BCEDD /* OnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB91D0249D3A21003BCEDD /* OnboardingButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +163,11 @@
 		19DB91BA249C67F3003BCEDD /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		19DB91BD249D0D7E003BCEDD /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		19DB91C0249D103B003BCEDD /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.mov; sourceTree = "<group>"; };
+		19DB91C5249D2D0D003BCEDD /* OnboardingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingItemView.swift; sourceTree = "<group>"; };
+		19DB91C7249D2D4C003BCEDD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		19DB91C9249D2D64003BCEDD /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
+		19DB91CD249D3025003BCEDD /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		19DB91D0249D3A21003BCEDD /* OnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +332,7 @@
 		19378FB2248ED04C00E3EBF8 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				19DB91C4249D2CF1003BCEDD /* Onboarding */,
 				192FDE96249BD42900297977 /* Settings */,
 				198A94682491AB87006F6D1E /* GameView */,
 				198A945B24903D69006F6D1E /* FindGame */,
@@ -334,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				19378FB6248ED1E300E3EBF8 /* MainView.swift */,
+				19DB91CD249D3025003BCEDD /* MainViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -417,6 +429,7 @@
 		198A945E24903DC7006F6D1E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				19DB91CF249D3A0A003BCEDD /* Modified */,
 				19DB91BC249D0D66003BCEDD /* Elements */,
 				19DB91B9249C67E1003BCEDD /* Controls */,
 				198A945F24903DE1006F6D1E /* Router.swift */,
@@ -479,6 +492,24 @@
 				192FDE9C249BD95100297977 /* Libraries */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		19DB91C4249D2CF1003BCEDD /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				19DB91C5249D2D0D003BCEDD /* OnboardingItemView.swift */,
+				19DB91C7249D2D4C003BCEDD /* OnboardingView.swift */,
+				19DB91C9249D2D64003BCEDD /* OnboardingContainerView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		19DB91CF249D3A0A003BCEDD /* Modified */ = {
+			isa = PBXGroup;
+			children = (
+				19DB91D0249D3A21003BCEDD /* OnboardingButton.swift */,
+			);
+			path = Modified;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -649,8 +680,10 @@
 				198A94862493E592006F6D1E /* PlayerWonGameState.swift in Sources */,
 				198A947A24930D7A006F6D1E /* PlayerTurnGameState.swift in Sources */,
 				198A946C2491AB9B006F6D1E /* GameViewModel.swift in Sources */,
+				19DB91CE249D3025003BCEDD /* MainViewModel.swift in Sources */,
 				19DB91BE249D0D7E003BCEDD /* VideoPlayer.swift in Sources */,
 				19378F97248B387E00E3EBF8 /* CentralBluetoothNetworkAdapter.swift in Sources */,
+				19DB91C6249D2D0D003BCEDD /* OnboardingItemView.swift in Sources */,
 				198A948A2493E9E9006F6D1E /* FinishedGameState.swift in Sources */,
 				19378F9D248C4A8100E3EBF8 /* GameProcess.swift in Sources */,
 				198A947E24931507006F6D1E /* PlayerTurnServerPayload.swift in Sources */,
@@ -680,13 +713,16 @@
 				1905F6F324832AC1003059A7 /* GameMap.swift in Sources */,
 				192FDE9A249BD49200297977 /* SettingsViewModel.swift in Sources */,
 				198A946024903DE1006F6D1E /* Router.swift in Sources */,
+				19DB91C8249D2D4C003BCEDD /* OnboardingView.swift in Sources */,
 				19378F7F248AC2C900E3EBF8 /* Game.swift in Sources */,
 				198A94762493008C006F6D1E /* StartedGameState.swift in Sources */,
+				19DB91CA249D2D64003BCEDD /* OnboardingContainerView.swift in Sources */,
 				19378F7D24886B7700E3EBF8 /* MapCell.swift in Sources */,
 				192FDEA2249BEB4D00297977 /* LocalRepository.swift in Sources */,
 				198A946224903E14006F6D1E /* FindGameViewModel.swift in Sources */,
 				19378F87248AED2600E3EBF8 /* GameCoordinator.swift in Sources */,
 				198A94882493E6AB006F6D1E /* PlayerWonServerPayload.swift in Sources */,
+				19DB91D1249D3A21003BCEDD /* OnboardingButton.swift in Sources */,
 				198A94802493C91C006F6D1E /* PlayerFinishedTurnMessagePayload.swift in Sources */,
 				19378F81248ADB5E00E3EBF8 /* Player.swift in Sources */,
 				196AD6412482F8E000BF63D7 /* ViewController.swift in Sources */,

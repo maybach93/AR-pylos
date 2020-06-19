@@ -14,10 +14,14 @@ struct MainView: View {
     @EnvironmentObject var router: Router
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    @State var showOnboarding: Bool = false
     init() {
-        
+        self.viewModel = MainViewModel()
+        self.showOnboarding = viewModel.showOnboarding
     }
+    var viewModel = MainViewModel()
     var body: some View {
+        
         switch router.firstController {
         case .main:
             return AnyView(NavigationView {
@@ -61,7 +65,13 @@ struct MainView: View {
                         }
                     }
                 }
-            })
+            }.sheet(isPresented: $showOnboarding) {
+                OnboardingView()
+            }.onAppear(perform: {
+                if self.viewModel.showOnboarding {
+                    self.showOnboarding = true
+                }
+            }))
         case .find(let findGameViewModel):
             return AnyView(NavigationView {
                 FindGameView(viewModel: findGameViewModel)
