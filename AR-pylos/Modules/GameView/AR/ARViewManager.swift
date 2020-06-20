@@ -12,8 +12,8 @@ import Combine
 
 extension ARViewManager {
     enum BallType {
-        case white
-        case black
+        case my
+        case opponent
         case availableToFill
     }
     enum EntityNames: String {
@@ -34,6 +34,14 @@ class ARViewManager: NSObject, ObservableObject {
     
     private let disposeBag = DisposeBag()
     private var cancelBag: Set<AnyCancellable> = []
+    private var repository: LocalRepository = LocalRepository()
+    lazy var myColor: UIColor = {
+        return (Colors(rawValue: repository.get(Int.self, LocalRepository.Keys.playerColor) ?? 0) ?? .white).uiColor
+    }()
+    
+    lazy var opponentColor: UIColor = {
+        return (Colors(rawValue: repository.get(Int.self, LocalRepository.Keys.opponentColor) ?? 0) ?? .black).uiColor
+    }()
     
     var arViewInitialized: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var playerPickedItem: PublishSubject<Coordinate?> = PublishSubject<Coordinate?>()
@@ -83,6 +91,10 @@ class ARViewManager: NSObject, ObservableObject {
     
     public func updatePlayerTurn(availableToMove: [Coordinate]) {
         scene.cube?.isEnabled = false
+        scene.bell?.isEnabled = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.scene.bell?.isEnabled = false
+        }
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         (self.sceneFilledBalls.filter({ availableToMove.contains($0.0) }).map({ $0.1 }) + self.sceneStashedBalls).forEach { (entity) in
             let gesture = arView?.installGestures(.translation, for: entity as! HasCollision)
@@ -91,17 +103,48 @@ class ARViewManager: NSObject, ObservableObject {
     }
     
     public func updateFinishState(isWon: Bool) {
+        self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
         if isWon {
-            scene.winner?.isEnabled = true
+            scene.hat?.isEnabled = true
+            scene.cube?.isEnabled = false
         }
         else {
-            scene.looser?.isEnabled = true
+            
         }
     }
     
     public func updateWaitingState() {
         scene.cube?.isEnabled = true
         self.arView?.gestureRecognizers?.forEach({ self.arView?.removeGestureRecognizer($0) })
+    }
+    
+    public func updateText(value: String, with hiding: Bool) {
+        guard let textEntity = scene.text?.children[0].children[0] else { return }
+        var textModelComponent: ModelComponent = (textEntity.components[ModelComponent])!
+        textModelComponent.mesh = .generateText(value,
+                                 extrusionDepth: 0.05,
+                                 font: .init(descriptor: UIFontDescriptor(name: "Helvetica-Light", size: 0.8), size: 0.15),
+                                 alignment: .left)
+        
+        textEntity.components.set(textModelComponent)
+        scene.text?.isEnabled = true
+        if hiding {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.scene.text?.isEnabled = false
+            }
+        }
+    }
+    
+    public func updateOpponentTurn(fromCoordinate: Coordinate?, toCoordinate: Coordinate) {
+        guard let entityToAnimate = self.sceneFilledBalls.first(where: { $0.0 == toCoordinate })?.1 else { return }
+        let position = entityToAnimate.transform
+        if let fromCoordinate = fromCoordinate {
+            entityToAnimate.transform.translation = self.position(for: fromCoordinate)
+        }
+        else {
+            entityToAnimate.transform.translation = Constants.initialStashPosition
+        }
+        entityToAnimate.move(to: position, relativeTo: scene, duration: TimeInterval(2))
     }
     
     public func updateAvailablePoints(coordinates: [Coordinate]) {
@@ -153,11 +196,11 @@ class ARViewManager: NSObject, ObservableObject {
         scene = try! ARGameComposer.loadARGameScene()
         self.placement = scene.placement?.clone(recursive: true)
         scene.placement?.removeFromParent()
-        scene.looser?.isEnabled = false
-        scene.winner?.isEnabled = false
+        scene.hat?.isEnabled = false
+        scene.bell?.isEnabled = false
+        scene.text?.isEnabled = false
         arView.scene.anchors.append(scene)
         arView.isUserInteractionEnabled = true
-        
         arViewInitialized.onNext(true)
     }
     
@@ -168,7 +211,7 @@ class ARViewManager: NSObject, ObservableObject {
             let i = floor(Float(index) / 3.0)
             let j = Int(index - Int(i) * 3)
            
-            let addedBall = addBall(type: .white, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
+            let addedBall = addBall(type: .my, position: [Constants.initialStashPosition.x + Float(j) * 0.09, Constants.initialStashPosition.y, Constants.initialStashPosition.z + Float(i) * 0.09])
             addedBall.name = EntityNames.stashedBall.rawValue
             self.sceneStashedBalls.append(addedBall)
         }
@@ -197,7 +240,7 @@ class ARViewManager: NSObject, ObservableObject {
         
         func add(cell: WrappedMapCell, coordinate: Coordinate) {
             guard let item = cell.item else { return }
-            let addedBall = addBall(type: item.owner == player ? .white : .black, position: position(for: coordinate))
+            let addedBall = addBall(type: item.owner == player ? .my : .opponent, position: position(for: coordinate))
             addedBall.name = EntityNames.filledBall.rawValue
             self.sceneFilledBalls.append((coordinate, addedBall))
         }
@@ -221,11 +264,11 @@ class ARViewManager: NSObject, ObservableObject {
         let color: UIColor
         let size: Float
         switch type {
-        case .white:
-            color = .white
+        case .my:
+            color = self.myColor
             size = Constants.ballDiameter / 2
-        case .black:
-            color = .black
+        case .opponent:
+            color = self.opponentColor
             size = Constants.ballDiameter / 2
         case .availableToFill:
             color = UIColor.green.withAlphaComponent(0.3)

@@ -29,6 +29,8 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
 
     @Published var arManager: ARViewManager = ARViewManager()
     
+    private let repository: LocalRepository = LocalRepository()
+    
     private var player: Player?
     internal var map: [[WrappedMapCell]] = []
     private var stashedItems: [Player: [Ball]] = [:]
@@ -82,11 +84,12 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
         case .playerTurn:
             guard let payload = message.payload as? PlayerTurnServerPayload else { return }
             self.handlePlayerTurn(payload: payload)
+        case .playerFinishedTurn:
+            guard let payload = message.payload as? PlayerFinishedTurnServerPayload else { return }
+            self.handlePlayerFinishedTurn(payload: payload)
         case .playerWon:
             guard let payload = message.payload as? PlayerWonServerPayload else { return }
             self.handlePlayerWon(payload: payload)
-        default:
-            break
         }
     }
 }
@@ -94,7 +97,7 @@ class GameCoordinator: GameCoordinatorBridgeProtocol {
 extension GameCoordinator {
     func handleInitiatedState(payload: InitiatedServerMessagePayload) {
         self.player = payload.player
-        self.player?.playerName = "Vitalii"
+        self.player?.playerName = self.repository.get(String.self, LocalRepository.Keys.playerName) ?? "Noname"
         self.arManager.arViewInitialized.distinctUntilChanged().filter({ $0 }).subscribe { [weak self] (event) in
             guard let self = self else { return }
             self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
@@ -116,15 +119,27 @@ extension GameCoordinator {
             self.currentServerPayload = payload
             let availableToMove: [Coordinate] = Array((payload.availableToMove ?? [:]).keys)
             self.arManager.updatePlayerTurn(availableToMove:availableToMove)
+            self.arManager.updateText(value: "Your turn", with: true)
         }
         else {
             self.arManager.updateWaitingState()
+            self.arManager.updateText(value: (payload.currentPlayer.playerName ?? "Noname") + " turn", with: true)
+        }
+    }
+}
+extension GameCoordinator {
+    func handlePlayerFinishedTurn(payload: PlayerFinishedTurnServerPayload) {
+        self.handleUpdateGameConfig(payload: payload.gameConfig)
+        if payload.player != payload.currentPlayer {
+            self.arManager.updateOpponentTurn(fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate)
         }
     }
 }
 extension GameCoordinator {
     func handlePlayerWon(payload: PlayerWonServerPayload) {
+        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
         self.gameEnded.onNext(())
         self.arManager.updateFinishState(isWon: payload.winner == self.player!)
+        self.arManager.updateText(value: payload.winner == self.player! ? "You are WINNER!" : "\(payload.winner.playerName ?? "Noname") won, Sorry", with: false)
     }
 }

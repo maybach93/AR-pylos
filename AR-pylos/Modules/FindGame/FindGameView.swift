@@ -26,21 +26,47 @@ struct FindGameView: View {
         switch viewModel.state {
         case .initial:
             return AnyView(NavigationView {
-                HStack(content: {
-                    Button("Create connection") {
+                VStack(alignment: .leading, spacing: 0) {
+                    Button(action: {
                         self.viewModel.start(isHost: true)
+                    }) {
+                        ZStack {
+                            Rectangle().fill(Color.orange.opacity(0.8))
+                            Text("Create game")
+                                .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
+                                .font(.title).foregroundColor(Color.black.opacity(0.6))
+                        }
                     }
-                    Button("Look for players") {
+                    Button(action: {
                         self.viewModel.start(isHost: false)
+                    }) {
+                        ZStack {
+                            Rectangle().fill(Color.green.opacity(0.8))
+                            Text("Join game")
+                                .frame(minWidth: 0, maxWidth: 200, minHeight: 0, maxHeight: 200)
+                                .font(.title).foregroundColor(Color.black.opacity(0.6))
+                        }
                     }
-                })
-            }).onDisappear {
+                    }.edgesIgnoringSafeArea(.all)
+                }.navigationBarTitle("Start game")).onDisappear {
                 self.viewModel.onDissapear()
             }
-        case .bluetooth:
+        case .bluetooth(let isHost):
             return AnyView(NavigationView {
-                Text("looking for teammate")
-            }).onDisappear {
+                ZStack {
+                    if isHost {
+                        Color.orange.opacity(0.8).edgesIgnoringSafeArea(.all)
+                    }
+                    else {
+                        Color.green.opacity(0.8).edgesIgnoringSafeArea(.all)
+                    }
+                    VStack {
+                        Text("Searching for nearby players")
+                        ActivityIndicator()
+                            .frame(width: 100, height: 100)
+                    }.foregroundColor(Color.white)
+                }
+            }.navigationBarTitle("Start game")).onDisappear {
                 self.viewModel.onDissapear()
             }
         case .gameCenter:

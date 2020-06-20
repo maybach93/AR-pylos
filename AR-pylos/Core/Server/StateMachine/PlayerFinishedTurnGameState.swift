@@ -34,7 +34,7 @@ class PlayerFinishedTurnGameState: BaseGameState {
                     self.isCurrentPlayerWon = true
                 }
                 
-                self.context.players.filter({ $0 != currentPlayer }).forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.onNext(ServerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnServerPayload(player: $0, currentPlayer: currentPlayer, fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate, item: payload.item))) })
+                self.context.players.filter({ $0 != currentPlayer }).forEach({ self.context.gameCoordinators[$0]?.serverStateMessages.onNext(ServerMessage(type: .playerFinishedTurn, payload: PlayerFinishedTurnServerPayload(player: $0, currentPlayer: currentPlayer, fromCoordinate: payload.fromCoordinate, toCoordinate: payload.toCoordinate, item: payload.item, gameConfig: GameConfigServerPayload(player: $0, map: self.context.game.map.map, stashedItems: self.context.game.stashedItems)))) })
                 observer.onNext(true)
             }, onError: nil, onCompleted: nil, onDisposed: nil).disposed(by: self.disposeBag)
             return Disposables.create {}
@@ -42,7 +42,7 @@ class PlayerFinishedTurnGameState: BaseGameState {
     }
     
     override func nextState() -> BaseGameState {
-        let state = self.isCurrentPlayerWon ? PlayerWonGameState(context: context) : StartedGameState(context: context)
+        let state = self.isCurrentPlayerWon ? PlayerWonGameState(context: context) : PlayerTurnGameState(context: context)
         state.movingFromPreviousState()
         return state
     }

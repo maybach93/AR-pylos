@@ -44,7 +44,7 @@ class PlayerTurnGameState: BaseGameState {
                     self.context.currentPlayer = self.context.players.next(current: player)
                     self.isCurrentPlayerLost = true
                 }
-                self.context.gameCoordinators[player]?.serverStateMessages.onNext(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
+                self.context.gameCoordinators[player]?.serverStateMessages.onNext(ServerMessage(type: .playerTurn, payload: PlayerTurnServerPayload(player: player, currentPlayer: currentPlayer, isPlayerTurn: isPlayerTurn, availableToMove: availableToMoveToPlayer, availablePointsFromStash: availablePoints)))
             }
             observer.onNext(true)
             

@@ -1,3 +1,2 @@
 github "ReactiveX/RxSwift" ~> 5.0
 
-github "rasmusth/BluetoothKit" "master"
