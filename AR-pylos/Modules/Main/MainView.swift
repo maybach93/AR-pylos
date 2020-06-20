@@ -15,9 +15,7 @@ struct MainView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     @State var showOnboarding: Bool = false
-    init() {
-        self.showOnboarding = viewModel.showOnboarding
-    }
+
     var viewModel = MainViewModel()
     var body: some View {
         

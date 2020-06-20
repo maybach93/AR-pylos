@@ -137,6 +137,7 @@ extension GameCoordinator {
 }
 extension GameCoordinator {
     func handlePlayerWon(payload: PlayerWonServerPayload) {
+        self.playerStateMessage.onNext(PlayerMessage(type: .initiated, payload: InitiatedPlayerMessagePayload(player: self.player!)))
         self.gameEnded.onNext(())
         self.arManager.updateFinishState(isWon: payload.winner == self.player!)
         self.arManager.updateText(value: payload.winner == self.player! ? "You are WINNER!" : "\(payload.winner.playerName ?? "Noname") won, Sorry", with: false)

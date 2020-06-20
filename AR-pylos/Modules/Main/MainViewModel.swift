@@ -11,15 +11,15 @@ import SwiftUI
 
 struct MainViewModel {
     private let repository: LocalRepository = LocalRepository()
-    var showOnboarding: Bool
-
-    init() {
-        if repository.get(Bool.self, .showOnboarding) == nil {
-            repository.set(value: true, .showOnboarding)
-            self.showOnboarding = true
-        }
-        else {
-            self.showOnboarding = false
+    var showOnboarding: Bool {
+        get {
+            if repository.get(Bool.self, .showOnboarding) == nil {
+                repository.set(value: true, .showOnboarding)
+                return true
+            }
+            else {
+                return false
+            }
         }
     }
 }
