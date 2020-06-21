@@ -2,7 +2,7 @@
 
 AR Pylos is a multiplayer AR game featuring:
   
-  - AR Kit 3
+  - ARKit 3
   - SwiftUI 
   - RxSwift for business logic 
   - connection  is handled via bluetooth
