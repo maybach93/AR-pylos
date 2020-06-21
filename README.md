@@ -12,6 +12,9 @@ AR Pylos is a multiplayer AR game featuring:
 
 https://en.wikipedia.org/wiki/Pylos_(board_game)
 ![alt text](https://i.ibb.co/DRTf1Bd/IMG-4042.png)
+![alt text](https://i.ibb.co/k5Gt4GS/IMG-4038.png)
+![alt text](https://i.ibb.co/C6d8LZD/IMG-4037.png)
+
 License
 ----
 
