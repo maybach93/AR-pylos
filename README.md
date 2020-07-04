@@ -23,11 +23,11 @@ Gameplay playback is playing on the background.
 ### Settings:
 You can change your name shown to other players, ball colors and turn on onboarding screen with rules.
 
-![](Resources/settings.png)
+![](Resources/settings.PNG)
 
 > Also supports dark theme
 
-![](Resources/settings_dark.png)
+![](Resources/settings_dark.PNG)
 
 
 ![](Resources/welcome.png)
