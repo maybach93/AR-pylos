@@ -9,18 +9,22 @@
   - RxSwift for business logic 
   - connection  is handled via bluetooth
   - game server is based on state machine pattern
+  
+### Architecture
 
-### Onboarding:
+![](Resources/arch.png)
+
+#### Onboarding:
 When you lauch the game first time, onboarding screen with rules is appeared. It can be optionally launched in settings later.
 
 ![](Resources/welcome.png)
 
-### Home:
+#### Home:
 Gameplay playback is playing on the background. 
 
 ![](Resources/home.png)
 
-### Settings:
+#### Settings:
 You can change your name shown to other players, ball colors and turn on onboarding screen with rules.
 
 ![](Resources/settings.PNG)
@@ -29,12 +33,12 @@ You can change your name shown to other players, ball colors and turn on onboard
 
 ![](Resources/settings_dark.PNG)
 
-### Matching:
+#### Matching:
 To start a game one player should select "Create game" (Central) and second "Find game" (Peripheral). The game server is running on (Central) player device.
 
 ![](Resources/matching.gif)
 
-### Gameplay: 
+#### Gameplay: 
 
 ![](Resources/gameplay.gif)
 ![](Resources/gameplay_white.gif)
