@@ -29,11 +29,16 @@ You can change your name shown to other players, ball colors and turn on onboard
 
 ![](Resources/settings_dark.PNG)
 
+### Matching:
+To start a game one player should select "Create game" (Central) and second "Find game" (Peripheral). The game server is running on (Central) player device.
 
-![](Resources/welcome.png)
 ![](Resources/matching.gif)
+
+### Gameplay: 
+
 ![](Resources/gameplay.gif)
 ![](Resources/gameplay_white.gif)
+
 License
 ----
 
